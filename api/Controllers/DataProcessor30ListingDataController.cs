@@ -47,5 +47,21 @@ namespace api.Controllers
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetById), new {id = dataProcessor30ListingDataModel.Id}, dataProcessor30ListingDataModel);
         }
+
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            var DataProcessor30ListingModel = _context.DataProcessor30ListingDatas.FirstOrDefault(x => x.Id == id);
+
+            if(DataProcessor30ListingModel == null){
+                return NotFound();
+            }
+            _context.Remove(DataProcessor30ListingModel);
+
+            _context.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
