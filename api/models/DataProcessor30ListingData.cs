@@ -26,7 +26,7 @@ namespace api.models
         // (3) International / 3rd Country Transfer
         public DataTransfer DataTransfer { get; set; } = new DataTransfer();
 
-        // (4) Security Measures
+        // (4) Security
         public DataSecurity DataSecurity {get; set; } = new DataSecurity();
         
     }
