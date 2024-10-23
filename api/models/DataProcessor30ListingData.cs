@@ -8,14 +8,26 @@ namespace api.models
 {
     public class DataProcessor30ListingData
     {
+        //Generic Data
        public int Id { get; set; }
     
         public string Name { get; set; } = string.Empty;
 
         public DateTime CreationTime {get; set; } = DateTime.Now;
 
-       public DataController DataController { get; set; } = new DataController();
+        // (1) Contact
+        public DataController DataController { get; set; } = new DataController();
         public DataProcessor DataProcessor { get; set; } = new DataProcessor();
         public DataProcessorRepresentative DataProcessorRepresentative { get; set; } = new DataProcessorRepresentative();
+
+        // (2) Categories of data
+        public DataCategories DataCategories { get; set; } = new DataCategories();
+
+        // (3) International / 3rd Country Transfer
+        public DataTransfer DataTransfer { get; set; } = new DataTransfer();
+
+        // (4) Security Measures
+        public DataSecurity DataSecurity {get; set; } = new DataSecurity();
+        
     }
 }
