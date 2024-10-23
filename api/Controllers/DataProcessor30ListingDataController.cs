@@ -48,6 +48,24 @@ namespace api.Controllers
             return CreatedAtAction(nameof(GetById), new {id = dataProcessor30ListingDataModel.Id}, dataProcessor30ListingDataModel);
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Update([FromRoute] int id, [FromBody] UpdateDataProcessor30ListingDataDto dataProcessor30ListingDataDto){
+            var dataProcessor30ListingDataModel = _context.DataProcessor30ListingDatas.Find(id);
+
+            if(dataProcessor30ListingDataModel == null){
+                return NotFound();
+            }
+
+            // Update the 30 listing data with the dto values and save
+            _context.Entry(dataProcessor30ListingDataModel).CurrentValues.SetValues(dataProcessor30ListingDataDto);
+            _context.Entry(dataProcessor30ListingDataModel.DataController).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataController);
+            _context.Entry(dataProcessor30ListingDataModel.DataProcessor).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataProcessor);
+            _context.Entry(dataProcessor30ListingDataModel.DataProcessorRepresentative).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataProcessorRepresentative);
+            _context.SaveChanges();
+
+            return Ok(dataProcessor30ListingDataModel);
+        }
+
 
         [HttpDelete("{id}")]
         public IActionResult Delete([FromRoute] int id)
