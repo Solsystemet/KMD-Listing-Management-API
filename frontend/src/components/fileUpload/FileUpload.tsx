@@ -25,7 +25,7 @@ export function FileUpload() {
          formData.append("file", file);
 
          await axios.post("http://localhost:5173/api/upload", formData, {
-            onUploadProgress: (progressEvent: any) => {
+            onUploadProgress: (progressEvent: ProgressEvent) => {
                const percentCompleted = Math.round(
                   (progressEvent.loaded * 100) / progressEvent.total
                );
@@ -39,7 +39,7 @@ export function FileUpload() {
       }
    };
 
-   const doDrop = useCallback(acceptedFiles => {
+   const doDrop = useCallback((acceptedFiles: File[]) => {
       if (acceptedFiles.length > 0) {
          const file = acceptedFiles[0];
          setSelectedFile(file);

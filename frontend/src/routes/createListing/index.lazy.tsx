@@ -1,10 +1,14 @@
-import React, { useState } from "react";
-import { Navbar } from "../components/navbar/Navbar";
-import { FileUpload } from "../components/fileUpload/FileUpload";
-import styles from "./CreateListing.module.css";
-import { StandardButton } from "../components/buttons/Buttons";
+import { createLazyFileRoute } from "@tanstack/react-router";
+import { StandardButton } from "../../components/buttons/Buttons";
+import { FileUpload } from "../../components/fileUpload/FileUpload";
+import { Navbar } from "../../components/navbar/Navbar";
+import styles from "./createListing.module.css";
 
-export function CreateListing() {
+export const Route = createLazyFileRoute("/createListing/")({
+   component: Index,
+});
+
+function Index() {
    return (
       <>
          <Navbar
