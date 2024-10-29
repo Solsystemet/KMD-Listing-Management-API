@@ -1,0 +1,23 @@
+.fileUploadContainer {
+    position: fixed;
+    top: 50%;          
+    left: 10%;         
+    transform: translateY(-50%);
+}
+
+.buttons{
+    display: block;
+    margin-top: 1rem;
+    text-align: center; 
+    justify-content: space-evenly;
+}
+
+.buttons > button {
+    margin: 0.5rem;
+}
+
+.submitButton {
+    position: absolute;
+   right: 5%;
+   bottom: 5%;
+}

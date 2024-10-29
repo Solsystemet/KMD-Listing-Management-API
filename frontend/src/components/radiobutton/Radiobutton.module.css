@@ -1,0 +1,52 @@
+.radioButton {
+    display: flex;
+    flex-direction: column;
+}
+
+.option {
+    margin-bottom: 0.625rem;
+}
+
+.customRadio {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.customRadio input{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.radiomark {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: #eee;
+    margin-right: 0.625rem;
+    border-radius: 0.25rem;
+    position: relative;
+}
+
+.customRadio input:checked + .radiomark {
+    background-color: var(--secondary-color);
+}
+
+.customRadio input:checked + .radiomark::after {
+    content: "";
+    position: absolute;
+    display: block;
+    left: 50%;
+    top: 50%;
+    width: 1rem; 
+    height: 1rem; 
+    background: url("../../assets/checkmark.svg") no-repeat center center;
+    background-size: contain;
+    transform: translate(-50%, -50%);
+ }
+ 

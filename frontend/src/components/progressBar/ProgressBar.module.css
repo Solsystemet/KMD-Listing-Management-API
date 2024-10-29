@@ -1,0 +1,17 @@
+.progressBarContainer {
+   display: flex;
+   flex-direction: row;
+   gap: 2rem;
+}
+
+.childElement {
+   padding: 0.5em 2em;
+   background-color: var(--secondary-background-color);
+   border-radius: 2cap;
+   color: var(--primary-color);
+   font-size: 0.5rem;
+}
+
+.childElement.selected {
+   background-color: var(--highlight-color);
+}

@@ -1,0 +1,58 @@
+.dropZone {
+   display: flex;
+   width: 20rem;
+   height: 20rem;
+   border: 0.2rem dashed var(--secondary-color);
+   background: #d9d9d9;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+}
+
+.fileDetails {
+   height: auto;
+   display: grid;
+   grid-template-columns: 0.2fr 1fr;
+   grid-template-rows: 1fr 1fr;
+   align-items: center;
+}
+
+.picCircle {
+   width: 3rem;
+   grid-column: 1;
+   grid-row: span 2;
+   aspect-ratio: 1/1;
+   border-radius: 50%;
+   background-color: var(--secondary-background-color);
+   align-self: center;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.fileName {
+   grid-column: 2;
+   grid-row: 1;
+   align-self: end;
+   margin-bottom: 0.2rem;
+}
+
+.progressBg {
+   grid-column: 2;
+   grid-row: 2;
+   width: 20rem;
+   height: 0.6rem;
+   background-color: rgba(0, 0, 0, 0.076);
+   border-radius: 2cap;
+   margin-top: 0.5rem;
+   align-self: start;
+}
+
+.progress {
+   width: 0%;
+   height: 100%;
+   background-color: var(--secondary-color);
+   border-radius: 2cap;
+   transition: width 0.5s ease;
+}
+

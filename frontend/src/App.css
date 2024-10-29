@@ -1,0 +1,15 @@
+#root {
+   max-width: 1280px;
+}
+
+* {
+   border: none;
+}
+
+:root {
+   --primary-color: #020304;
+   --secondary-color: #1f614e;
+   --highlight-color: #ffc37d;
+   --background-color: #ffffff;
+   --secondary-background-color: #d9d9d9;
+}

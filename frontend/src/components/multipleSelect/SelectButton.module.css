@@ -1,0 +1,51 @@
+.checkBox {
+   display: flex;
+   flex-direction: column;
+}
+
+.option {
+   margin-bottom: 0.625rem;
+}
+
+.customCheckbox {
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+   user-select: none;
+   position: relative;
+}
+
+.customCheckbox input {
+   position: absolute;
+   opacity: 0;
+   cursor: pointer;
+   height: 0;
+   width: 0;
+}
+
+.checkmark {
+   display: inline-block;
+   width: 1.25rem;
+   height: 1.25rem;
+   background-color: #eee;
+   margin-right: 0.625rem;
+   border-radius: 0.25rem;
+   position: relative;
+}
+
+.customCheckbox input:checked + .checkmark {
+   background-color: var(--secondary-color);
+}
+
+.customCheckbox input:checked + .checkmark::after {
+   content: "";
+   position: absolute;
+   display: block;
+   left: 50%;
+   top: 50%;
+   width: 1rem; /* Adjust size as needed */
+   height: 1rem; /* Adjust size as needed */
+   background: url("../../assets/checkmark.svg") no-repeat center center;
+   background-size: contain;
+   transform: translate(-50%, -50%);
+}

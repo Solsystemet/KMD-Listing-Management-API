@@ -1,0 +1,16 @@
+.searchContainer {
+    position: relative; 
+    width: 100%;
+}
+
+.suggestionBox {
+    position: absolute;
+    top: 3rem;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    padding: 1rem; /* Adjust padding as needed */
+}
