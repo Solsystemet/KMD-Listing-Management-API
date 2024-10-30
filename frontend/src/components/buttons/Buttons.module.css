@@ -1,9 +1,10 @@
 .standardButton {
    background-color: var(--secondary-color);
-   padding: 0.5em 1em;
+   padding: 0.5em 2em;
    cursor: pointer;
    transition: all 0.2s linear;
    text-align: center;
+   border: none;
 }
 
 .standardButton:hover {

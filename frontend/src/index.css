@@ -12,6 +12,12 @@
    text-rendering: optimizeLegibility;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
+
+   --primary-color: #020304;
+   --secondary-color: #1f614e;
+   --highlight-color: #ffc37d;
+   --background-color: #ffffff;
+   --secondary-background-color: #d9d9d9;
 }
 
 a {
@@ -113,4 +119,8 @@ h1 {
    src: url(./assets/fonts/MerriweatherSans/MerriweatherSans-SemiBoldItalic.ttf);
    font-weight: 600;
    font-style: italic;
+}
+
+#root {
+   max-width: 1280px;
 }

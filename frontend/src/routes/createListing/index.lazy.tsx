@@ -10,37 +10,19 @@ export const Route = createLazyFileRoute("/createListing/")({
 
 function Index() {
    return (
-      <>
-         <Navbar
-            children={[
-               { url: "/CreateListing", label: "Create Listing" },
-               { url: "/Listings", label: "Listings" },
-            ]}
-         />
-         <div className={styles.fileUploadContainer}>
-            <FileUpload />
-            <div className={styles.buttons}>
+      <main>
+         <div className={styles.contentContainer}>
+            <div className={styles.fileUploadContainer}>
+               <FileUpload />
+            </div>
+            <div className={styles.submitButton}>
                <StandardButton
-                  children={"Choose file"}
+                  children={"Submit"}
                   color={"white"}
                   fontSize={"16px"}
                />
-               <StandardButton
-                  children={"Skip"}
-                  color={"black"}
-                  fontSize={"14px"}
-                  backgroundColor="white"
-               />
             </div>
          </div>
-
-         <div className={styles.submitButton}>
-            <StandardButton
-               children={"Submit"}
-               color={"white"}
-               fontSize={"16px"}
-            />
-         </div>
-      </>
+      </main>
    );
 }
