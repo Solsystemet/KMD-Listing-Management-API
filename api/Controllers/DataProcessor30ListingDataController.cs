@@ -61,6 +61,11 @@ namespace api.Controllers
             _context.Entry(dataProcessor30ListingDataModel.DataController).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataController);
             _context.Entry(dataProcessor30ListingDataModel.DataProcessor).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataProcessor);
             _context.Entry(dataProcessor30ListingDataModel.DataProcessorRepresentative).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataProcessorRepresentative);
+            _context.Entry(dataProcessor30ListingDataModel.DataCategories).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataCategories);
+            _context.Entry(dataProcessor30ListingDataModel.DataSecurity).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataSecurity);
+            _context.Entry(dataProcessor30ListingDataModel.DataTransfer).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataTransfer);
+
+
             _context.SaveChanges();
 
             return Ok(dataProcessor30ListingDataModel);
