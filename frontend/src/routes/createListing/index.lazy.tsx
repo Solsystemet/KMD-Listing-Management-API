@@ -1,7 +1,6 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { StandardButton } from "../../components/buttons/Buttons";
 import { FileUpload } from "../../components/fileUpload/FileUpload";
-import { Navbar } from "../../components/navbar/Navbar";
 import styles from "./createListing.module.css";
 
 export const Route = createLazyFileRoute("/createListing/")({

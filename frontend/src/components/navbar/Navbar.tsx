@@ -1,5 +1,4 @@
 import styles from "./Navbar.module.css";
-import React from "react";
 import imgKMD from "../../assets/imgKMD.svg";
 import { NavButton } from "../buttons/Buttons";
 
