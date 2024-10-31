@@ -1,0 +1,28 @@
+nav {
+   display: flex;
+   flex-direction: row;
+   position: fixed;
+   top: 0;
+   z-index: 999;
+   background-color: var(--secondary-color);
+   width: 100vw;
+   align-items: center;
+}
+
+.contentContainer {
+   padding: 0rem 2rem;
+   height: 3rem;
+   display: flex;
+   gap: 2rem;
+   flex-direction: row;
+   width: 100%;
+   align-items: center;
+}
+
+img {
+   transform: scale(0.6);
+}
+
+.text {
+   color: white;
+}

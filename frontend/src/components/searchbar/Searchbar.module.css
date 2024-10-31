@@ -1,0 +1,39 @@
+.Searchbar {
+  flex-grow: 1;  
+  padding: 0.5rem 1rem;  
+  font-size: 1rem;  
+  border: none;  
+  border-radius: 1rem -1rem -1rem 1rem;  
+  outline: none;
+  background-color: transparent;  
+  color: black;
+}
+
+.searchbarWrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;  
+  border: 1px solid #ccc;
+  border-radius: 1rem;  
+  background-color: #eee;
+}
+
+.Searchbar::placeholder {
+  color: #000000;
+}
+
+.searchIcon {
+  display: flex; 
+  align-items: center; 
+  padding: 0.5rem;  
+  background-color: #eee;
+  border-radius: 1rem 1rem 1rem 1rem;  
+  color: black;
+  cursor: pointer; 
+}
+
+.searchIcon:hover {
+  background-color: #1F614E;
+  color: white;
+  transition: color 0.3s ease-in-out;
+}

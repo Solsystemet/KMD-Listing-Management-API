@@ -1,0 +1,36 @@
+name: Deploy KMDListing API
+
+on:
+  workflow_dispatch:
+  
+env:
+  AZURE_WEBAPP_NAME: "app-KMDListing-web-northeurope-dev-001"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.x' # Version correction
+
+      - name: Install dependencies
+        run: dotnet restore ./api/api.csproj # Backslashes corrected
+
+      - name: Build
+        run: dotnet build ./api/api.csproj --configuration Release
+
+        # publish
+      - name: 
+        run: dotnet publish ./api/api.csproj --configuration Release  --output ./publish
+
+        #deploy
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME}}
+          publish_profile: ${{secrets.AZURE_WEBAPP_PUBLISH_PROFILE}}
+          package: ./publish
+  

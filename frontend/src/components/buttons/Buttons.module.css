@@ -1,0 +1,38 @@
+.standardButton {
+   background-color: var(--secondary-color);
+   padding: 0.5em 2em;
+   cursor: pointer;
+   transition: all 0.2s linear;
+   text-align: center;
+   border: none;
+}
+
+.standardButton:hover {
+   transform: scale(1.05);
+}
+
+.navButton {
+   cursor: pointer;
+}
+
+.navButton > p {
+   position: relative;
+   display: inline-block;
+   margin: 0;
+}
+
+.navButton > p::after {
+   content: "";
+   position: absolute;
+   left: -10%;
+   right: -10%;
+   bottom: -0.2rem;
+   width: 0;
+   height: 0.1rem;
+   background-color: currentColor;
+   transition: width 0.3s ease;
+}
+
+.navButton:hover > p::after {
+   width: 120%;
+}

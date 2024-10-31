@@ -1,0 +1,38 @@
+.popUp {
+   position: fixed;
+   bottom: -100%; /* Start off-screen */
+   left: 50%;
+   transform: translateX(-50%);
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between; /* Ensure space is distributed between elements */
+   border-radius: 1rem;
+   background: #fff;
+   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+   min-height: 15rem;
+   min-width: 13rem;
+   padding: 2rem 1rem;
+   transition: all 0.5s ease-out; /* Smooth transition */
+}
+
+.textContainer h3 {
+   text-align: center;
+   width: 100%;
+   font-size: 2rem;
+}
+
+.buttonContainer {
+   display: flex;
+   width: 100%;
+   justify-content: space-between;
+}
+
+.popUp.show {
+   bottom: 10%; /* Position when shown */
+   opacity: 1;
+}
+
+.popUp.hide {
+   bottom: -100%; /* Position when hidden */
+   opacity: 0;
+}
