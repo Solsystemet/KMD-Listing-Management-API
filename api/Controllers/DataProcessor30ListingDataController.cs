@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.DataProcessor30ListingData;
+using api.Interfaces;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
@@ -16,21 +18,23 @@ namespace api.Controllers
     {
 
         private readonly ApplicationDBContext _context;
-        public DataProcessor30ListingDataController(ApplicationDBContext context)
+        private readonly IDataProcessor30ListingDataRepository _dataProcessor30ListingDataRepo;
+        public DataProcessor30ListingDataController(ApplicationDBContext context, IDataProcessor30ListingDataRepository dataProcessor30ListingDataRepo)
         {
+            _dataProcessor30ListingDataRepo = dataProcessor30ListingDataRepo;
             _context = context;
         }
 
         [HttpGet]
-        public IActionResult GetAll(){
-            var dataProcessor30ListingDatas = _context.DataProcessor30ListingDatas.ToList();
+        public async Task<IActionResult> GetAll(){
+            var dataProcessor30ListingDatas = await _dataProcessor30ListingDataRepo.GetAllSync();
             return Ok(dataProcessor30ListingDatas);
         }
 
         [HttpGet("{id}")]
 
-        public IActionResult GetById([FromRoute] int id){
-            var dataProcessor30ListingData = _context.DataProcessor30ListingDatas.Find(id);
+        public async Task<IActionResult> GetById([FromRoute] int id){
+            var dataProcessor30ListingData = await _dataProcessor30ListingDataRepo.GetByIdAsync(id);
 
             if(dataProcessor30ListingData == null){
                 return NotFound();
@@ -40,50 +44,34 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateDataProcessor30ListingDataRequestDto dataProcessor30ListingDataDto){
+        public async Task<IActionResult> Create([FromBody] CreateDataProcessor30ListingDataRequestDto dataProcessor30ListingDataDto){
             var dataProcessor30ListingDataModel = dataProcessor30ListingDataDto.ToDataProcessor30ListingDataFromCreateDTO();
-
-            _context.DataProcessor30ListingDatas.Add(dataProcessor30ListingDataModel);
-            _context.SaveChanges();
+            await _dataProcessor30ListingDataRepo.CreateAsync(dataProcessor30ListingDataModel);
             return CreatedAtAction(nameof(GetById), new {id = dataProcessor30ListingDataModel.Id}, dataProcessor30ListingDataModel);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] UpdateDataProcessor30ListingDataDto dataProcessor30ListingDataDto){
-            var dataProcessor30ListingDataModel = _context.DataProcessor30ListingDatas.Find(id);
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateDataProcessor30ListingDataDto dataProcessor30ListingDataDto){
+            var dataProcessor30ListingDataModel = await _dataProcessor30ListingDataRepo.UpdateAsync(id, dataProcessor30ListingDataDto);
 
             if(dataProcessor30ListingDataModel == null){
                 return NotFound();
             }
 
-            // Update the 30 listing data with the dto values and save
-            _context.Entry(dataProcessor30ListingDataModel).CurrentValues.SetValues(dataProcessor30ListingDataDto);
-            _context.Entry(dataProcessor30ListingDataModel.DataController).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataController);
-            _context.Entry(dataProcessor30ListingDataModel.DataProcessor).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataProcessor);
-            _context.Entry(dataProcessor30ListingDataModel.DataProcessorRepresentative).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataProcessorRepresentative);
-            _context.Entry(dataProcessor30ListingDataModel.DataCategories).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataCategories);
-            _context.Entry(dataProcessor30ListingDataModel.DataSecurity).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataSecurity);
-            _context.Entry(dataProcessor30ListingDataModel.DataTransfer).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataTransfer);
-
-
-            _context.SaveChanges();
 
             return Ok(dataProcessor30ListingDataModel);
         }
 
 
         [HttpDelete("{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var DataProcessor30ListingModel = _context.DataProcessor30ListingDatas.FirstOrDefault(x => x.Id == id);
+            var DataProcessor30ListingModel = await _dataProcessor30ListingDataRepo.DeleteAsync(id);
 
             if(DataProcessor30ListingModel == null){
                 return NotFound();
             }
-            _context.Remove(DataProcessor30ListingModel);
-
-            _context.SaveChanges();
-
+            
             return NoContent();
         }
     }
