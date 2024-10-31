@@ -15,7 +15,7 @@ builder.Configuration.AddUserSecrets<Program>();
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
 {
     // Fetch connection string from appsettings.json or appsettings.Development.json
-    options.UseSqlServer(builder.Configuration["ConnectionString:KMDListing:sqlDb"]);
+    options.UseSqlServer(builder.Configuration["ConnectionString:KMDListing:SqlDb"]);
 });
 
 var app = builder.Build();
@@ -28,7 +28,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthorization(); //ændre her
+
 
 app.MapControllers();
 

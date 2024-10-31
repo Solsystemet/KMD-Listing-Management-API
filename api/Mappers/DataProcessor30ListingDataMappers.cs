@@ -16,7 +16,11 @@ namespace api.Mappers
                 Name = dataProcessor30ListingData.Name,
                 CreationTime = dataProcessor30ListingData.CreationTime,
                 DataController = dataProcessor30ListingData.DataController,
-                DataProcessorRepresentative = dataProcessor30ListingData.DataProcessorRepresentative
+                DataProcessorRepresentative = dataProcessor30ListingData.DataProcessorRepresentative,
+                DataCategories = dataProcessor30ListingData.DataCategories,
+                DataSecurity = dataProcessor30ListingData.DataSecurity,
+                DataTransfer = dataProcessor30ListingData.DataTransfer
+
             };
         }
 
@@ -26,7 +30,10 @@ namespace api.Mappers
                  Name = dataProcessor30ListingDataDto.Name,
                  DataController = dataProcessor30ListingDataDto.DataController,
                  DataProcessor = dataProcessor30ListingDataDto.DataProcessor,
-                 DataProcessorRepresentative = dataProcessor30ListingDataDto.DataProcessorRepresentative
+                 DataProcessorRepresentative = dataProcessor30ListingDataDto.DataProcessorRepresentative,
+                 DataCategories = dataProcessor30ListingDataDto.DataCategories,
+                DataSecurity = dataProcessor30ListingDataDto.DataSecurity,
+                DataTransfer = dataProcessor30ListingDataDto.DataTransfer
             };
         }
     }
