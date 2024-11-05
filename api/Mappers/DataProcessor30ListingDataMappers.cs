@@ -17,6 +17,7 @@ namespace api.Mappers
                 CreationTime = dataProcessor30ListingData.CreationTime,
                 DataController = dataProcessor30ListingData.DataController,
                 DataProcessorRepresentative = dataProcessor30ListingData.DataProcessorRepresentative,
+                DataSecurityAdvisor = dataProcessor30ListingData.DataSecurityAdvisor,
                 DataCategories = dataProcessor30ListingData.DataCategories,
                 DataSecurity = dataProcessor30ListingData.DataSecurity,
                 DataTransfer = dataProcessor30ListingData.DataTransfer
@@ -31,6 +32,7 @@ namespace api.Mappers
                  DataController = dataProcessor30ListingDataDto.DataController,
                  DataProcessor = dataProcessor30ListingDataDto.DataProcessor,
                  DataProcessorRepresentative = dataProcessor30ListingDataDto.DataProcessorRepresentative,
+                 DataSecurityAdvisor = dataProcessor30ListingDataDto.DataSecurityAdvisor,
                  DataCategories = dataProcessor30ListingDataDto.DataCategories,
                 DataSecurity = dataProcessor30ListingDataDto.DataSecurity,
                 DataTransfer = dataProcessor30ListingDataDto.DataTransfer

@@ -28,6 +28,9 @@ namespace api.Data
         
         modelBuilder.Entity<DataProcessor30ListingData>()
             .OwnsOne(p => p.DataProcessorRepresentative);
+        
+        modelBuilder.Entity<DataProcessor30ListingData>()
+            .OwnsOne(p => p.DataSecurityAdvisor);
 
         modelBuilder.Entity<DataProcessor30ListingData>()
             .OwnsOne(p => p.DataCategories);
