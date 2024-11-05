@@ -14,6 +14,7 @@ namespace api.models
         public string Name { get; set; } = string.Empty;
 
         public DateTime CreationTime {get; set; } = DateTime.Now;
+        public DateTime UpdateTime {get; set; } = DateTime.Now;
 
         // (1) Contact
         public DataController DataController { get; set; } = new DataController();

@@ -50,6 +50,7 @@ namespace api.Repository
             _context.Entry(existing30Listing.DataCategories).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataCategories);
             _context.Entry(existing30Listing.DataSecurity).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataSecurity);
             _context.Entry(existing30Listing.DataTransfer).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataTransfer);
+            existing30Listing.UpdateTime = DateTime.Now;
 
             await _context.SaveChangesAsync();
 
