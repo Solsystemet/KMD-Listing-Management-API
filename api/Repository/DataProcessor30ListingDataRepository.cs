@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.DataProcessor30ListingData;
+using api.Helpers;
 using api.Interfaces;
 using api.models;
 using Microsoft.EntityFrameworkCore;
@@ -17,9 +18,15 @@ namespace api.Repository
             _context = context;
         }
 
-        public async Task<List<DataProcessor30ListingData>> GetAllSync()
+        public async Task<List<DataProcessor30ListingData>> GetAllAsync(QueryObject query)
         {
-            return await _context.DataProcessor30ListingDatas.ToListAsync();
+            var listings =  _context.DataProcessor30ListingDatas.AsQueryable();
+
+            if(!string.IsNullOrWhiteSpace(query.Name)){
+                listings = listings.Where(l => l.Name.Contains(query.Name));
+            }
+
+            return await listings.ToListAsync();
         }
 
         public async Task<DataProcessor30ListingData?> GetByIdAsync(int id)
