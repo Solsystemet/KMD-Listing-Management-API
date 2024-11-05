@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.DataProcessor30ListingData;
+using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -26,11 +27,11 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(){
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject query){
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
-            var dataProcessor30ListingDatas = await _dataProcessor30ListingDataRepo.GetAllSync();
+            var dataProcessor30ListingDatas = await _dataProcessor30ListingDataRepo.GetAllAsync(query);
             return Ok(dataProcessor30ListingDatas);
         }
 
