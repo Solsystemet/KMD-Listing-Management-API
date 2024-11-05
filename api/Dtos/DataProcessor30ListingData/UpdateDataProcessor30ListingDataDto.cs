@@ -13,6 +13,7 @@ namespace api.Dtos.DataProcessor30ListingData
         public DataController DataController { get; set; } = new DataController();
         public DataProcessor DataProcessor { get; set; } = new DataProcessor();
         public DataProcessorRepresentative DataProcessorRepresentative { get; set; } = new DataProcessorRepresentative();
+        public DataSecurityAdvisor DataSecurityAdvisor { get; set; } = new DataSecurityAdvisor();
 
         public DataCategories DataCategories { get; set; } = new DataCategories();
 
