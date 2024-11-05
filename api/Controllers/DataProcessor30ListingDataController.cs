@@ -27,13 +27,19 @@ namespace api.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAll(){
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
             var dataProcessor30ListingDatas = await _dataProcessor30ListingDataRepo.GetAllSync();
             return Ok(dataProcessor30ListingDatas);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
 
         public async Task<IActionResult> GetById([FromRoute] int id){
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
             var dataProcessor30ListingData = await _dataProcessor30ListingDataRepo.GetByIdAsync(id);
 
             if(dataProcessor30ListingData == null){
@@ -45,13 +51,19 @@ namespace api.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateDataProcessor30ListingDataRequestDto dataProcessor30ListingDataDto){
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
             var dataProcessor30ListingDataModel = dataProcessor30ListingDataDto.ToDataProcessor30ListingDataFromCreateDTO();
             await _dataProcessor30ListingDataRepo.CreateAsync(dataProcessor30ListingDataModel);
             return CreatedAtAction(nameof(GetById), new {id = dataProcessor30ListingDataModel.Id}, dataProcessor30ListingDataModel);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateDataProcessor30ListingDataDto dataProcessor30ListingDataDto){
+             if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
             var dataProcessor30ListingDataModel = await _dataProcessor30ListingDataRepo.UpdateAsync(id, dataProcessor30ListingDataDto);
 
             if(dataProcessor30ListingDataModel == null){
@@ -63,9 +75,12 @@ namespace api.Controllers
         }
 
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
             var DataProcessor30ListingModel = await _dataProcessor30ListingDataRepo.DeleteAsync(id);
 
             if(DataProcessor30ListingModel == null){
