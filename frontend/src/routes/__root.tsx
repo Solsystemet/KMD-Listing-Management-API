@@ -6,13 +6,7 @@ import "./../index.css";
 export const Route = createRootRoute({
    component: () => (
       <>
-         <Navbar
-            children={[
-               { url: "/home", label: "Home" },
-               { url: "/about", label: "About" },
-               { url: "/contact", label: "Contact" },
-            ]}
-         />
+         <Navbar children={[{ url: "/uploadPage", label: "Create Listing" }]} />
          <Outlet />
          <TanStackRouterDevtools />
       </>

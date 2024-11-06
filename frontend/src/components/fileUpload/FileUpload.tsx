@@ -57,7 +57,7 @@ export function FileUpload() {
    return (
       <div className={styles.fileUploadContainer}>
          <div className={styles.dropZoneWrap}>
-            <div {...getRootProps()} className={styles.dropZone}>
+            <div {...getRootProps()} onClick={open} className={styles.dropZone}>
                <input {...getInputProps()} />
                {isDragActive ? (
                   <p>Drop the file here</p>

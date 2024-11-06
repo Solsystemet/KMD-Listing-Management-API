@@ -1,0 +1,10 @@
+.inputBox {
+   width: 100%;
+   padding: 8px;
+   font-size: 16px;
+   border: 1px solid #ccc;
+   color: var(--primary-color);
+   border-radius: 4px;
+   box-sizing: border-box;
+   background-color: #ffffff; /* Changed to white */
+}

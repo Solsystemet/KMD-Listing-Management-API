@@ -1,0 +1,17 @@
+.surveyContainer {
+   background-color: white;
+   width: 60%;
+   padding: 3rem;
+}
+
+.inputContainer {
+   display: flex;
+   flex-direction: column;
+   gap: 0.5rem;
+   margin-bottom: 2rem;
+}
+
+.surveyContainer > * > h3 {
+   font-size: 1.5rem;
+   margin: 2rem 0rem;
+}
