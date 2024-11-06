@@ -12,6 +12,7 @@ namespace api.Repository
 {
     public class DataProcessor30ListingDataRepository : IDataProcessor30ListingDataRepository
     {
+
         private readonly ApplicationDBContext _context;
         public DataProcessor30ListingDataRepository(ApplicationDBContext context)
         {
@@ -26,6 +27,20 @@ namespace api.Repository
                 listings = listings.Where(l => l.Name.Contains(query.Name));
             }
 
+            if(!string.IsNullOrWhiteSpace(query.SortBy)){
+
+               
+                if(query.SortBy.Equals("Name", StringComparison.OrdinalIgnoreCase)){
+                    listings = query.IsDescending ? listings.OrderByDescending(l => l.Name) : listings.OrderBy(l => l.Name);
+                }
+                else if(query.SortBy.Equals("Creation Time", StringComparison.OrdinalIgnoreCase)){
+                listings = query.IsDescending ? listings.OrderByDescending(l => l.CreationTime) : listings.OrderBy(l => l.CreationTime);
+                }
+                else if(query.SortBy.Equals("Update Time", StringComparison.OrdinalIgnoreCase)){
+                listings = query.IsDescending ? listings.OrderByDescending(l => l.UpdateTime) : listings.OrderBy(l => l.UpdateTime);
+                }
+            }
+            
             return await listings.ToListAsync();
         }
 
