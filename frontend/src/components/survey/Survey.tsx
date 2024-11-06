@@ -27,6 +27,16 @@ function DataTransfers({ index }: { index: number }) {
    );
 }
 
+function TextBox() {
+   return (
+      <textarea
+         name="description"
+         rows={20}
+         className={styles.textBox}
+      ></textarea>
+   );
+}
+
 type SurveyProps = {
    numberOfContact: number;
    numberOfDataTransfers: number;
@@ -62,6 +72,13 @@ export function Survey({
             {Array.from({ length: numberOfDataTransfers }).map((_, index) => (
                <DataTransfers index={index + 1} />
             ))}
+         </div>
+         <div>
+            <h3>
+               Beskrivelse af tekniske og organisatoriske
+               sikkerhedsforanstaltninger.
+            </h3>
+            <TextBox></TextBox>
          </div>
       </div>
    );
