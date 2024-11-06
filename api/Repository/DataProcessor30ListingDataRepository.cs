@@ -40,8 +40,11 @@ namespace api.Repository
                 listings = query.IsDescending ? listings.OrderByDescending(l => l.UpdateTime) : listings.OrderBy(l => l.UpdateTime);
                 }
             }
-            
-            return await listings.ToListAsync();
+
+            var skipNumber = (query.PageNumber - 1)* query.PageSize;
+
+
+            return await listings.Skip(skipNumber).Take(query.PageSize).ToListAsync();
         }
 
         public async Task<DataProcessor30ListingData?> GetByIdAsync(int id)
