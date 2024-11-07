@@ -14,4 +14,13 @@ export default defineConfig({
       outDir: "../api/wwwroot",
       emptyOutDir: true,
    },
+
+   server: {
+      proxy: {
+         "/api": {
+            target: "http://localhost:5047",
+            changeOrigin: true,
+         },
+      },
+   },
 });
