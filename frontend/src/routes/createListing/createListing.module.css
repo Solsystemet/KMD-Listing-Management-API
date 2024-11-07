@@ -1,32 +1,10 @@
-main {
+.createListing {
    display: flex;
-   flex-direction: column;
-   justify-content: center;
+   background-color: hsl(0, 0%, 56%);
+}
+
+.createListing > div {
+   display: flex;
    width: 100vw;
-   height: 100vh;
-   align-items: center;
-}
-
-.contentContainer {
-   display: flex;
-   flex-direction: column;
-   width: 100%;
-   height: 100%;
    justify-content: center;
-   align-items: center;
-   position: relative;
-}
-
-.fileUploadContainer {
-   flex: 1;
-   display: flex;
-   width: 80%;
-   justify-content: center;
-   align-items: center;
-}
-
-.submitButton {
-   position: absolute;
-   bottom: 5rem;
-   right: 5rem;
 }
