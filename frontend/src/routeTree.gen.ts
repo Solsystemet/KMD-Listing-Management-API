@@ -17,6 +17,7 @@ import { Route as rootRoute } from './routes/__root'
 // Create Virtual Routes
 
 const IndexLazyImport = createFileRoute('/')()
+const UploadPageIndexLazyImport = createFileRoute('/uploadPage/')()
 const CreateListingIndexLazyImport = createFileRoute('/createListing/')()
 
 // Create/Update Routes
@@ -26,6 +27,14 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const UploadPageIndexLazyRoute = UploadPageIndexLazyImport.update({
+  id: '/uploadPage/',
+  path: '/uploadPage/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/uploadPage/index.lazy').then((d) => d.Route),
+)
 
 const CreateListingIndexLazyRoute = CreateListingIndexLazyImport.update({
   id: '/createListing/',
@@ -53,6 +62,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CreateListingIndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/uploadPage/': {
+      id: '/uploadPage/'
+      path: '/uploadPage'
+      fullPath: '/uploadPage'
+      preLoaderRoute: typeof UploadPageIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -61,36 +77,41 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/createListing': typeof CreateListingIndexLazyRoute
+  '/uploadPage': typeof UploadPageIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/createListing': typeof CreateListingIndexLazyRoute
+  '/uploadPage': typeof UploadPageIndexLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
   '/createListing/': typeof CreateListingIndexLazyRoute
+  '/uploadPage/': typeof UploadPageIndexLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/createListing'
+  fullPaths: '/' | '/createListing' | '/uploadPage'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/createListing'
-  id: '__root__' | '/' | '/createListing/'
+  to: '/' | '/createListing' | '/uploadPage'
+  id: '__root__' | '/' | '/createListing/' | '/uploadPage/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   CreateListingIndexLazyRoute: typeof CreateListingIndexLazyRoute
+  UploadPageIndexLazyRoute: typeof UploadPageIndexLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   CreateListingIndexLazyRoute: CreateListingIndexLazyRoute,
+  UploadPageIndexLazyRoute: UploadPageIndexLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -106,7 +127,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/createListing/"
+        "/createListing/",
+        "/uploadPage/"
       ]
     },
     "/": {
@@ -114,6 +136,9 @@ export const routeTree = rootRoute
     },
     "/createListing/": {
       "filePath": "createListing/index.lazy.tsx"
+    },
+    "/uploadPage/": {
+      "filePath": "uploadPage/index.lazy.tsx"
     }
   }
 }
