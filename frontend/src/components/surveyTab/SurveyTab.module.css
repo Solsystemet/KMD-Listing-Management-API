@@ -1,0 +1,36 @@
+.surveyTabContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    outline: black solid 0.1rem;
+}
+
+.surveyTab {
+    position: relative;
+    width: 15rem;
+    margin: 0;
+}
+
+.surveyTabInfo {
+    padding: 0.05rem;
+    margin: 0;
+}
+
+.date {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.05rem;
+    font-size: small;
+    margin: 0;
+}
+
+.evenBackground {
+    background-color: rgb(121, 121, 121);
+}
+
+.oddBackground {
+    background-color: white;
+}
