@@ -1,47 +1,29 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { SurveyTab } from "../components/surveyTab/SurveyTab";
+import { ListingSidebar } from "../components/listingSidebar/listingSidebar";
+import { useQuery } from "@tanstack/react-query";
+import { getAllListings } from "../lib/api";
 
 export const Route = createLazyFileRoute("/")({
    component: Index,
 });
-
+async function getAll30Listings() {
+   return await getAllListings();
+}
 function Index() {
-   const surveyData = [
-      {
-         date: new Date(),
-         company: "Company 1",
-         projectName: "Project 1",
-         dataProcessor: "Processor 1",
-      },
-      {
-         date: new Date(),
-         company: "Company 2",
-         projectName: "Project 2",
-         dataProcessor: "Processor 2",
-      },
-      {
-         date: new Date(),
-         company: "Company 3",
-         projectName: "Project 3",
-         dataProcessor: "Processor 3",
-      },
-      {
-         date: new Date(),
-         company: "Company 4",
-         projectName: "Project 4",
-         dataProcessor: "Processor 4",
-      },
-      {
-         date: new Date(),
-         company: "Company 4",
-         projectName: "Project 4",
-         dataProcessor: "Processor 4",
-      },
-   ];
+   const { isPending, error, data } = useQuery({
+      queryKey: ["get-all-30-listings"],
+      queryFn: getAll30Listings,
+   });
 
    return (
       <main>
-         <SurveyTab children={surveyData} />
+         {isPending ? (
+            "Loading..."
+         ) : error ? (
+            error.message
+         ) : (
+            <ListingSidebar listingSidebarDtos={data} />
+         )}
       </main>
    );
 }
