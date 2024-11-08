@@ -5,7 +5,6 @@ type ListingSidebarDtoWithStringDate = {
    name: string;
    creationTime: string;
    dataProcessorName: string;
-   dataTransfer: string;
 };
 export async function getAllListings() {
    const res = await axios.get("/api/dataProcessor30listingData");
@@ -18,7 +17,6 @@ export async function getAllListings() {
          Name: listing.name,
          CreationTime: new Date(listing.creationTime),
          DataProcessorName: listing.dataProcessorName,
-         DataTransfer: listing.dataTransfer,
       });
    }
 
