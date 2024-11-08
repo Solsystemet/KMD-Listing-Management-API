@@ -32,7 +32,8 @@ namespace api.Controllers
                 return BadRequest(ModelState);
             }
             var dataProcessor30ListingDatas = await _dataProcessor30ListingDataRepo.GetAllAsync(query);
-            return Ok(dataProcessor30ListingDatas);
+            var dataProcessor30ListingDataDtos = dataProcessor30ListingDatas.Select(l => l.ToDto());
+            return Ok(dataProcessor30ListingDataDtos);
         }
 
         [HttpGet("{id:int}")]
