@@ -16,7 +16,6 @@ namespace api.Mappers
                 Name = dataProcessor30ListingData.Name,
                 CreationTime = dataProcessor30ListingData.CreationTime,
                 DataProcessorName = dataProcessor30ListingData.DataProcessor.Name,
-                DataTransfer = dataProcessor30ListingData.DataTransfer.TransferInformation,
 
             };
         }
