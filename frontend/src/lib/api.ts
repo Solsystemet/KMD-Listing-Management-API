@@ -7,7 +7,7 @@ type ListingSidebarDtoWithStringDate = {
    dataProcessorName: string;
 };
 export async function getAllListings() {
-   const res = await axios.get("/api/dataProcessor30listingData");
+   const res = await axios.get("/api/data-processor-30-listing-data");
    const listingsStringDate: ListingSidebarDtoWithStringDate[] = res.data;
 
    const listings: ListingSidebarDto[] = [];

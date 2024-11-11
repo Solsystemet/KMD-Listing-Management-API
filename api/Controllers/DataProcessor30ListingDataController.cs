@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 namespace api.Controllers
 {
 
-    [Route ("api/DataProcessor30ListingData")]
+    [Route ("api/data-processor-30-listing-data")]
     [ApiController]
     public class DataProcessor30ListingDataController : ControllerBase
     {
