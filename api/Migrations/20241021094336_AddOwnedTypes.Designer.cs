@@ -25,7 +25,7 @@ namespace api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("api.models.DataProcessor30ListingData", b =>
+            modelBuilder.Entity("api.Models.DataProcessor30ListingData", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,9 +45,9 @@ namespace api.Migrations
                     b.ToTable("dataProcessor30ListingDatas");
                 });
 
-            modelBuilder.Entity("api.models.DataProcessor30ListingData", b =>
+            modelBuilder.Entity("api.Models.DataProcessor30ListingData", b =>
                 {
-                    b.OwnsOne("api.models.DataController", "DataController", b1 =>
+                    b.OwnsOne("api.Models.DataController", "DataController", b1 =>
                         {
                             b1.Property<int>("DataProcessor30ListingDataId")
                                 .HasColumnType("int");
@@ -82,7 +82,7 @@ namespace api.Migrations
                                 .HasForeignKey("DataProcessor30ListingDataId");
                         });
 
-                    b.OwnsOne("api.models.DataProcessor", "DataProcessor", b1 =>
+                    b.OwnsOne("api.Models.DataProcessor", "DataProcessor", b1 =>
                         {
                             b1.Property<int>("DataProcessor30ListingDataId")
                                 .HasColumnType("int");
@@ -117,7 +117,7 @@ namespace api.Migrations
                                 .HasForeignKey("DataProcessor30ListingDataId");
                         });
 
-                    b.OwnsOne("api.models.DataProcessorRepresentative", "DataProcessorRepresentative", b1 =>
+                    b.OwnsOne("api.Models.DataProcessorRepresentative", "DataProcessorRepresentative", b1 =>
                         {
                             b1.Property<int>("DataProcessor30ListingDataId")
                                 .HasColumnType("int");

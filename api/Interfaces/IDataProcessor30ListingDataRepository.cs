@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.DataProcessor30ListingData;
 using api.Helpers;
-using api.models;
+using api.Models;
 
 namespace api.Interfaces
 {
