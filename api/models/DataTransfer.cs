@@ -11,5 +11,8 @@ namespace api.models
     {
         public string TransferInformation { get; set; } = string.Empty;
 
+         public bool IsEqual(DataTransfer dataTransfer){
+            return dataTransfer.TransferInformation == this.TransferInformation;
+        }
     }
 }

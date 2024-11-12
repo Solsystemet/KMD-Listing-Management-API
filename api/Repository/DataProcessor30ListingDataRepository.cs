@@ -49,7 +49,8 @@ namespace api.Repository
 
         public async Task<DataProcessor30ListingData?> GetByIdAsync(int id)
         {
-            return await _context.DataProcessor30ListingDatas.FindAsync(id);
+
+            return await _context.DataProcessor30ListingDatas.Include(E=> E.DataEdits).FirstOrDefaultAsync(l => l.Id == id);
         }
 
         public async Task<DataProcessor30ListingData> CreateAsync(DataProcessor30ListingData DataProcessor30ListingDataModel)
@@ -67,6 +68,17 @@ namespace api.Repository
                 return null;
             }
 
+            List<string>updatedFields = new List<string>();
+
+            if(existing30Listing.Name != dataProcessor30ListingDataDto.Name) updatedFields.Add("Name");
+            if(!existing30Listing.DataController.IsEqual(dataProcessor30ListingDataDto.DataController)) updatedFields.Add("Data Controller");
+            if(!existing30Listing.DataProcessor.IsEqual(dataProcessor30ListingDataDto.DataProcessor)) updatedFields.Add("Data processor");
+            if(!existing30Listing.DataProcessorRepresentative.IsEqual(dataProcessor30ListingDataDto.DataProcessorRepresentative)) updatedFields.Add("Data Processor Representative");
+            if(!existing30Listing.DataSecurityAdvisor.IsEqual(dataProcessor30ListingDataDto.DataSecurityAdvisor)) updatedFields.Add("Data Security Advisor");
+            if(!existing30Listing.DataCategories.IsEqual(dataProcessor30ListingDataDto.DataCategories)) updatedFields.Add("Data categories");
+            if(!existing30Listing.DataSecurity.IsEqual(dataProcessor30ListingDataDto.DataSecurity)) updatedFields.Add("Data security");
+            if(!existing30Listing.DataTransfer.IsEqual(dataProcessor30ListingDataDto.DataTransfer)) updatedFields.Add("Data Transfer");
+
             _context.Entry(existing30Listing).CurrentValues.SetValues(dataProcessor30ListingDataDto);
             _context.Entry(existing30Listing.DataController).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataController);
             _context.Entry(existing30Listing.DataProcessor).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataProcessor);
@@ -77,21 +89,39 @@ namespace api.Repository
             _context.Entry(existing30Listing.DataTransfer).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataTransfer);
             existing30Listing.UpdateTime = DateTime.Now;
 
+            await _context.DataEditDatas.AddAsync(new DataEdit("Listing Updated", String.Join(',', updatedFields), existing30Listing.Id));
+            updatedFields.Clear();
             await _context.SaveChangesAsync();
 
             return existing30Listing;
 
         }
 
-        public async Task<DataProcessor30ListingData?> DeleteAsync(int id)
-        {
-            var DataProcessor30ListingDataModel = await _context.DataProcessor30ListingDatas.FindAsync(id);
-            if(DataProcessor30ListingDataModel == null){
-                return null;
+       public async Task<DataProcessor30ListingData?> DeleteAsync(int id)
+         {
+            var dataProcessor30ListingData = await _context.DataProcessor30ListingDatas
+                .Include(e => e.DataEdits)
+                .FirstOrDefaultAsync(l => l.Id == id);
+
+            if (dataProcessor30ListingData != null)
+            {
+                foreach(var dataEdit in dataProcessor30ListingData.DataEdits)
+                {
+                    _context.DataEditDatas.Remove(dataEdit);
+                }
             }
-            _context.DataProcessor30ListingDatas.Remove(DataProcessor30ListingDataModel);
+
+
+            
+            _context.DataProcessor30ListingDatas.Remove(dataProcessor30ListingData);
+
+            // Save changes
             await _context.SaveChangesAsync();
-            return DataProcessor30ListingDataModel;
-        }
+
+            return dataProcessor30ListingData;
+            }
+
+
+        
     }
 }

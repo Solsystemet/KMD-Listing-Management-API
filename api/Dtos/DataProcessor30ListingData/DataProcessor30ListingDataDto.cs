@@ -28,5 +28,7 @@ namespace api.Dtos.DataProcessor30ListingData
         public DataSecurity DataSecurity { get; set; } =  new DataSecurity();
 
         public DataTransfer DataTransfer { get; set; } = new DataTransfer();
+
+        public List<DataEdit> dataEdits { get; set; } = new List<DataEdit>();
     }
 }

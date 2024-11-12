@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,11 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241107100323_DataEdit")]
+    partial class DataEdit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +55,7 @@ namespace api.Migrations
 
                     b.HasIndex("DataProcessor30ListingDataId");
 
-                    b.ToTable("DataEditDatas");
+                    b.ToTable("DataEdit");
                 });
 
             modelBuilder.Entity("api.models.DataProcessor30ListingData", b =>
@@ -81,7 +84,7 @@ namespace api.Migrations
             modelBuilder.Entity("api.models.DataEdit", b =>
                 {
                     b.HasOne("api.models.DataProcessor30ListingData", "DataProcessor30ListingData")
-                        .WithMany("DataEdits")
+                        .WithMany("dataEdits")
                         .HasForeignKey("DataProcessor30ListingDataId");
 
                     b.Navigation("DataProcessor30ListingData");
@@ -286,7 +289,7 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.models.DataProcessor30ListingData", b =>
                 {
-                    b.Navigation("DataEdits");
+                    b.Navigation("dataEdits");
                 });
 #pragma warning restore 612, 618
         }
