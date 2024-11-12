@@ -11,5 +11,8 @@ namespace api.Models
     {
         public string CategoryList { get; set; } = string.Empty;
         
+        public bool IsEqual(DataCategories dataCategories){
+            return dataCategories.CategoryList == this.CategoryList;
+        }
     }
 }

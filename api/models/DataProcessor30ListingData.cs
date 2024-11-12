@@ -30,6 +30,8 @@ namespace api.Models
 
         // (4) Security
         public DataSecurity DataSecurity {get; set; } = new DataSecurity();
+
+        public List<DataEdit> DataEdits { get; set; } = new List<DataEdit>();
         
     }
 }

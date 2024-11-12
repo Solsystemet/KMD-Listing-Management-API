@@ -16,6 +16,8 @@ namespace api.Data
         }
 
         public DbSet<DataProcessor30ListingData> DataProcessor30ListingDatas {get; set;}
+        public DbSet<DataEdit> DataEditDatas {get; set;}
+        
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,7 +42,10 @@ namespace api.Data
 
         modelBuilder.Entity<DataProcessor30ListingData>()
             .OwnsOne(p => p.DataSecurity);
+        
 
         }
+
+        
     }
 }

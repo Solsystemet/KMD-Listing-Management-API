@@ -10,6 +10,6 @@ namespace api.Models
     [Owned]
     public class DataProcessorRepresentative : DataContactInfo
     {
-
+        
     }
 }
