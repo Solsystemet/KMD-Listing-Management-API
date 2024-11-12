@@ -7,11 +7,7 @@ export const Route = createRootRoute({
    component: () => (
       <>
          <Navbar
-            children={[
-               { url: "/home", label: "Home" },
-               { url: "/about", label: "About" },
-               { url: "/contact", label: "Contact" },
-            ]}
+            children={[{ url: "/upload-page", label: "Create Listing" }]}
          />
          <Outlet />
          <TanStackRouterDevtools />

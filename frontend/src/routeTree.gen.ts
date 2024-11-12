@@ -17,7 +17,8 @@ import { Route as rootRoute } from './routes/__root'
 // Create Virtual Routes
 
 const IndexLazyImport = createFileRoute('/')()
-const CreateListingIndexLazyImport = createFileRoute('/createListing/')()
+const UploadPageIndexLazyImport = createFileRoute('/upload-page/')()
+const CreateListingIndexLazyImport = createFileRoute('/create-listing/')()
 
 // Create/Update Routes
 
@@ -27,12 +28,20 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-const CreateListingIndexLazyRoute = CreateListingIndexLazyImport.update({
-  id: '/createListing/',
-  path: '/createListing/',
+const UploadPageIndexLazyRoute = UploadPageIndexLazyImport.update({
+  id: '/upload-page/',
+  path: '/upload-page/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import('./routes/createListing/index.lazy').then((d) => d.Route),
+  import('./routes/upload-page/index.lazy').then((d) => d.Route),
+)
+
+const CreateListingIndexLazyRoute = CreateListingIndexLazyImport.update({
+  id: '/create-listing/',
+  path: '/create-listing/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/create-listing/index.lazy').then((d) => d.Route),
 )
 
 // Populate the FileRoutesByPath interface
@@ -46,11 +55,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/createListing/': {
-      id: '/createListing/'
-      path: '/createListing'
-      fullPath: '/createListing'
+    '/create-listing/': {
+      id: '/create-listing/'
+      path: '/create-listing'
+      fullPath: '/create-listing'
       preLoaderRoute: typeof CreateListingIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/upload-page/': {
+      id: '/upload-page/'
+      path: '/upload-page'
+      fullPath: '/upload-page'
+      preLoaderRoute: typeof UploadPageIndexLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -60,37 +76,42 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
-  '/createListing': typeof CreateListingIndexLazyRoute
+  '/create-listing': typeof CreateListingIndexLazyRoute
+  '/upload-page': typeof UploadPageIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
-  '/createListing': typeof CreateListingIndexLazyRoute
+  '/create-listing': typeof CreateListingIndexLazyRoute
+  '/upload-page': typeof UploadPageIndexLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
-  '/createListing/': typeof CreateListingIndexLazyRoute
+  '/create-listing/': typeof CreateListingIndexLazyRoute
+  '/upload-page/': typeof UploadPageIndexLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/createListing'
+  fullPaths: '/' | '/create-listing' | '/upload-page'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/createListing'
-  id: '__root__' | '/' | '/createListing/'
+  to: '/' | '/create-listing' | '/upload-page'
+  id: '__root__' | '/' | '/create-listing/' | '/upload-page/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   CreateListingIndexLazyRoute: typeof CreateListingIndexLazyRoute
+  UploadPageIndexLazyRoute: typeof UploadPageIndexLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   CreateListingIndexLazyRoute: CreateListingIndexLazyRoute,
+  UploadPageIndexLazyRoute: UploadPageIndexLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -106,14 +127,18 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/createListing/"
+        "/create-listing/",
+        "/upload-page/"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
-    "/createListing/": {
-      "filePath": "createListing/index.lazy.tsx"
+    "/create-listing/": {
+      "filePath": "create-listing/index.lazy.tsx"
+    },
+    "/upload-page/": {
+      "filePath": "upload-page/index.lazy.tsx"
     }
   }
 }

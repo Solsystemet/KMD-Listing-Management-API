@@ -89,7 +89,7 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.models.DataProcessor30ListingData", b =>
                 {
-                    b.OwnsOne("api.models.DataCategories", "DataCategories", b1 =>
+                    b.OwnsOne("api.Models.DataCategories", "DataCategories", b1 =>
                         {
                             b1.Property<int>("DataProcessor30ListingDataId")
                                 .HasColumnType("int");
@@ -106,7 +106,7 @@ namespace api.Migrations
                                 .HasForeignKey("DataProcessor30ListingDataId");
                         });
 
-                    b.OwnsOne("api.models.DataController", "DataController", b1 =>
+                    b.OwnsOne("api.Models.DataController", "DataController", b1 =>
                         {
                             b1.Property<int>("DataProcessor30ListingDataId")
                                 .HasColumnType("int");
@@ -138,7 +138,7 @@ namespace api.Migrations
                                 .HasForeignKey("DataProcessor30ListingDataId");
                         });
 
-                    b.OwnsOne("api.models.DataProcessor", "DataProcessor", b1 =>
+                    b.OwnsOne("api.Models.DataProcessor", "DataProcessor", b1 =>
                         {
                             b1.Property<int>("DataProcessor30ListingDataId")
                                 .HasColumnType("int");
@@ -170,7 +170,7 @@ namespace api.Migrations
                                 .HasForeignKey("DataProcessor30ListingDataId");
                         });
 
-                    b.OwnsOne("api.models.DataProcessorRepresentative", "DataProcessorRepresentative", b1 =>
+                    b.OwnsOne("api.Models.DataProcessorRepresentative", "DataProcessorRepresentative", b1 =>
                         {
                             b1.Property<int>("DataProcessor30ListingDataId")
                                 .HasColumnType("int");
@@ -199,7 +199,7 @@ namespace api.Migrations
                                 .HasForeignKey("DataProcessor30ListingDataId");
                         });
 
-                    b.OwnsOne("api.models.DataSecurity", "DataSecurity", b1 =>
+                    b.OwnsOne("api.Models.DataSecurity", "DataSecurity", b1 =>
                         {
                             b1.Property<int>("DataProcessor30ListingDataId")
                                 .HasColumnType("int");
@@ -216,7 +216,7 @@ namespace api.Migrations
                                 .HasForeignKey("DataProcessor30ListingDataId");
                         });
 
-                    b.OwnsOne("api.models.DataSecurityAdvisor", "DataSecurityAdvisor", b1 =>
+                    b.OwnsOne("api.Models.DataSecurityAdvisor", "DataSecurityAdvisor", b1 =>
                         {
                             b1.Property<int>("DataProcessor30ListingDataId")
                                 .HasColumnType("int");
@@ -245,7 +245,7 @@ namespace api.Migrations
                                 .HasForeignKey("DataProcessor30ListingDataId");
                         });
 
-                    b.OwnsOne("api.models.DataTransfer", "DataTransfer", b1 =>
+                    b.OwnsOne("api.Models.DataTransfer", "DataTransfer", b1 =>
                         {
                             b1.Property<int>("DataProcessor30ListingDataId")
                                 .HasColumnType("int");

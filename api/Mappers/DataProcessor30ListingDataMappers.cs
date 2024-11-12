@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.DataProcessor30ListingData;
-using api.models;
+using api.Models;
 
 namespace api.Mappers
 {
@@ -15,12 +15,7 @@ namespace api.Mappers
                 Id = dataProcessor30ListingData.Id,
                 Name = dataProcessor30ListingData.Name,
                 CreationTime = dataProcessor30ListingData.CreationTime,
-                DataController = dataProcessor30ListingData.DataController,
-                DataProcessorRepresentative = dataProcessor30ListingData.DataProcessorRepresentative,
-                DataSecurityAdvisor = dataProcessor30ListingData.DataSecurityAdvisor,
-                DataCategories = dataProcessor30ListingData.DataCategories,
-                DataSecurity = dataProcessor30ListingData.DataSecurity,
-                DataTransfer = dataProcessor30ListingData.DataTransfer
+                DataProcessorName = dataProcessor30ListingData.DataProcessor.Name,
 
             };
         }

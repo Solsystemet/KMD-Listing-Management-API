@@ -6,7 +6,7 @@ using api.Data;
 using api.Dtos.DataProcessor30ListingData;
 using api.Helpers;
 using api.Interfaces;
-using api.models;
+using api.Models;
 using Microsoft.EntityFrameworkCore;
 namespace api.Repository
 {
