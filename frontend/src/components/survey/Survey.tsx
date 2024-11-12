@@ -1,31 +1,7 @@
 import InputBox from "../inputBox/inputBox";
-import { MultipleSelect } from "../multipleSelect/MultipleSelect";
+import { Checkbox } from "../checkBox/Checkbox";
 import styles from "./Survey.module.css";
-
-function ContactInfo({ index }: { index: number }) {
-   return (
-      <form className={styles.inputContainer}>
-         <p>Contact Info {index}</p>
-         <InputBox templateText={"Name"} />
-         <InputBox templateText={"Position"} />
-         <InputBox templateText={"Telephone number"} />
-         <InputBox templateText={"E-mail"} />
-      </form>
-   );
-}
-
-function DataTransfers({ index }: { index: number }) {
-   return (
-      <form className={styles.inputContainer}>
-         <p>Contact Info {index}</p>
-         <InputBox templateText={"Company name"} />
-         <InputBox templateText={"Address"} />
-         <InputBox templateText={"Treatment of data"} />
-         <InputBox templateText={"Transfer basis"} />
-         <MultipleSelect>{"Is it KMDs sub data-processor?"}</MultipleSelect>
-      </form>
-   );
-}
+import { useForm } from "@tanstack/react-form";
 
 function TextBox() {
    return (
@@ -46,31 +22,69 @@ export function Survey({
    numberOfContact,
    numberOfDataTransfers,
 }: SurveyProps) {
-   return (
-      <div className={styles.surveyContainer}>
-         <div className={styles.ContactInfoCont}>
-            <h3>Contact info of controller</h3>
+   const form = useForm({
+      onSubmit: async ({ value }) => {
+         console.log(value);
+      },
+   });
 
+   return (
+      <form
+         onSubmit={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            form.handleSubmit();
+         }}
+      >
+         <div className={styles.ContactInfoController}>
+            <h3>Contact info of controller</h3>
             {Array.from({ length: numberOfContact }).map((_, index) => (
-               <ContactInfo index={index + 1} />
+               <form.Field name={`contactInfoController.${index}`} key={index}>
+                  {field => (
+                     <>
+                        <p>Contact Info {index}</p>
+                        <InputBox templateText={"Name"} />
+                        <InputBox templateText={"Position"} />
+                        <InputBox templateText={"Telephone number"} />
+                        <InputBox templateText={"E-mail"} />
+                     </>
+                  )}
+               </form.Field>
             ))}
          </div>
+
          <div className={styles.dataCategories}>
             <h3>Data categories</h3>
-            <MultipleSelect>
-               {"School administrators"}
-               {"School management"}
-               {"Teachers"}
-               {"Other employees"}
-               {"Students"}
-               {"Parents to students under 18 years old"}
-            </MultipleSelect>
+            <form.Field name="dataCategories" mode="array">
+               {field => (
+                  <>
+                     <Checkbox>{"School administrators"}</Checkbox>
+                     <Checkbox>{"School management"}</Checkbox>
+                     <Checkbox>{"Teachers"}</Checkbox>
+                     <Checkbox>{"Other employees"}</Checkbox>
+                     <Checkbox>{"Students"}</Checkbox>
+                     <Checkbox>
+                        {"Parents to students under 18 years old"}
+                     </Checkbox>
+                  </>
+               )}
+            </form.Field>
          </div>
          <div className={styles.dataTransfersContainer}>
             <h3>Data transfer info</h3>
-
             {Array.from({ length: numberOfDataTransfers }).map((_, index) => (
-               <DataTransfers index={index + 1} />
+               <form.Field name={`dataTransfers.${index}`} key={index}>
+                  {field => (
+                     <>
+                        <p>Contact Info {index}</p>
+                        <InputBox templateText={"Company name"} />
+                        <InputBox templateText={"Address"} />
+                        <InputBox templateText={"Treatment of data"} />
+                        <InputBox templateText={"Transfer basis"} />
+                        <Checkbox>{"Is it KMDs sub data-processor?"}</Checkbox>
+                     </>
+                  )}
+               </form.Field>
             ))}
          </div>
          <div>
@@ -78,8 +92,11 @@ export function Survey({
                Beskrivelse af tekniske og organisatoriske
                sikkerhedsforanstaltninger.
             </h3>
-            <TextBox></TextBox>
+
+            <form.Field name="securityMeasures">
+               {field => <TextBox />}
+            </form.Field>
          </div>
-      </div>
+      </form>
    );
 }
