@@ -1,15 +1,17 @@
-import InputBox from "../inputBox/inputBox";
-import { Checkbox } from "../checkBox/Checkbox";
+import React from "react";
+import { useForm, Field } from "@tanstack/react-form";
 import styles from "./Survey.module.css";
-import { useForm } from "@tanstack/react-form";
+import InputBox from "../inputBox/inputBox";
+import { StandardButton } from "../buttons/Buttons";
 
-function TextBox() {
+function FieldInfo({ field }: { field: Field<any, any, any, any> }) {
    return (
-      <textarea
-         name="description"
-         rows={20}
-         className={styles.textBox}
-      ></textarea>
+      <>
+         {field.state.meta.isTouched && field.state.meta.errors.length ? (
+            <em>{field.state.meta.errors.join(", ")}</em>
+         ) : null}
+         {field.state.meta.isValidating ? "Validating..." : null}
+      </>
    );
 }
 
@@ -22,81 +24,146 @@ export function Survey({
    numberOfContact,
    numberOfDataTransfers,
 }: SurveyProps) {
+   const contactNumbers = Array.from(
+      { length: numberOfContact },
+      (_, i) => `Contact ${i + 1}`
+   );
+
    const form = useForm({
-      onSubmit: async ({ value }) => {
-         console.log(value);
+      defaultValues: {
+         contactInfoController: contactNumbers.reduce(
+            (acc, name) => {
+               acc[name] = {
+                  name: "",
+                  position: "",
+                  telephoneNumber: "",
+                  email: "",
+               };
+               return acc;
+            },
+            {} as Record<
+               string,
+               {
+                  name: string;
+                  position: string;
+                  telephoneNumber: string;
+                  email: string;
+               }
+            >
+         ),
+         lastName: "",
+      },
+      onSubmit: async values => {
+         // Do something with form data
+         console.log(values);
       },
    });
 
+   const handleSubmit = (event: React.FormEvent) => {
+      event.preventDefault();
+      form.handleSubmit();
+   };
+
    return (
-      <form
-         onSubmit={e => {
-            e.preventDefault();
-            e.stopPropagation();
-            form.handleSubmit();
-         }}
-      >
-         <div className={styles.ContactInfoController}>
-            <h3>Contact info of controller</h3>
-            {Array.from({ length: numberOfContact }).map((_, index) => (
-               <form.Field name={`contactInfoController.${index}`} key={index}>
+      <div className={styles.surveyForm}>
+         <h1>Simple Form Example</h1>
+         <form onSubmit={handleSubmit}>
+            <div>
+               {contactNumbers.map((key, index) => (
+                  <Field
+                     form={form}
+                     name={`contactInfoController.${key}`}
+                     key={index}
+                  >
+                     {field => (
+                        <div className={styles.inputContainer}>
+                           <InputBox
+                              templateText="Enter name"
+                              id={`name-${index}`}
+                              name={`contactInfoController.${key}.name`}
+                              value={field.state.value.name}
+                              onBlur={field.handleBlur}
+                              required={true}
+                              onChange={e =>
+                                 field.handleChange({
+                                    ...field.state.value,
+                                    name: e.target.value,
+                                 })
+                              }
+                           />
+                           <FieldInfo field={field} />
+                           <InputBox
+                              templateText="Enter position"
+                              id={`position-${index}`}
+                              name={`contactInfoController.${key}.position`}
+                              value={field.state.value.position}
+                              onBlur={field.handleBlur}
+                              required={true}
+                              onChange={e =>
+                                 field.handleChange({
+                                    ...field.state.value,
+                                    position: e.target.value,
+                                 })
+                              }
+                           />
+                           <FieldInfo field={field} />
+                           <InputBox
+                              templateText="Enter telephone number"
+                              id={`telephoneNumber-${index}`}
+                              name={`contactInfoController.${key}.telephoneNumber`}
+                              value={field.state.value.telephoneNumber}
+                              onBlur={field.handleBlur}
+                              required={true}
+                              onChange={e =>
+                                 field.handleChange({
+                                    ...field.state.value,
+                                    telephoneNumber: e.target.value,
+                                 })
+                              }
+                           />
+                           <FieldInfo field={field} />
+                           <InputBox
+                              templateText="Enter email"
+                              id={`email-${index}`}
+                              name={`contactInfoController.${key}.email`}
+                              value={field.state.value.email}
+                              onBlur={field.handleBlur}
+                              required={true}
+                              onChange={e =>
+                                 field.handleChange({
+                                    ...field.state.value,
+                                    email: e.target.value,
+                                 })
+                              }
+                           />
+                           <FieldInfo field={field} />
+                        </div>
+                     )}
+                  </Field>
+               ))}
+            </div>
+            <div>
+               <Field form={form} name="lastName">
                   {field => (
                      <>
-                        <p>Contact Info {index}</p>
-                        <InputBox templateText={"Name"} />
-                        <InputBox templateText={"Position"} />
-                        <InputBox templateText={"Telephone number"} />
-                        <InputBox templateText={"E-mail"} />
+                        <label htmlFor={field.name}>Last Name:</label>
+                        <InputBox
+                           templateText="Enter last name"
+                           id={field.name}
+                           name={field.name}
+                           value={field.state.value}
+                           onBlur={field.handleBlur}
+                           onChange={e => field.handleChange(e.target.value)}
+                        />
+                        <FieldInfo field={field} />
                      </>
                   )}
-               </form.Field>
-            ))}
-         </div>
-
-         <div className={styles.dataCategories}>
-            <h3>Data categories</h3>
-            <form.Field name="dataCategories" mode="array">
-               {field => (
-                  <>
-                     <Checkbox>{"School administrators"}</Checkbox>
-                     <Checkbox>{"School management"}</Checkbox>
-                     <Checkbox>{"Teachers"}</Checkbox>
-                     <Checkbox>{"Other employees"}</Checkbox>
-                     <Checkbox>{"Students"}</Checkbox>
-                     <Checkbox>
-                        {"Parents to students under 18 years old"}
-                     </Checkbox>
-                  </>
-               )}
-            </form.Field>
-         </div>
-         <div className={styles.dataTransfersContainer}>
-            <h3>Data transfer info</h3>
-            {Array.from({ length: numberOfDataTransfers }).map((_, index) => (
-               <form.Field name={`dataTransfers.${index}`} key={index}>
-                  {field => (
-                     <>
-                        <p>Contact Info {index}</p>
-                        <InputBox templateText={"Company name"} />
-                        <InputBox templateText={"Address"} />
-                        <InputBox templateText={"Treatment of data"} />
-                        <InputBox templateText={"Transfer basis"} />
-                        <Checkbox>{"Is it KMDs sub data-processor?"}</Checkbox>
-                     </>
-                  )}
-               </form.Field>
-            ))}
-         </div>
-         <div>
-            <h3>
-               Beskrivelse af tekniske og organisatoriske
-               sikkerhedsforanstaltninger.
-            </h3>
-
-            <form.Field name="securityMeasures">
-               {field => <TextBox />}
-            </form.Field>
-         </div>
-      </form>
+               </Field>
+            </div>
+            <StandardButton type="submit" disabled={!form.state.canSubmit}>
+               {form.state.isSubmitting ? "..." : "Submit"}
+            </StandardButton>
+         </form>
+      </div>
    );
 }

@@ -1,4 +1,4 @@
-import styles from "./MultipleSelect.module.css";
+import styles from "./Checkbox.module.css";
 
 type MultipleSelectProps = {
    children: string;
