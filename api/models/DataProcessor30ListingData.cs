@@ -22,6 +22,8 @@ namespace api.Models
         public DataProcessorRepresentative DataProcessorRepresentative { get; set; } = new DataProcessorRepresentative();
         public DataSecurityAdvisor DataSecurityAdvisor { get; set; } = new DataSecurityAdvisor();
 
+        public List<DataSubProcessor> DataSubProcessors { get; set; } = new List<DataSubProcessor>();
+
         // (2) Categories of data
         public DataCategories DataCategories { get; set; } = new DataCategories();
 
@@ -30,6 +32,7 @@ namespace api.Models
 
         // (4) Security
         public DataSecurity DataSecurity {get; set; } = new DataSecurity();
+
 
         public List<DataEdit> DataEdits { get; set; } = new List<DataEdit>();
         

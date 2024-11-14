@@ -50,13 +50,17 @@ namespace api.Repository
         public async Task<DataProcessor30ListingData?> GetByIdAsync(int id)
         {
 
-            return await _context.DataProcessor30ListingDatas.Include(E=> E.DataEdits).FirstOrDefaultAsync(l => l.Id == id);
+            return await _context.DataProcessor30ListingDatas.Include(E=> E.DataEdits).Include(S =>S.DataSubProcessors).FirstOrDefaultAsync(l => l.Id == id);
         }
 
         public async Task<DataProcessor30ListingData> CreateAsync(DataProcessor30ListingData DataProcessor30ListingDataModel)
         {
-            await _context.DataProcessor30ListingDatas.AddAsync(DataProcessor30ListingDataModel);
+            var Data30Listing = await _context.DataProcessor30ListingDatas.AddAsync(DataProcessor30ListingDataModel);
+
+
+
             await _context.SaveChangesAsync();
+
             return DataProcessor30ListingDataModel;
         }
 
@@ -90,6 +94,8 @@ namespace api.Repository
             existing30Listing.UpdateTime = DateTime.Now;
 
             await _context.DataEditDatas.AddAsync(new DataEdit("Listing Updated", String.Join(',', updatedFields), existing30Listing.Id));
+            
+
             updatedFields.Clear();
             await _context.SaveChangesAsync();
 
