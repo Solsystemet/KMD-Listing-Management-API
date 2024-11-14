@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler } from "react";
+import { ChangeEventHandler } from "react";
 import styles from "./Searchbar.module.css";
 import { Search } from 'lucide-react';  
 
