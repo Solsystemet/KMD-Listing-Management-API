@@ -1,6 +1,6 @@
 import styles from './createListing.module.css'
 import { createLazyFileRoute } from '@tanstack/react-router'
-import { Survey } from '../../components/survey/Survey'
+import { Survey } from '../../components/Survey/Survey'
 
 export const Route = createLazyFileRoute('/create-listing/')({
   component: Index,
