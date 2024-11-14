@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import styles from "./Searchbar.module.css";
 import { Search } from "lucide-react";
 import QueryObject from "./../../types/QueryObject";
@@ -29,7 +29,7 @@ function SearchbarUI(props: SearchbarUIProps) {
 }
 
 type SearchbarProps = {
-   setQueryObject: (queryObject: QueryObject) => QueryObject;
+   setQueryObject: Dispatch<SetStateAction<QueryObject>>;
 };
 
 export function Searchbar({ setQueryObject }: SearchbarProps) {
