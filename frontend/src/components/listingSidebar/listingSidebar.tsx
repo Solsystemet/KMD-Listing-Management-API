@@ -1,6 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
-import { getAllListings } from "../../lib/api";
-
 import styles from "./listingSidebar.module.css";
 import ListingSidebarDto from "../../types/ListingSidebarDto";
 
