@@ -12,10 +12,10 @@ type SearchbarUIProps = {
 
 function SearchbarUI(props: SearchbarUIProps) {
    return (
-      <form className={styles.searchbarWrapper} onSubmit={props.onSearch}>
+      <form className={styles.searchbar} onSubmit={props.onSearch}>
          <input
             type="text"
-            className={styles.Searchbar}
+            className={styles.searchTextbox}
             placeholder={props.placeholder}
             value={props.value}
             onChange={props.onChange}
@@ -53,13 +53,11 @@ export function Searchbar({ setQueryObject }: SearchbarProps) {
    };
 
    return (
-      <div className={styles.searchContainer}>
-         <SearchbarUI
-            value={searchValue}
-            onSearch={handleSearchSubmit}
-            onChange={handleSearchChange}
-            placeholder="Search..."
-         />
-      </div>
+      <SearchbarUI
+         value={searchValue}
+         onSearch={handleSearchSubmit}
+         onChange={handleSearchChange}
+         placeholder="Search..."
+      />
    );
 }
