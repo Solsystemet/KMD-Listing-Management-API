@@ -1,13 +1,18 @@
 import axios from "axios";
 import ListingSidebarDto from "../types/ListingSidebarDto";
+import QueryObject from "../types/QueryObject";
+
 type ListingSidebarDtoWithStringDate = {
    id: number;
    name: string;
    creationTime: string;
    dataProcessorName: string;
 };
-export async function getAllListings() {
-   const res = await axios.get("/api/data-processor-30-listing-data");
+
+export async function getAllListings(queryObject: QueryObject) {
+   const res = await axios.get("/api/data-processor-30-listing-data", {
+      params: { Name: queryObject.name },
+   });
    const listingsStringDate: ListingSidebarDtoWithStringDate[] = res.data;
 
    const listings: ListingSidebarDto[] = [];
