@@ -25,6 +25,9 @@ function Index() {
    return (
       <main>
          <div>
+            <Searchbar setQueryObject={setQueryObject} />
+         </div>
+         <div>
             {isPending ? (
                "Loading..."
             ) : error ? (
@@ -32,9 +35,6 @@ function Index() {
             ) : (
                <ListingSidebar listingSidebarDtos={data} />
             )}
-         </div>
-         <div>
-            <Searchbar />
          </div>
       </main>
    );

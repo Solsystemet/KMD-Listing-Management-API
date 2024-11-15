@@ -33,18 +33,11 @@ type SearchbarProps = {
 
 export function Searchbar({ setQueryObject }: SearchbarProps) {
    const [searchValue, setSearchValue] = useState("");
-   const [showSuggestions, setShowSuggestions] = useState(false);
 
    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       setSearchValue(value);
       console.log(value);
-
-      if (value.length > 0) {
-         setShowSuggestions(true);
-      } else {
-         setShowSuggestions(false);
-      }
 
       setQueryObject((prevQueryObject: QueryObject) => {
          const newQueryObject: QueryObject = {
@@ -67,12 +60,6 @@ export function Searchbar({ setQueryObject }: SearchbarProps) {
             onChange={handleSearchChange}
             placeholder="Search..."
          />
-
-         {showSuggestions && (
-            <div className={styles.suggestionBox}>
-               <p>Suggestions will appear here</p>
-            </div>
-         )}
       </div>
    );
 }
