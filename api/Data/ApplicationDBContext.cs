@@ -18,6 +18,7 @@ namespace api.Data
         public DbSet<DataProcessor30ListingData> DataProcessor30ListingDatas {get; set;}
         public DbSet<DataEdit> DataEditDatas {get; set;}
         
+        public DbSet<DataSubProcessor> DataSubProcessors {get; set;}
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

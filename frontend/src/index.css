@@ -20,6 +20,10 @@
    --secondary-background-color: #d9d9d9;
 }
 
+* {
+   font-size: 1rem;
+}
+
 a {
    font-weight: 500;
    color: #646cff;
@@ -37,14 +41,13 @@ main {
 body {
    margin: 0;
    display: flex;
-   place-items: center;
-   min-width: 320px;
+   min-width: 100vw;
    min-height: 100vh;
 }
 
 h1 {
-   font-size: 3.2em;
-   line-height: 1.1;
+   font-size: 3rem;
+   line-height: 1rem;
 }
 
 @font-face {

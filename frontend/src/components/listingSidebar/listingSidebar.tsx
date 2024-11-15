@@ -3,28 +3,27 @@ import ListingSidebarDto from "../../types/ListingSidebarDto";
 
 function SidebarTile({
    listingSidebarDto,
+   index,
 }: {
    listingSidebarDto: ListingSidebarDto;
+   index: number;
 }) {
    return (
-      <div>
+      <>
          <div
-            key={listingSidebarDto.Id}
             className={`${styles.surveyTab} ${
-               listingSidebarDto.Id % 2 === 0
-                  ? styles.evenBackground
-                  : styles.oddBackground
+               index % 2 === 0 ? styles.evenBackground : styles.oddBackground
             }`}
          >
-            <p className={styles.Date}>
-               {listingSidebarDto.CreationTime.toLocaleDateString()}
-            </p>
             <div className={styles.surveyTabInfo}>
                <h2>{listingSidebarDto.Name}</h2>
                <p>{listingSidebarDto.DataProcessorName}</p>
             </div>
+            <p className={styles.date}>
+               {listingSidebarDto.CreationTime.toLocaleDateString()}
+            </p>
          </div>
-      </div>
+      </>
    );
 }
 
@@ -35,8 +34,8 @@ export function ListingSidebar({
 }) {
    return (
       <div className={styles.surveyTabContainer}>
-         {listingSidebarDtos.map(listingSidebarDto => (
-            <SidebarTile listingSidebarDto={listingSidebarDto} />
+         {listingSidebarDtos.map((listingSidebarDto, index) => (
+            <SidebarTile listingSidebarDto={listingSidebarDto} index={index} />
          ))}
       </div>
    );

@@ -1,24 +1,23 @@
-.Searchbar {
+.searchbar {
+   display: flex;
+   width: 80%;
+   align-items: center;
+   border: 1px solid #ccc;
+   border-radius: 10rem;
+   background-color: #eee;
+   margin: 1rem;
+}
+
+.searchTextbox {
    flex-grow: 1;
-   padding: 0.5rem 1rem;
-   font-size: 1rem;
+   padding-left: 1rem;
    border: none;
-   border-radius: 1rem -1rem -1rem 1rem;
    outline: none;
    background-color: transparent;
    color: black;
 }
 
-.searchbarWrapper {
-   display: flex;
-   width: 100%;
-   align-items: center;
-   border: 1px solid #ccc;
-   border-radius: 1rem;
-   background-color: #eee;
-}
-
-.Searchbar::placeholder {
+.searchTextbox::placeholder {
    color: #000000;
 }
 
@@ -27,30 +26,15 @@
    align-items: center;
    padding: 0.5rem;
    background-color: #eee;
-   border-radius: 1rem 1rem 1rem 1rem;
+   border: 1px solid #ccc;
+   border-radius: 10rem;
    color: black;
    cursor: pointer;
+   border: none;
 }
 
 .searchIcon:hover {
-   background-color: #1f614e;
+   background-color: var(--secondary-color);
    color: white;
    transition: background-color 0.3s ease-in-out;
-}
-
-.searchContainer {
-   position: relative;
-   width: 100%;
-}
-
-.suggestionBox {
-   position: absolute;
-   top: 3rem;
-   width: 100%;
-   background-color: white;
-   border: 1px solid #ccc;
-   border-radius: 0.5rem;
-   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
-   z-index: 1;
-   padding: 1rem; /* Adjust padding as needed */
 }
