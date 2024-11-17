@@ -28,6 +28,10 @@ export function Survey({
       { length: numberOfContact },
       (_, i) => `Contact ${i + 1}`
    );
+   const dataTransfers = Array.from(
+      { length: numberOfDataTransfers },
+      (_, i) => `Data Transfer ${i + 1}`
+   );
 
    const form = useForm({
       defaultValues: {
@@ -51,7 +55,28 @@ export function Survey({
                }
             >
          ),
-         lastName: "",
+         dataTransferController: dataTransfers.reduce(
+            (acc, name) => {
+               acc[name] = {
+                  companyName: "",
+                  address: "",
+                  treatmentOfData: "",
+                  transferBasis: "",
+                  kmdSubDataProcessor: "",
+               };
+               return acc;
+            },
+            {} as Record<
+               string,
+               {
+                  companyName: string;
+                  address: string;
+                  treatmentOfData: string;
+                  transferBasis: string;
+                  kmdSubDataProcessor: string;
+               }
+            >
+         ),
       },
       onSubmit: async values => {
          // Do something with form data
@@ -67,7 +92,7 @@ export function Survey({
    return (
       <div className={styles.surveyForm}>
          <h1>Simple Form Example</h1>
-         <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <div>
                {contactNumbers.map((key, index) => (
                   <Field
@@ -143,27 +168,80 @@ export function Survey({
                ))}
             </div>
             <div>
-               <Field form={form} name="lastName">
-                  {field => (
-                     <>
-                        <label htmlFor={field.name}>Last Name:</label>
-                        <InputBox
-                           templateText="Enter last name"
-                           id={field.name}
-                           name={field.name}
-                           value={field.state.value}
-                           onBlur={field.handleBlur}
-                           onChange={e => field.handleChange(e.target.value)}
-                        />
-                        <FieldInfo field={field} />
-                     </>
-                  )}
-               </Field>
-            </div>
-            <StandardButton type="submit" disabled={!form.state.canSubmit}>
-               {form.state.isSubmitting ? "..." : "Submit"}
-            </StandardButton>
-         </form>
-      </div>
-   );
-}
+               {dataTransfers.map((key, index) => (
+                  <Field
+                     form={form}
+                     name={`dataTransferController.${key}`}
+                     key={index}
+                  >
+                     {field => (
+                        <div className={styles.inputContainer}>
+                           <InputBox
+                              templateText="Enter company name"
+                              id={`companyName-${index}`}
+                              name={`dataTransferController.${key}.companyName`}
+                              value={field.state.value.companyName}
+                              onBlur={field.handleBlur}
+                              required={true}
+                              onChange={e =>
+                                 field.handleChange({
+                                    ...field.state.value,
+                                    companyName: e.target.value,
+                                 })
+                              }
+                           />
+                           <FieldInfo field={field} />
+                           <InputBox
+                              templateText="Enter address"
+                              id={`address-${index}`}
+                              name={`dataTransferController.${key}.address`}
+                              value={field.state.value.address}
+                              onBlur={field.handleBlur}
+                              required={true}
+                              onChange={e =>
+                                 field.handleChange({
+                                    ...field.state.value,
+                                    address: e.target.value,
+                                 })
+                              }
+                           />
+                           <FieldInfo field={field} />
+                           <InputBox
+                              templateText="Enter treatment of data"
+                              id={`treatmentOfData-${index}`}
+                              name={`dataTransferController.${key}.treatmentOfData`}
+                              value={field.state.value.treatmentOfData}
+                              onBlur={field.handleBlur}
+                              required={true}
+                              onChange={e =>
+                                 field.handleChange({
+                                    ...field.state.value,
+                                    treatmentOfData: e.target.value,
+                                 })
+                              }
+                           />
+                           <FieldInfo field={field} />
+                           <InputBox
+                              templateText="Enter transfer basis"
+                              id={`transferBasis-${index}`}
+                              name={`dataTransferController.${key}.transferBasis`}
+                              value={field.state.value.transferBasis}
+                              onBlur={field.handleBlur}
+                              required={true}
+                              onChange={e =>
+                                 field.handleChange({
+                                    ...field.state.value,
+                                    transferBasis: e.target.value,
+                                 })
+                              }
+                           />
+                           <FieldInfo field={field} />
+                           //Multipleselcect needs to be merged into branch
+                           </div>
+                        )}
+                     </Field>
+                  ))}
+               </div>
+            </form> 
+         </div>
+      )};
