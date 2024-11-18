@@ -6,6 +6,8 @@ import { Searchbar } from "../components/searchbar/Searchbar";
 import QueryObject from "../types/QueryObject";
 import { useState } from "react";
 
+import styles from "./index.module.css";
+
 export const Route = createLazyFileRoute("/")({
    component: Index,
 });
@@ -24,10 +26,9 @@ function Index() {
 
    return (
       <main>
-         <div>
+         <div className={styles.sidebar}>
             <Searchbar setQueryObject={setQueryObject} />
-         </div>
-         <div>
+
             {isPending ? (
                "Loading..."
             ) : error ? (
