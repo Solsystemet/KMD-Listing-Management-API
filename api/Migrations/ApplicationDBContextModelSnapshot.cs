@@ -22,7 +22,7 @@ namespace api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("api.Models.DataEdit", b =>
+            modelBuilder.Entity("api.models.DataEdit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,7 +55,7 @@ namespace api.Migrations
                     b.ToTable("DataEditDatas");
                 });
 
-            modelBuilder.Entity("api.Models.DataProcessor30ListingData", b =>
+            modelBuilder.Entity("api.models.DataProcessor30ListingData", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,65 +78,16 @@ namespace api.Migrations
                     b.ToTable("DataProcessor30ListingDatas");
                 });
 
-            modelBuilder.Entity("api.Models.DataSubProcessor", b =>
+            modelBuilder.Entity("api.models.DataEdit", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CVR")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("DataProcessor30ListingDataId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Mail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Treatment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("directSubProcessor")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("transferReason")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DataProcessor30ListingDataId");
-
-                    b.ToTable("DataSubProcessors");
-                });
-
-            modelBuilder.Entity("api.Models.DataEdit", b =>
-                {
-                    b.HasOne("api.Models.DataProcessor30ListingData", "DataProcessor30ListingData")
+                    b.HasOne("api.models.DataProcessor30ListingData", "DataProcessor30ListingData")
                         .WithMany("DataEdits")
                         .HasForeignKey("DataProcessor30ListingDataId");
 
                     b.Navigation("DataProcessor30ListingData");
                 });
 
-            modelBuilder.Entity("api.Models.DataProcessor30ListingData", b =>
+            modelBuilder.Entity("api.models.DataProcessor30ListingData", b =>
                 {
                     b.OwnsOne("api.Models.DataCategories", "DataCategories", b1 =>
                         {
@@ -333,20 +284,9 @@ namespace api.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("api.Models.DataSubProcessor", b =>
-                {
-                    b.HasOne("api.Models.DataProcessor30ListingData", "DataProcessor30ListingData")
-                        .WithMany("DataSubProcessors")
-                        .HasForeignKey("DataProcessor30ListingDataId");
-
-                    b.Navigation("DataProcessor30ListingData");
-                });
-
-            modelBuilder.Entity("api.Models.DataProcessor30ListingData", b =>
+            modelBuilder.Entity("api.models.DataProcessor30ListingData", b =>
                 {
                     b.Navigation("DataEdits");
-
-                    b.Navigation("DataSubProcessors");
                 });
 #pragma warning restore 612, 618
         }
