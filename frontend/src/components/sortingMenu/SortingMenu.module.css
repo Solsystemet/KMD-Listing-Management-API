@@ -1,0 +1,17 @@
+.sortingMenuContainer > button {
+   border: 0.1em solid black;
+   background-color: transparent;
+}
+
+.menu {
+   display: flex;
+   align-items: center;
+
+   padding: 1rem 2rem;
+   background-color: wheat;
+   opacity: 0;
+}
+
+.menu.isShown {
+   opacity: 1;
+}
