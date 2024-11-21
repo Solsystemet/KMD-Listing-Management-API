@@ -12,7 +12,7 @@ type ListingSidebarDtoWithStringDate = {
 export async function getAllListings(queryObject: QueryObject) {
    const res = await axios.get("/api/data-processor-30-listing-data", {
       params: {
-         Name: queryObject.name,
+         SortBy: queryObject.sortBy,
          IsDescending: queryObject.isDescending,
       },
    });
