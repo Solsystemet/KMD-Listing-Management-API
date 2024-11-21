@@ -314,46 +314,46 @@ namespace api.FileScraper
                                 case "Navn":
                                     if (isDataAnsvarlig)
                                     {
-                                        dataAnsvarlig.Name = String.Join("", wordsAtSameY);
+                                        dataAnsvarlig.Name = String.Join("", wordsAtSameY).Trim();
                                     }
                                     else
                                     {
-                                        dataBehandler.Name = String.Join("", wordsAtSameY);
+                                        dataBehandler.Name = String.Join("", wordsAtSameY).Trim();
                                     }
                                     break;
 
                                 case "Stilling":
                                     if (isDataAnsvarlig)
                                     {
-                                        dataAnsvarlig.Role = String.Join("", wordsAtSameY);
+                                        dataAnsvarlig.Role = String.Join("", wordsAtSameY).Trim();
 
                                     }
                                     else
                                     {
-                                        dataBehandler.Role = String.Join("", wordsAtSameY);
+                                        dataBehandler.Role = String.Join("", wordsAtSameY).Trim();
                                     }
                                     break;
 
                                 case "Telefonnummer":
                                     if (isDataAnsvarlig)
                                     {
-                                        dataAnsvarlig.Phone = String.Join("", wordsAtSameY);
+                                        dataAnsvarlig.Phone = String.Join("", wordsAtSameY).Trim();
                                     }
                                     else
                                     {
-                                        dataBehandler.Phone = String.Join("", wordsAtSameY);
+                                        dataBehandler.Phone = String.Join("", wordsAtSameY).Trim();
                                     }
                                     break;
 
                                 case "E-mail":
                                     if (isDataAnsvarlig)
                                     {
-                                        dataAnsvarlig.Email = String.Join("", wordsAtSameY);
+                                        dataAnsvarlig.Email = String.Join("", wordsAtSameY).Trim();
                                         isDataAnsvarlig = false;
                                     }
                                     else
                                     {
-                                        dataBehandler.Email = String.Join("", wordsAtSameY);
+                                        dataBehandler.Email = String.Join("", wordsAtSameY).Trim();
                                         isDataBehandlerComplete = true;
                                     }
                                     break;
