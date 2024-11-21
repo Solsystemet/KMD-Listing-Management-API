@@ -29,7 +29,7 @@ function Index() {
       <main>
          <div className={styles.sidebar}>
             <Searchbar setQueryObject={setQueryObject} />
-            <SortingMenu />
+            <SortingMenu setQueryObject={setQueryObject} />
             {isPending ? (
                "Loading..."
             ) : error ? (

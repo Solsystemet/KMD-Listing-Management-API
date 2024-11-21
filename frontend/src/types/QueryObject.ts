@@ -1,6 +1,6 @@
 type QueryObject = {
    name?: string | null;
-   sortBy?: string | null;
+   sortBy?: "Name" | "Creation Time" | "Update Time";
    isDescending: boolean;
    pageNumber: number;
    pageSize: number;

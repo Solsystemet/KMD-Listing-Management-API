@@ -1,61 +1,87 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import styles from "./SortingMenu.module.css";
 import {
    ArrowDownNarrowWide,
    ArrowDownWideNarrow,
    ChevronDown,
 } from "lucide-react";
+import QueryObject from "../../types/QueryObject";
 
-function SortingItem({ children, isSelected, onClick }: SortingItemProps) {
-   const [isAscending, setIsAscending] = useState(true);
+type SortingItemProps = {
+   children: string;
+   sortingParameter: "Name" | "Creation Time" | "Update Time";
+   isSelected: boolean;
+   isAscending: boolean;
+   onClick: (value: string) => void;
+   onToggleOrder: () => void;
+};
 
-   function handleToggleSortingOrder() {
-      setIsAscending(!isAscending);
-      onClick(children, !isAscending);
-   }
-
+function SortingItem({
+   children,
+   sortingParameter,
+   isSelected,
+   isAscending,
+   onClick,
+   onToggleOrder,
+}: SortingItemProps) {
    return (
       <div className={styles.sortingItem}>
          <button
-            onClick={() => onClick(children, isAscending)}
+            onClick={() => onClick(sortingParameter)}
             className={`${styles.sortingItemButton} ${isSelected ? styles.selected : ""}`}
          >
             {children}
          </button>
-         <button
-            onClick={handleToggleSortingOrder}
-            className={styles.sortingOrderButton}
-         >
-            {isAscending ? (
-               <ArrowDownWideNarrow size={20} color="var(--primary-color)" />
-            ) : (
-               <ArrowDownNarrowWide size={20} color="var(--primary-color)" />
-            )}
-         </button>
+         {isSelected && (
+            <button
+               onClick={onToggleOrder}
+               className={styles.sortingOrderButton}
+            >
+               {isAscending ? (
+                  <ArrowDownWideNarrow size={20} color="var(--primary-color)" />
+               ) : (
+                  <ArrowDownNarrowWide size={20} color="var(--primary-color)" />
+               )}
+            </button>
+         )}
       </div>
    );
 }
 
-type SortingItemProps = {
-   children: string;
-   isSelected: boolean;
-   onClick: (value: string, isAscending: boolean) => void;
+type SortingMenuProps = {
+   setQueryObject: Dispatch<SetStateAction<QueryObject>>;
 };
 
-export default SortingItem;
-
-export function SortingMenu() {
+export function SortingMenu({ setQueryObject }: SortingMenuProps) {
    const [isShown, setIsShown] = useState(false);
-   const [selectedSorting, setSelectedSorting] = useState<string | null>(null);
+   const [selectedSorting, setSelectedSorting] = useState<
+      "Name" | "Creation Time" | "Update Time" | null
+   >(null);
    const [isAscending, setIsAscending] = useState(true);
 
    function handleToggleShown() {
       setIsShown(!isShown);
    }
 
-   function handleSortingItemClick(value: string, ascending: boolean) {
+   function handleSortingItemClick(
+      value: "Name" | "Creation Time" | "Update Time"
+   ) {
       setSelectedSorting(value);
-      setIsAscending(ascending);
+      setQueryObject((prevQueryObject: QueryObject) => {
+         const newQueryObject: QueryObject = {
+            ...prevQueryObject,
+            sortBy: value,
+         };
+         return newQueryObject;
+      });
+   }
+
+   function handleToggleSortingOrder() {
+      setIsAscending(!isAscending);
+      setQueryObject((prevQueryObject: QueryObject) => ({
+         ...prevQueryObject,
+         isDescending: !isAscending,
+      }));
    }
 
    return (
@@ -66,20 +92,29 @@ export function SortingMenu() {
          </button>
          <div className={`${styles.menu} ${isShown ? styles.isShown : ""}`}>
             <SortingItem
-               isSelected={selectedSorting === "Creation date"}
-               onClick={handleSortingItemClick}
+               sortingParameter="Creation Time"
+               isSelected={selectedSorting === "Creation Time"}
+               isAscending={isAscending}
+               onClick={() => handleSortingItemClick("Creation Time")}
+               onToggleOrder={handleToggleSortingOrder}
             >
                Creation date
             </SortingItem>
             <SortingItem
-               isSelected={selectedSorting === "Edit date"}
-               onClick={handleSortingItemClick}
+               sortingParameter="Update Time"
+               isSelected={selectedSorting === "Update Time"}
+               isAscending={isAscending}
+               onClick={() => handleSortingItemClick("Update Time")}
+               onToggleOrder={handleToggleSortingOrder}
             >
                Edit date
             </SortingItem>
             <SortingItem
+               sortingParameter="Name"
                isSelected={selectedSorting === "Name"}
-               onClick={handleSortingItemClick}
+               isAscending={isAscending}
+               onClick={() => handleSortingItemClick("Name")}
+               onToggleOrder={handleToggleSortingOrder}
             >
                Name
             </SortingItem>
@@ -87,3 +122,5 @@ export function SortingMenu() {
       </div>
    );
 }
+
+export default SortingItem;
