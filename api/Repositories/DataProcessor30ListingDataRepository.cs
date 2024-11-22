@@ -8,7 +8,8 @@ using api.Helpers;
 using api.Interfaces;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
-namespace api.Repository
+
+namespace api.Repositories
 {
     public class DataProcessor30ListingDataRepository : IDataProcessor30ListingDataRepository
     {

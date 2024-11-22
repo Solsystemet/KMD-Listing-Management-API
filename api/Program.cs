@@ -1,9 +1,6 @@
-using api.Data; // Assuming this is where your DbContext class is
-
+using api.Data;
 using api.Interfaces;
-
-using api.Repository;
-
+using api.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +21,6 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 // Add DbContext with the correct connection string
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
 {
-    // Fetch connection string from appsettings.json or appsettings.Development.json
     options.UseSqlServer(builder.Configuration["ConnectionString:KMDListing:SqlDb"]);
 });
 builder.Services.AddScoped<IDataProcessor30ListingDataRepository, DataProcessor30ListingDataRepository>();
