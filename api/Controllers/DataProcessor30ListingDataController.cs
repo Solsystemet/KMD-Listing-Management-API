@@ -17,13 +17,10 @@ namespace api.Controllers
     [ApiController]
     public class DataProcessor30ListingDataController : ControllerBase
     {
-
-        private readonly ApplicationDBContext _context;
         private readonly IDataProcessor30ListingDataRepository _dataProcessor30ListingDataRepo;
-        public DataProcessor30ListingDataController(ApplicationDBContext context, IDataProcessor30ListingDataRepository dataProcessor30ListingDataRepo)
+        public DataProcessor30ListingDataController(IDataProcessor30ListingDataRepository dataProcessor30ListingDataRepo)
         {
             _dataProcessor30ListingDataRepo = dataProcessor30ListingDataRepo;
-            _context = context;
         }
 
         [HttpGet]
