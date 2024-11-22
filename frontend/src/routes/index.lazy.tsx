@@ -7,6 +7,7 @@ import QueryObject from "../types/QueryObject";
 import { useState } from "react";
 
 import styles from "./index.module.css";
+import { SortingMenu } from "../components/sortingMenu/SortingMenu";
 
 export const Route = createLazyFileRoute("/")({
    component: Index,
@@ -28,7 +29,7 @@ function Index() {
       <main>
          <div className={styles.sidebar}>
             <Searchbar setQueryObject={setQueryObject} />
-
+            <SortingMenu setQueryObject={setQueryObject} />
             {isPending ? (
                "Loading..."
             ) : error ? (

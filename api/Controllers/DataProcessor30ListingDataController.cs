@@ -25,14 +25,17 @@ namespace api.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] QueryObject query){
+
+
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
             var dataProcessor30ListingDatas = await _dataProcessor30ListingDataRepo.GetAllAsync(query);
             var dataProcessor30ListingDataDtos = dataProcessor30ListingDatas.Select(l => l.ToDto());
+                    Console.WriteLine(query.SortBy);
+            Console.WriteLine(query.IsDescending);
             return Ok(dataProcessor30ListingDataDtos);
         }
-
         [HttpGet("{id:int}")]
 
         public async Task<IActionResult> GetById([FromRoute] int id){
