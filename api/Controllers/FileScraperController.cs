@@ -36,7 +36,7 @@ namespace api.Controllers
 
             PdfDocument pdfDocument = FileScraper.FileScraper.OpenPDF(file.OpenReadStream());
             //Extract ContactInfo
-            (string, List<int>) representatives = FileScraper.FileScraper.GetSection(pdfDocument, "14. Ikrafttræden og ophør", "15. Kontaktpersoner hos den dataansvarlige og databehandleren");
+            (string, List<int>) representatives = FileScraper.FileScraper.GetSection(pdfDocument, "14. Ikrafttrï¿½den og ophï¿½r", "15. Kontaktpersoner hos den dataansvarlige og databehandleren");
             (FileScraper.FileScraper.DataController, FileScraper.FileScraper.DataProcessor) representativePair = FileScraper.FileScraper.ExtractDataProcessors(pdfDocument, representatives.Item2);
 
             // Extract Subprocessors
