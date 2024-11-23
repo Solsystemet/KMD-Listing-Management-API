@@ -30,7 +30,7 @@ export function FileUpload() {
                const formData = new FormData();
                formData.append("file", file);
 
-               await axios.post("http://localhost:5173/api/upload", formData, {
+               await axios.post("/api/file-scraper", formData, {
                   onUploadProgress: (progressEvent: any) => {
                      const percentCompleted = Math.round(
                         (progressEvent.loaded * 100) / progressEvent.total
