@@ -17,34 +17,35 @@ namespace api.Data
 
         public DbSet<DataProcessor30ListingData> DataProcessor30ListingDatas {get; set;}
         public DbSet<DataEdit> DataEditDatas {get; set;}
+
+        public DbSet<DataSubProcessor> DataSubProcessors { get; set; }
         
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-        modelBuilder.Entity<DataProcessor30ListingData>()
-            .OwnsOne(p => p.DataController);
-        
-        modelBuilder.Entity<DataProcessor30ListingData>()
-            .OwnsOne(p => p.DataProcessor);
-        
-        modelBuilder.Entity<DataProcessor30ListingData>()
-            .OwnsOne(p => p.DataProcessorRepresentative);
-        
-        modelBuilder.Entity<DataProcessor30ListingData>()
-            .OwnsOne(p => p.DataSecurityAdvisor);
+{
+    
+    
 
-        modelBuilder.Entity<DataProcessor30ListingData>()
-            .OwnsOne(p => p.DataCategories);
+    modelBuilder.Entity<DataProcessor30ListingData>()
+        .OwnsOne(p => p.DataProcessor);
 
-        modelBuilder.Entity<DataProcessor30ListingData>()
-            .OwnsOne(p => p.DataTransfer);
+    modelBuilder.Entity<DataProcessor30ListingData>()
+        .OwnsOne(p => p.DataProcessorRepresentative);
 
-        modelBuilder.Entity<DataProcessor30ListingData>()
-            .OwnsOne(p => p.DataSecurity);
-        
+    modelBuilder.Entity<DataProcessor30ListingData>()
+        .OwnsOne(p => p.DataSecurityAdvisor);
 
-        }
+    modelBuilder.Entity<DataProcessor30ListingData>()
+        .OwnsOne(p => p.DataCategories);
+
+    modelBuilder.Entity<DataProcessor30ListingData>()
+        .OwnsOne(p => p.DataTransfer);
+
+    modelBuilder.Entity<DataProcessor30ListingData>()
+        .OwnsOne(p => p.DataSecurity);
+}
+
 
         
     }

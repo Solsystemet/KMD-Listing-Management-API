@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,11 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241124192234_DataSubProcessorAdd5")]
+    partial class DataSubProcessorAdd5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,7 +89,7 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Address")
+                    b.Property<string>("Adress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -100,15 +103,7 @@ namespace api.Migrations
                     b.Property<bool>("DirectSubProcessor")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Mail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -124,14 +119,15 @@ namespace api.Migrations
 
                     b.HasIndex("DataProcessor30ListingDataId");
 
-                    b.ToTable("DataSubProcessors");
+                    b.ToTable("DataSubProcessor");
                 });
 
             modelBuilder.Entity("api.Models.DataEdit", b =>
                 {
                     b.HasOne("api.Models.DataProcessor30ListingData", "DataProcessor30ListingData")
                         .WithMany("DataEdits")
-                        .HasForeignKey("DataProcessor30ListingDataId");
+                        .HasForeignKey("DataProcessor30ListingDataId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("DataProcessor30ListingData");
                 });
@@ -337,7 +333,8 @@ namespace api.Migrations
                 {
                     b.HasOne("api.Models.DataProcessor30ListingData", "DataProcessor30ListingData")
                         .WithMany("DataSubProcessors")
-                        .HasForeignKey("DataProcessor30ListingDataId");
+                        .HasForeignKey("DataProcessor30ListingDataId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("DataProcessor30ListingData");
                 });

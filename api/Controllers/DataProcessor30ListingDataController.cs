@@ -56,8 +56,9 @@ namespace api.Controllers
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
-            var dataProcessor30ListingDataModel = dataProcessor30ListingDataDto.ToDataProcessor30ListingDataFromCreateDTO();
-            await _dataProcessor30ListingDataRepo.CreateAsync(dataProcessor30ListingDataModel);
+            
+            var dataProcessor30ListingDataModel = await _dataProcessor30ListingDataRepo.CreateAsync(dataProcessor30ListingDataDto);
+
             return CreatedAtAction(nameof(GetById), new {id = dataProcessor30ListingDataModel.Id}, dataProcessor30ListingDataModel);
         }
 

@@ -6,6 +6,7 @@ using api.Data;
 using api.Dtos.DataProcessor30ListingData;
 using api.Helpers;
 using api.Interfaces;
+using api.Mappers;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -51,19 +52,24 @@ namespace api.Repositories
         public async Task<DataProcessor30ListingData?> GetByIdAsync(int id)
         {
 
-            return await _context.DataProcessor30ListingDatas.Include(E=> E.DataEdits).FirstOrDefaultAsync(l => l.Id == id);
+            return await _context.DataProcessor30ListingDatas.Include(d=> d.DataSubProcessors).Include(e=> e.DataEdits).FirstOrDefaultAsync(l => l.Id == id);
         }
 
-        public async Task<DataProcessor30ListingData> CreateAsync(DataProcessor30ListingData DataProcessor30ListingDataModel)
+        public async Task<DataProcessor30ListingData> CreateAsync(CreateDataProcessor30ListingDataRequestDto dataProcessor30ListingDataDto)
         {
-            await _context.DataProcessor30ListingDatas.AddAsync(DataProcessor30ListingDataModel);
+            var dataProcessor30ListingEntity = await _context.DataProcessor30ListingDatas.AddAsync(dataProcessor30ListingDataDto.ToDataProcessor30ListingDataFromCreateDTO());
+            var dataProcessor30ListingModel = dataProcessor30ListingEntity.Entity;
             await _context.SaveChangesAsync();
-            return DataProcessor30ListingDataModel;
+            foreach (var dataSubProcessor in dataProcessor30ListingDataDto.DataSubProcessors) {
+                await _context.DataSubProcessors.AddAsync(new DataSubProcessor(dataSubProcessor, dataProcessor30ListingModel));
+            }
+            await _context.SaveChangesAsync();
+            return dataProcessor30ListingModel;
         }
 
         public async Task<DataProcessor30ListingData?> UpdateAsync(int id, UpdateDataProcessor30ListingDataDto dataProcessor30ListingDataDto)
         {
-            var existing30Listing = await _context.DataProcessor30ListingDatas.FindAsync(id);
+            var existing30Listing = await _context.DataProcessor30ListingDatas.Include(d => d.DataSubProcessors).FirstOrDefaultAsync(l => l.Id == id);
 
             if(existing30Listing == null){
                 return null;
@@ -79,6 +85,30 @@ namespace api.Repositories
             if(!existing30Listing.DataCategories.IsEqual(dataProcessor30ListingDataDto.DataCategories)) updatedFields.Add("Data categories");
             if(!existing30Listing.DataSecurity.IsEqual(dataProcessor30ListingDataDto.DataSecurity)) updatedFields.Add("Data security");
             if(!existing30Listing.DataTransfer.IsEqual(dataProcessor30ListingDataDto.DataTransfer)) updatedFields.Add("Data Transfer");
+            
+            bool SubProcessorUpdated = false;
+            if(existing30Listing.DataSubProcessors.Count == dataProcessor30ListingDataDto.DataSubProcessors.Count){
+                
+                for(int i = 0; i<existing30Listing.DataSubProcessors.Count; i++){
+                    if(existing30Listing.DataSubProcessors[i].IsEqualUpdateDto(dataProcessor30ListingDataDto.DataSubProcessors[i])){
+                        SubProcessorUpdated = true;
+                        break;
+                    }
+                }
+            }else{
+                SubProcessorUpdated = true;
+            }
+
+            if(SubProcessorUpdated){
+                updatedFields.Add("Data Sub-Processor");
+
+                foreach(var SubProcessor in existing30Listing.DataSubProcessors){
+                    _context.DataSubProcessors.Remove(SubProcessor);
+                }
+                foreach(var SubProcessor in dataProcessor30ListingDataDto.DataSubProcessors){
+                    await _context.DataSubProcessors.AddAsync(new DataSubProcessor(SubProcessor, existing30Listing));
+                }
+            }
 
             _context.Entry(existing30Listing).CurrentValues.SetValues(dataProcessor30ListingDataDto);
             _context.Entry(existing30Listing.DataController).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataController);
@@ -99,30 +129,31 @@ namespace api.Repositories
         }
 
        public async Task<DataProcessor30ListingData?> DeleteAsync(int id)
-         {
+        {
             var dataProcessor30ListingData = await _context.DataProcessor30ListingDatas
+                .Include(d=> d.DataSubProcessors)
                 .Include(e => e.DataEdits)
                 .FirstOrDefaultAsync(l => l.Id == id);
 
-            if (dataProcessor30ListingData != null)
+            if (dataProcessor30ListingData == null)
             {
-                foreach(var dataEdit in dataProcessor30ListingData.DataEdits)
-                {
-                    _context.DataEditDatas.Remove(dataEdit);
-                }
+                return null;
             }
 
-
+            foreach(var dataEdit in dataProcessor30ListingData.DataEdits)
+            {
+                _context.DataEditDatas.Remove(dataEdit);
+            }
+            foreach(var dataSubProcessor in dataProcessor30ListingData.DataSubProcessors)
+            {
+                _context.DataSubProcessors.Remove(dataSubProcessor);
+            }
             
             _context.DataProcessor30ListingDatas.Remove(dataProcessor30ListingData);
 
-            // Save changes
             await _context.SaveChangesAsync();
 
             return dataProcessor30ListingData;
-            }
-
-
-        
+        }
     }
 }

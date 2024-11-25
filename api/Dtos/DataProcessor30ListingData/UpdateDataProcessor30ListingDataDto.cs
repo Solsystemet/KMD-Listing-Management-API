@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Dtos.DataSubProcessor;
 using api.Models;
 
 namespace api.Dtos.DataProcessor30ListingData
@@ -24,5 +25,7 @@ namespace api.Dtos.DataProcessor30ListingData
         public DataSecurity DataSecurity { get; set; } =  new DataSecurity();
 
         public DataTransfer DataTransfer { get; set; } = new DataTransfer();
+
+        public List<SubProcessorDto> DataSubProcessors { get; set; } = new List<SubProcessorDto>();
     }
 }
