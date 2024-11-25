@@ -13,5 +13,8 @@ namespace api.Dtos.DataProcessor30ListingData
         public string Name { get; set; } = string.Empty;
         public DateTime CreationTime {get; set; }
         public string DataProcessorName { get; set; } = string.Empty;
+
+        
+
     }
 }

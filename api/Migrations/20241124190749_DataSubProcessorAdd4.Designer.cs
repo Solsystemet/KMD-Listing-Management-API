@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,11 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241124190749_DataSubProcessorAdd4")]
+    partial class DataSubProcessorAdd4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,7 +89,7 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Address")
+                    b.Property<string>("Adress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -97,26 +100,18 @@ namespace api.Migrations
                     b.Property<int?>("DataProcessor30ListingDataId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("DirectSubProcessor")
+                    b.Property<string>("Treatment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("directSubProcessor")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Mail")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TransferReason")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Treatment")
+                    b.Property<string>("transferReason")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -124,7 +119,7 @@ namespace api.Migrations
 
                     b.HasIndex("DataProcessor30ListingDataId");
 
-                    b.ToTable("DataSubProcessors");
+                    b.ToTable("DataSubProcessor");
                 });
 
             modelBuilder.Entity("api.Models.DataEdit", b =>
@@ -335,11 +330,10 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.DataSubProcessor", b =>
                 {
-                    b.HasOne("api.Models.DataProcessor30ListingData", "DataProcessor30ListingData")
+                    b.HasOne("api.Models.DataProcessor30ListingData", null)
                         .WithMany("DataSubProcessors")
-                        .HasForeignKey("DataProcessor30ListingDataId");
-
-                    b.Navigation("DataProcessor30ListingData");
+                        .HasForeignKey("DataProcessor30ListingDataId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("api.Models.DataProcessor30ListingData", b =>

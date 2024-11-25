@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.DataProcessor30ListingData;
+using api.Dtos.DataSubProcessor;
 using api.Models;
 
 namespace api.Mappers
@@ -23,14 +24,14 @@ namespace api.Mappers
         public static DataProcessor30ListingData ToDataProcessor30ListingDataFromCreateDTO(this CreateDataProcessor30ListingDataRequestDto dataProcessor30ListingDataDto){
             return new DataProcessor30ListingData
             {
-                 Name = dataProcessor30ListingDataDto.Name,
-                 DataController = dataProcessor30ListingDataDto.DataController,
-                 DataProcessor = dataProcessor30ListingDataDto.DataProcessor,
-                 DataProcessorRepresentative = dataProcessor30ListingDataDto.DataProcessorRepresentative,
-                 DataSecurityAdvisor = dataProcessor30ListingDataDto.DataSecurityAdvisor,
-                 DataCategories = dataProcessor30ListingDataDto.DataCategories,
+                Name = dataProcessor30ListingDataDto.Name,
+                DataController = dataProcessor30ListingDataDto.DataController,
+                DataProcessor = dataProcessor30ListingDataDto.DataProcessor,
+                DataProcessorRepresentative = dataProcessor30ListingDataDto.DataProcessorRepresentative,
+                DataSecurityAdvisor = dataProcessor30ListingDataDto.DataSecurityAdvisor,
+                DataCategories = dataProcessor30ListingDataDto.DataCategories,
                 DataSecurity = dataProcessor30ListingDataDto.DataSecurity,
-                DataTransfer = dataProcessor30ListingDataDto.DataTransfer
+                DataTransfer = dataProcessor30ListingDataDto.DataTransfer,
             };
         }
     }
