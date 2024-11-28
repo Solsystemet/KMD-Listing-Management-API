@@ -1,12 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import styles from "./FileUpload.module.css";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import { FileText } from "lucide-react";
 import { StandardButton } from "../buttons/Buttons";
+import NullableDataProcessor30ListingData from "../../types/NullableDataProcessor30ListingData";
 
-export function FileUpload() {
+export function FileUpload({
+   setListingData,
+}: {
+   setListingData: Dispatch<
+      SetStateAction<NullableDataProcessor30ListingData | null>
+   >;
+}) {
    const [uploadStatus, setUploadStatus] = useState("select");
    const [selectedFile, setSelectedFile] = useState<File | null>(null);
    const [progress, setProgress] = useState(0);
@@ -30,14 +37,23 @@ export function FileUpload() {
                const formData = new FormData();
                formData.append("file", file);
 
-               await axios.post("/api/file-scraper", formData, {
-                  onUploadProgress: (progressEvent: any) => {
-                     const percentCompleted = Math.round(
-                        (progressEvent.loaded * 100) / progressEvent.total
-                     );
-                     setProgress(percentCompleted);
-                  },
-               });
+               const response = await axios.post(
+                  "/api/file-scraper",
+                  formData,
+                  {
+                     onUploadProgress: (progressEvent: any) => {
+                        const percentCompleted = Math.round(
+                           (progressEvent.loaded * 100) / progressEvent.total
+                        );
+                        setProgress(percentCompleted);
+                     },
+                  }
+               );
+
+               const ListingData: NullableDataProcessor30ListingData =
+                  response.data;
+
+               setListingData(ListingData);
 
                setUploadStatus("done");
             } catch {
