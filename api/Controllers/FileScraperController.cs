@@ -11,6 +11,7 @@ using UglyToad.PdfPig.DocumentLayoutAnalysis.WordExtractor;
 using UglyToad.PdfPig.Fonts.Standard14Fonts;
 using UglyToad.PdfPig.Writer;
 using api.FileScraper;
+using api.Dtos.DataProcessor30ListingData.NullableDataProcessor30ListingData;
 
 namespace api.Controllers
 {
@@ -36,8 +37,8 @@ namespace api.Controllers
 
             PdfDocument pdfDocument = FileScraper.FileScraper.OpenPDF(file.OpenReadStream());
             //Extract ContactInfo
-            (string, List<int>) representatives = FileScraper.FileScraper.GetSection(pdfDocument, "14. Ikrafttr�den og oph�r", "15. Kontaktpersoner hos den dataansvarlige og databehandleren");
-            (FileScraper.FileScraper.DataController, FileScraper.FileScraper.DataProcessor) representativePair = FileScraper.FileScraper.ExtractDataProcessors(pdfDocument, representatives.Item2);
+            (string, List<int>) representatives = FileScraper.FileScraper.GetSection(pdfDocument, "14. Ikrafttræden og ophør", "15. Kontaktpersoner hos den dataansvarlige og databehandleren");
+            (NullableDataControllerRepresentative, NullableDataProcessorRepresentative) representativePair = FileScraper.FileScraper.ExtractDataProcessors(pdfDocument, representatives.Item2);
 
             // Extract Subprocessors
             (string, List<int>) SubProcessorSection = FileScraper.FileScraper.GetSection(pdfDocument, "B.1. Godkendte underdatabehandlere", "B.2.");
@@ -54,14 +55,20 @@ namespace api.Controllers
                 }
                 list.Add(innerList);
             }
-            IEnumerable<FileScraper.FileScraper.SubProcessor>? verifiedSubProcessors = FileScraper.FileScraper.CreateSubProcessorList(list);
+            IEnumerable<NullableSubProcessor>? verifiedSubProcessors = FileScraper.FileScraper.CreateSubProcessorList(list);
 
-            List<object?> objList = new List<object?>();
-            objList.Add(representativePair.Item1);
-            objList.Add(representativePair.Item2);
-            objList.Add(verifiedSubProcessors);
+            var dataProcessor30ListingData = new NullableDataProcessor30ListingData(); 
+            dataProcessor30ListingData.DataControllerRepresentative = representativePair.Item1;
+            dataProcessor30ListingData.DataProcessorRepresentative = representativePair.Item2;
+            if (verifiedSubProcessors != null)
+            {
+                dataProcessor30ListingData.DataSubProcessors = verifiedSubProcessors.ToList();
+            }
+            else {
+                dataProcessor30ListingData.DataSubProcessors = new List<NullableSubProcessor>();
+            }
 
-            return Ok(objList);
+            return Ok(dataProcessor30ListingData);
             
         }
     }
