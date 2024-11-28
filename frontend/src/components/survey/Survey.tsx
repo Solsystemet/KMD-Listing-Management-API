@@ -111,9 +111,12 @@ export function Survey({
       <div className={styles.dataCategories}>
         <h3>Data categories</h3>
         <MultipleSelect>
-          {"Opperation"}
-          {"Maintenance"}
-          {"Support of the solution"}
+          {"School administrators"}
+          {"School management"}
+          {"Teachers"}
+          {"Other employees"}
+          {"Students"}
+          {"Parents to students under 18 years old"}
         </MultipleSelect>
       </div>
       <div className={styles.dataTransfersContainer}>
