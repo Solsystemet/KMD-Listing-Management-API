@@ -12,67 +12,6 @@ namespace api.FileScraper
 {
     public static class FileScraper
     {
-        // Structs for dataController and DataProcessors
-        // Should prbably not be defined here, but for now yes
-        #region
-        public class SubProcessor
-        {
-            public string? name { get; set; }
-            public string? CVR { get; set; }
-            public string? Adress { get; set; }
-            public string? Treatment { get; set; }
-            public bool? directSubProcessor { get; set; }
-            public string? transferReason { get; set; }
-
-            public override string ToString()
-            {
-                return String.Format("name={0}\n\n\nCVR={1}\n\n\nAdress={2}\n\n\nTreatment={3}\n\n\nDirectSubProcessor={4}\n\n\nTransferReson={5}", this.name, this.CVR, this.Adress, this.Treatment, this.directSubProcessor, this.transferReason);
-            }
-        }
-
-        public class DataController
-        {
-            public string? Name { get; set; }
-            public string? Role { get; set; }
-            public string? Phone { get; set; }
-            public string? Email { get; set; }
-
-            // Constructor for initialization
-            public DataController(string? name = null, string? role = null, string? phone = null, string? email = null)
-            {
-                Name = name;
-                Role = role;
-                Phone = phone;
-                Email = email;
-            }
-            public override string ToString()
-            {
-                return String.Format("name={0}\nrole={1}\nnumber={2}\nemail={3}\n", this.Name, this.Role, this.Phone, this.Email);
-            }
-        }
-
-        public class DataProcessor
-        {
-            public string? Name { get; set; }
-            public string? Role { get; set; }
-            public string? Phone { get; set; }
-            public string? Email { get; set; }
-
-            // Constructor for initialization
-            public DataProcessor(string? name = null, string? role = null, string? phone = null, string? email = null)
-            {
-                Name = name;
-                Role = role;
-                Phone = phone;
-                Email = email;
-            }
-            public override string ToString()
-            {
-                return String.Format("name={0}\nrole={1}\nnumber={2}\nemail={3}\n", this.Name, this.Role, this.Phone, this.Email);
-            }
-        }
-        #endregion
-
         public static PdfDocument OpenPDF( Stream fileData)
         {
             return PdfDocument.Open(fileData);
