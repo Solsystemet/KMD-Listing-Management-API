@@ -11,46 +11,46 @@ type NullableDataProcessor30ListingData = {
    dataSubProcessors: NullableSubProcessor[];
 };
 
-type NullableDataContactInfo = {
+export type NullableDataContactInfo = {
    name?: string | null;
    address?: string | null;
    phoneNo?: string | null;
    mail?: string | null;
 };
 
-type NullableDataController = NullableDataContactInfo & {
+export type NullableDataController = NullableDataContactInfo & {
    cvr?: string | null;
 };
 
-type NullableDataProcessor = NullableDataContactInfo & {
+export type NullableDataProcessor = NullableDataContactInfo & {
    cvr?: string | null;
 };
 
-type NullableDataControllerRepresentative = NullableDataContactInfo & {
+export type NullableDataControllerRepresentative = NullableDataContactInfo & {
    role?: string | null;
 };
 
-type NullableDataProcessorRepresentative = NullableDataContactInfo & {
+export type NullableDataProcessorRepresentative = NullableDataContactInfo & {
    role?: string | null;
 };
 
-type NullableDataSecurityAdvisor = NullableDataContactInfo & {
+export type NullableDataSecurityAdvisor = NullableDataContactInfo & {
    categoryList?: string | null;
 };
 
-type NullableDataCategories = {
+export type NullableDataCategories = {
    categoryList?: string | null;
 };
 
-type NullableDataSecurity = {
+export type NullableDataSecurity = {
    securityMeasures?: string | null;
 };
 
-type NullableDataTransfer = {
+export type NullableDataTransfer = {
    transferInformation?: string | null;
 };
 
-type NullableSubProcessor = {
+export type NullableSubProcessor = {
    name?: string | null;
    cvr?: string | null;
    address?: string | null;

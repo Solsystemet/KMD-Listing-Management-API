@@ -14,60 +14,55 @@ export function FileUpload({
       SetStateAction<NullableDataProcessor30ListingData | null>
    >;
 }) {
-   const [uploadStatus, setUploadStatus] = useState("select");
    const [selectedFile, setSelectedFile] = useState<File | null>(null);
    const [progress, setProgress] = useState(0);
 
-   const clearFileInput = useCallback(() => {
-      setSelectedFile(null);
-      setProgress(0);
-   }, []);
    const doDrop = useCallback(
       async (acceptedFiles: string | any[]) => {
-         if (acceptedFiles.length > 0) {
-            const file = acceptedFiles[0];
-            setSelectedFile(file);
+         if (acceptedFiles.length === 0) {
+            return;
+         }
+         const file = acceptedFiles[0];
+         setSelectedFile(file);
 
-            if (uploadStatus === "done") {
-               clearFileInput();
-               return;
-            }
-            try {
-               setUploadStatus("Uploading");
-               const formData = new FormData();
-               formData.append("file", file);
+         try {
+            const formData = new FormData();
+            formData.append("file", file);
 
-               const response = await axios.post(
-                  "/api/file-scraper",
-                  formData,
-                  {
-                     onUploadProgress: (progressEvent: any) => {
-                        const percentCompleted = Math.round(
-                           (progressEvent.loaded * 100) / progressEvent.total
-                        );
-                        setProgress(percentCompleted);
-                     },
+            const response = await axios.post("/api/file-scraper", formData, {
+               onUploadProgress: progressEvent => {
+                  console.log(progressEvent.total);
+                  let percentCompleted = 0;
+                  if (!progressEvent.total) {
+                     percentCompleted = 100;
+                  } else {
+                     percentCompleted = Math.round(
+                        (progressEvent.loaded * 100) / progressEvent.total
+                     );
                   }
-               );
+                  setProgress(percentCompleted);
+               },
+            });
 
-               const ListingData: NullableDataProcessor30ListingData =
-                  response.data;
+            const ListingData: NullableDataProcessor30ListingData =
+               response.data;
 
-               setListingData(ListingData);
-
-               setUploadStatus("done");
-            } catch {
-               setUploadStatus("select");
-            }
+            setListingData(ListingData);
+         } catch {
+            setListingData(null);
          }
       },
-      [uploadStatus, clearFileInput]
+      [setListingData]
    );
 
    const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
       onDrop: doDrop,
       noClick: true,
       noKeyboard: true,
+      accept: {
+         "application/pdf": [".pdf"],
+      },
+      multiple: false,
    });
 
    return (

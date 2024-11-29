@@ -20,7 +20,7 @@ function Index() {
    }
 
    return (
-      <main>
+      <main className={styles.layout}>
          <div className={styles.contentContainer}>
             <div className={styles.fileUploadContainer}>
                <FileUpload setListingData={setListingData} />

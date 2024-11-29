@@ -7,8 +7,12 @@
    border: none;
 }
 
-.standardButton:hover {
+.standardButton:enabled:hover {
    transform: scale(1.05);
+}
+
+.standardButton:disabled {
+   background-color: var(--secondary-background-color);
 }
 
 .navButton {
