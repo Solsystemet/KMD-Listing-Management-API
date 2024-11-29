@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import styles from "./FileUpload.module.css";
-import { useDropzone } from "react-dropzone";
+import { FileRejection, useDropzone } from "react-dropzone";
 import axios from "axios";
 import { FileText } from "lucide-react";
 import { StandardButton } from "../buttons/Buttons";
@@ -16,11 +15,16 @@ export function FileUpload({
 }) {
    const [selectedFile, setSelectedFile] = useState<File | null>(null);
    const [progress, setProgress] = useState(0);
+   const [isInvalidUpload, setIsInvalidUpload] = useState(false);
 
    const doDrop = useCallback(
-      async (acceptedFiles: string | any[]) => {
-         if (acceptedFiles.length === 0) {
-            return;
+      async <T extends File>(
+         acceptedFiles: T[],
+         fileRejections: FileRejection[]
+      ) => {
+         console.log(fileRejections);
+         if (fileRejections.length > 0) {
+            return setIsInvalidUpload(true);
          }
          const file = acceptedFiles[0];
          setSelectedFile(file);
@@ -78,6 +82,11 @@ export function FileUpload({
                   </p>
                )}
             </div>
+            {isInvalidUpload && (
+               <p className={styles.invalidUpload}>
+                  Invalid Upload type. Please upload only 1 PDF file.
+               </p>
+            )}
             <StandardButton onClick={open} color={""} fontSize={"1rem"}>
                Upload File
             </StandardButton>
