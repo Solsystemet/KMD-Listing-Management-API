@@ -6,72 +6,12 @@ using UglyToad.PdfPig.DocumentLayoutAnalysis;
 using UglyToad.PdfPig.Fonts.Standard14Fonts;
 using UglyToad.PdfPig.Writer;
 using UglyToad.PdfPig;
+using api.Dtos.DataProcessor30ListingData.NullableDataProcessor30ListingData;
 
 namespace api.FileScraper
 {
     public static class FileScraper
     {
-        // Structs for dataController and DataProcessors
-        // Should prbably not be defined here, but for now yes
-        #region
-        public class SubProcessor
-        {
-            public string? name { get; set; }
-            public string? CVR { get; set; }
-            public string? Adress { get; set; }
-            public string? Treatment { get; set; }
-            public bool? directSubProcessor { get; set; }
-            public string? transferReason { get; set; }
-
-            public override string ToString()
-            {
-                return String.Format("name={0}\n\n\nCVR={1}\n\n\nAdress={2}\n\n\nTreatment={3}\n\n\nDirectSubProcessor={4}\n\n\nTransferReson={5}", this.name, this.CVR, this.Adress, this.Treatment, this.directSubProcessor, this.transferReason);
-            }
-        }
-
-        public class DataController
-        {
-            public string? Name { get; set; }
-            public string? Role { get; set; }
-            public string? Phone { get; set; }
-            public string? Email { get; set; }
-
-            // Constructor for initialization
-            public DataController(string? name = null, string? role = null, string? phone = null, string? email = null)
-            {
-                Name = name;
-                Role = role;
-                Phone = phone;
-                Email = email;
-            }
-            public override string ToString()
-            {
-                return String.Format("name={0}\nrole={1}\nnumber={2}\nemail={3}\n", this.Name, this.Role, this.Phone, this.Email);
-            }
-        }
-
-        public class DataProcessor
-        {
-            public string? Name { get; set; }
-            public string? Role { get; set; }
-            public string? Phone { get; set; }
-            public string? Email { get; set; }
-
-            // Constructor for initialization
-            public DataProcessor(string? name = null, string? role = null, string? phone = null, string? email = null)
-            {
-                Name = name;
-                Role = role;
-                Phone = phone;
-                Email = email;
-            }
-            public override string ToString()
-            {
-                return String.Format("name={0}\nrole={1}\nnumber={2}\nemail={3}\n", this.Name, this.Role, this.Phone, this.Email);
-            }
-        }
-        #endregion
-
         public static PdfDocument OpenPDF( Stream fileData)
         {
             return PdfDocument.Open(fileData);
@@ -278,11 +218,11 @@ namespace api.FileScraper
         }
 
 
-        static public(DataController, DataProcessor) ExtractDataProcessors( PdfDocument document, List<int> pages)
+        static public(NullableDataControllerRepresentative, NullableDataProcessorRepresentative) ExtractDataProcessors( PdfDocument document, List<int> pages)
         {
             
-                DataController dataAnsvarlig = new DataController();
-                DataProcessor dataBehandler = new DataProcessor();
+                NullableDataControllerRepresentative dataAnsvarlig = new NullableDataControllerRepresentative();
+                NullableDataProcessorRepresentative dataBehandler = new NullableDataProcessorRepresentative();
 
                 for (int i = 0; i < pages.Count; i++)
                 {
@@ -337,23 +277,23 @@ namespace api.FileScraper
                                 case "Telefonnummer":
                                     if (isDataAnsvarlig)
                                     {
-                                        dataAnsvarlig.Phone = String.Join("", wordsAtSameY).Trim();
+                                        dataAnsvarlig.PhoneNo = String.Join("", wordsAtSameY).Trim();
                                     }
                                     else
                                     {
-                                        dataBehandler.Phone = String.Join("", wordsAtSameY).Trim();
+                                        dataBehandler.PhoneNo = String.Join("", wordsAtSameY).Trim();
                                     }
                                     break;
 
                                 case "E-mail":
                                     if (isDataAnsvarlig)
                                     {
-                                        dataAnsvarlig.Email = String.Join("", wordsAtSameY).Trim();
+                                        dataAnsvarlig.Mail = String.Join("", wordsAtSameY).Trim();
                                         isDataAnsvarlig = false;
                                     }
                                     else
                                     {
-                                        dataBehandler.Email = String.Join("", wordsAtSameY).Trim();
+                                        dataBehandler.Mail = String.Join("", wordsAtSameY).Trim();
                                         isDataBehandlerComplete = true;
                                     }
                                     break;
@@ -529,9 +469,9 @@ namespace api.FileScraper
             }
 
         }
-        static public IEnumerable<SubProcessor>? CreateSubProcessorList(List<List<String>> data)
+        static public IEnumerable<NullableSubProcessor>? CreateSubProcessorList(List<List<String>> data)
         {
-            List<SubProcessor>? result = new List<SubProcessor>();
+            List<NullableSubProcessor>? result = new List<NullableSubProcessor>();
 
             foreach (List<string> row in data)
             {
@@ -540,13 +480,13 @@ namespace api.FileScraper
                     continue;
 
 
-                SubProcessor subProcessor = new SubProcessor();
-                subProcessor.name = row[0];
+                NullableSubProcessor subProcessor = new NullableSubProcessor();
+                subProcessor.Name = row[0];
                 subProcessor.CVR = row[1];
-                subProcessor.Adress = row[2];
+                subProcessor.Address = row[2];
                 subProcessor.Treatment = row[3];
-                subProcessor.directSubProcessor = row[4] == "Ja" ? true : false;
-                subProcessor.transferReason = row[5] == null ? "N/A" : row[5];
+                subProcessor.DirectSubProcessor = row[4] == "Ja" ? true : false;
+                subProcessor.TransferReason = row[5] == null ? "N/A" : row[5];
                 result.Add(subProcessor);
             }
 

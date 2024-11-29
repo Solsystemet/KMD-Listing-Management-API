@@ -8,6 +8,7 @@ type StandardButtonProps = {
    fontSize: string;
    border?: string;
    onClick?: () => void;
+   disabled?: boolean;
 };
 
 export function StandardButton(props: StandardButtonProps) {
@@ -21,6 +22,7 @@ export function StandardButton(props: StandardButtonProps) {
          }}
          className={styles.standardButton}
          onClick={props.onClick}
+         disabled={props.disabled}
       >
          {props.children}
       </button>

@@ -1,57 +1,68 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import styles from "./FileUpload.module.css";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import { FileText } from "lucide-react";
 import { StandardButton } from "../buttons/Buttons";
+import NullableDataProcessor30ListingData from "../../types/NullableDataProcessor30ListingData";
 
-export function FileUpload() {
-   const [uploadStatus, setUploadStatus] = useState("select");
+export function FileUpload({
+   setListingData,
+}: {
+   setListingData: Dispatch<
+      SetStateAction<NullableDataProcessor30ListingData | null>
+   >;
+}) {
    const [selectedFile, setSelectedFile] = useState<File | null>(null);
    const [progress, setProgress] = useState(0);
 
-   const clearFileInput = useCallback(() => {
-      setSelectedFile(null);
-      setProgress(0);
-   }, []);
    const doDrop = useCallback(
       async (acceptedFiles: string | any[]) => {
-         if (acceptedFiles.length > 0) {
-            const file = acceptedFiles[0];
-            setSelectedFile(file);
+         if (acceptedFiles.length === 0) {
+            return;
+         }
+         const file = acceptedFiles[0];
+         setSelectedFile(file);
 
-            if (uploadStatus === "done") {
-               clearFileInput();
-               return;
-            }
-            try {
-               setUploadStatus("Uploading");
-               const formData = new FormData();
-               formData.append("file", file);
+         try {
+            const formData = new FormData();
+            formData.append("file", file);
 
-               await axios.post("/api/file-scraper", formData, {
-                  onUploadProgress: (progressEvent: any) => {
-                     const percentCompleted = Math.round(
+            const response = await axios.post("/api/file-scraper", formData, {
+               onUploadProgress: progressEvent => {
+                  console.log(progressEvent.total);
+                  let percentCompleted = 0;
+                  if (!progressEvent.total) {
+                     percentCompleted = 100;
+                  } else {
+                     percentCompleted = Math.round(
                         (progressEvent.loaded * 100) / progressEvent.total
                      );
-                     setProgress(percentCompleted);
-                  },
-               });
+                  }
+                  setProgress(percentCompleted);
+               },
+            });
 
-               setUploadStatus("done");
-            } catch {
-               setUploadStatus("select");
-            }
+            const ListingData: NullableDataProcessor30ListingData =
+               response.data;
+
+            setListingData(ListingData);
+         } catch {
+            setListingData(null);
          }
       },
-      [uploadStatus, clearFileInput]
+      [setListingData]
    );
 
    const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
       onDrop: doDrop,
       noClick: true,
       noKeyboard: true,
+      accept: {
+         "application/pdf": [".pdf"],
+      },
+      multiple: false,
    });
 
    return (

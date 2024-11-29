@@ -2,135 +2,245 @@ import { useState } from "react"; // Importing useState to handle state manageme
 import InputBox from "../inputBox/inputBox";
 import { MultipleSelect } from "../multipleSelect/MultipleSelect";
 import styles from "./Survey.module.css";
+import NullableDataProcessor30ListingData, {
+   NullableDataContactInfo,
+   NullableDataController,
+   NullableDataControllerRepresentative,
+   NullableDataProcessor,
+   NullableDataProcessorRepresentative,
+   NullableSubProcessor,
+} from "../../types/NullableDataProcessor30ListingData";
 
-function ContactInfo({ index }: { index: number }) {
-  return (
-    <form className={styles.inputContainer}>
-      <p>Contact Info {index}</p>
-      <InputBox templateText={"Name"} />
-      <InputBox templateText={"Position"} />
-      <InputBox templateText={"Telephone number"} />
-      <InputBox templateText={"E-mail"} />
-    </form>
-  );
+function ContactInfo({
+   contactInfo,
+   hasCvr,
+   cvr,
+   hasRole,
+   role,
+}: {
+   contactInfo?: NullableDataContactInfo;
+   hasCvr?: boolean;
+   cvr?: string;
+   hasRole?: boolean;
+   role?: string;
+}) {
+   return (
+      <>
+         <InputBox
+            templateText={"Name"}
+            value={contactInfo && contactInfo.name ? contactInfo.name : ""}
+         />
+         {hasCvr && <InputBox templateText={"CVR"} value={cvr} />}
+         {hasRole && <InputBox templateText={"Role"} value={role} />}
+         <InputBox
+            templateText={"Address"}
+            value={
+               contactInfo && contactInfo.address ? contactInfo.address : ""
+            }
+         />
+         <InputBox
+            templateText={"Telephone number"}
+            value={
+               contactInfo && contactInfo.phoneNo ? contactInfo.phoneNo : ""
+            }
+         />
+         <InputBox
+            templateText={"E-mail"}
+            value={contactInfo && contactInfo.mail ? contactInfo.mail : ""}
+         />
+      </>
+   );
 }
 
-function DataTransfers({ index }: { index: number }) {
-  return (
-    <form className={styles.inputContainer}>
-      <p>Data Transfer Info {index}</p>
-      <InputBox templateText={"Company name"} />
-      <InputBox templateText={"Address"} />
-      <InputBox templateText={"Treatment of data"} />
-      <InputBox templateText={"Transfer basis"} />
-      <MultipleSelect>{`Is it KMD's sub data-processor?`}</MultipleSelect>
-    </form>
-  );
+function DataController({
+   dataController,
+}: {
+   dataController: NullableDataController;
+}) {
+   return (
+      <form className={styles.inputContainer}>
+         <h2>Data Controller Info</h2>
+         <ContactInfo
+            hasCvr={true}
+            cvr={dataController && dataController.cvr ? dataController.cvr : ""}
+            contactInfo={dataController}
+         />
+      </form>
+   );
+}
+function DataProcessor({
+   dataProcessor,
+}: {
+   dataProcessor: NullableDataProcessor;
+}) {
+   return (
+      <form className={styles.inputContainer}>
+         <h2>Data Processor Info</h2>
+         <ContactInfo
+            hasCvr={true}
+            cvr={dataProcessor && dataProcessor.cvr ? dataProcessor.cvr : ""}
+            contactInfo={dataProcessor}
+         />
+      </form>
+   );
+}
+function DataControllerRepresentative({
+   dataControllerRepresentative,
+}: {
+   dataControllerRepresentative: NullableDataControllerRepresentative;
+}) {
+   return (
+      <form className={styles.inputContainer}>
+         <h2>Data Controller Representative Info</h2>
+         <ContactInfo
+            hasRole={true}
+            role={
+               dataControllerRepresentative && dataControllerRepresentative.role
+                  ? dataControllerRepresentative.role
+                  : ""
+            }
+            contactInfo={dataControllerRepresentative}
+         />
+      </form>
+   );
+}
+function DataProcessorRepresentative({
+   dataProcessorRepresentative,
+}: {
+   dataProcessorRepresentative: NullableDataProcessorRepresentative;
+}) {
+   return (
+      <form className={styles.inputContainer}>
+         <h2>Data Processor Representative Info</h2>
+         <ContactInfo
+            hasRole={true}
+            role={
+               dataProcessorRepresentative && dataProcessorRepresentative.role
+                  ? dataProcessorRepresentative.role
+                  : ""
+            }
+            contactInfo={dataProcessorRepresentative}
+         />
+      </form>
+   );
 }
 
-function DataProcessors({ index }: { index: number }) {
-  return (
-    <form className={styles.inputContainer}>
-      <p>Data Processor Info {index}</p>
-      <InputBox templateText={"Company name"} />
-      <InputBox templateText={"Address"} />
-      <InputBox templateText={"Treatment of data"} />
-      <InputBox templateText={"Transfer basis"} />
-      <MultipleSelect>{`Is it KMD's sub data-processor?`}</MultipleSelect>
-    </form>
-  );
+function DataSubProcessors({
+   index,
+   subProcessor,
+}: {
+   index: number;
+   subProcessor: NullableSubProcessor;
+}) {
+   return (
+      <form className={styles.inputContainer}>
+         <h3>Data Sub Processor Info {index}</h3>
+         <InputBox
+            templateText={"Company name"}
+            value={subProcessor.name ? subProcessor.name : ""}
+         />
+         <InputBox
+            templateText={"CVR"}
+            value={subProcessor.cvr ? subProcessor.cvr : ""}
+         />
+         <InputBox
+            templateText={"Address"}
+            value={subProcessor.address ? subProcessor.address : ""}
+         />
+         <InputBox
+            templateText={"Treatment of data"}
+            value={subProcessor.treatment ? subProcessor.treatment : ""}
+         />
+         <MultipleSelect
+            checked={
+               subProcessor.directSubProcessor
+                  ? "Is it KMD's sub data-processor?"
+                  : undefined
+            }
+         >
+            {"Is it KMD's sub data-processor?"}
+         </MultipleSelect>
+         <h4>Transfer basis</h4>
+         <TextBox
+            value={
+               subProcessor.transferReason ? subProcessor.transferReason : ""
+            }
+         />
+      </form>
+   );
 }
 
-function TextBox() {
-  return (
-    <textarea
-      name="description"
-      rows={20}
-      className={styles.textBox}
-    ></textarea>
-  );
+function TextBox({ value }: { value?: string }) {
+   return (
+      <textarea name="description" rows={5} className={styles.textBox}>
+         {value}
+      </textarea>
+   );
 }
 
 type SurveyProps = {
-  numberOfContact: number;
-  numberOfDataTransfers: number;
-  numberofDataProcessors: number;
+   listingDataProp: NullableDataProcessor30ListingData;
 };
 
-export function Survey({
-  numberOfContact,
-  numberOfDataTransfers,
-  numberofDataProcessors,
-}: SurveyProps) {
-  const [contactInfoCount, setContactInfoCount] = useState<number[]>(
-    new Array(numberOfContact).fill(1)
-  );
-  const [dataTransfersCount, setDataTransfersCount] = useState<number[]>(
-    new Array(numberOfDataTransfers).fill(1)
-  );
-  const [dataProcessorsCount, setDataProcessorsCount] = useState<number[]>(
-    new Array(numberofDataProcessors).fill(1)
-  );
+export function Survey({ listingDataProp }: SurveyProps) {
+   const [listingData, SetListingData] = useState(listingDataProp);
 
-  const addContactInfo = () => {
-    setContactInfoCount((prev) => [...prev, prev.length + 1]);
-  };
+   function addDataProcessors() {
+      SetListingData({
+         ...listingData,
+         dataSubProcessors: [
+            ...listingData.dataSubProcessors,
+            {
+               name: "",
+               cvr: "",
+               address: "",
+               treatment: "",
+               directSubProcessor: false,
+               transferReason: "",
+            },
+         ],
+      });
+   }
 
-  const addDataTransfers = () => {
-    setDataTransfersCount((prev) => [...prev, prev.length + 1]);
-  };
+   return (
+      <div className={styles.surveyContainer}>
+         <div className={styles.ContactInfoCont}>
+            <h1>Data Processor 30 Listing information</h1>
+            <InputBox templateText={"Listing Name"} />
 
-  const addDataProcessors = () => {
-    setDataProcessorsCount((prev) => [...prev, prev.length + 1]);
-  };
+            <DataController dataController={listingData.dataController} />
+            <DataProcessor dataProcessor={listingData.dataProcessor} />
 
-  return (
-    <div className={styles.surveyContainer}>
-      <div className={styles.ContactInfoCont}>
-        <h3>Contact info of Data Controller</h3>
+            <DataControllerRepresentative
+               dataControllerRepresentative={
+                  listingData.dataControllerRepresentative
+               }
+            />
+            <DataProcessorRepresentative
+               dataProcessorRepresentative={
+                  listingData.dataProcessorRepresentative
+               }
+            />
 
-        {contactInfoCount.map((_, index) => (
-          <ContactInfo key={index} index={index + 1} />
-        ))}
-        <button onClick={addContactInfo} className={styles.addButton}>
-          Add Contact Info
-        </button>
+            <h2>Data Sub Processors</h2>
+            {listingData.dataSubProcessors.map((subProcessor, index) => (
+               <DataSubProcessors
+                  key={index}
+                  index={index + 1}
+                  subProcessor={subProcessor}
+               />
+            ))}
+            <button onClick={addDataProcessors} className={styles.addButton}>
+               Add Data Processor
+            </button>
+            <h2>Beskrivelse af det information der bliver behandlet.</h2>
+            <TextBox></TextBox>
+            <h2>
+               Beskrivelse af tekniske og organisatoriske
+               sikkerhedsforanstaltninger.
+            </h2>
+            <TextBox></TextBox>
+         </div>
       </div>
-
-      <div className={styles.ContactInfoCont}>
-        <h3>Contact info of Data Processor</h3>
-
-        {dataProcessorsCount.map((_, index) => (
-          <DataProcessors key={index} index={index + 1} />
-        ))}
-        <button onClick={addDataProcessors} className={styles.addButton}>
-          Add Data Processor
-        </button>
-      </div>
-
-      <div className={styles.dataCategories}>
-        <h3>Data categories</h3>
-        <MultipleSelect>
-          {"Opperation"}
-          {"Maintenance"}
-          {"Support of the solution"}
-        </MultipleSelect>
-      </div>
-      <div className={styles.dataTransfersContainer}>
-        <h3>Data transfer info</h3>
-        {dataTransfersCount.map((_, index) => (
-          <DataTransfers key={index} index={index + 1} />
-        ))}
-        <button onClick={addDataTransfers} className={styles.addButton}>
-          Add Data Transfer
-        </button>
-      </div>
-      <div>
-        <h3>
-          Beskrivelse af tekniske og organisatoriske sikkerhedsforanstaltninger.
-        </h3>
-        <TextBox></TextBox>
-      </div>
-    </div>
-  );
+   );
 }
