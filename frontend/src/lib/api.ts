@@ -1,6 +1,8 @@
 import axios from "axios";
 import ListingSidebarDto from "../types/ListingSidebarDto";
 import QueryObject from "../types/QueryObject";
+import { Dispatch, SetStateAction } from "react";
+import NullableDataProcessor30ListingData from "../types/NullableDataProcessor30ListingData";
 
 type ListingSidebarDtoWithStringDate = {
    id: number;
@@ -29,4 +31,28 @@ export async function getAllListings(queryObject: QueryObject) {
    }
 
    return listings;
+}
+
+export async function scrapeFile(
+   formData: FormData,
+   setProgress: Dispatch<SetStateAction<number>>
+) {
+   const response = await axios.post("/api/file-scraper", formData, {
+      onUploadProgress: progressEvent => {
+         let percentCompleted = 0;
+
+         if (!progressEvent.total) {
+            percentCompleted = 100;
+         } else {
+            percentCompleted = Math.round(
+               (progressEvent.loaded * 100) / progressEvent.total
+            );
+         }
+
+         setProgress(percentCompleted);
+      },
+   });
+
+   const ListingData: NullableDataProcessor30ListingData = response.data;
+   return ListingData;
 }
