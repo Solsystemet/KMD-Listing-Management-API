@@ -7,7 +7,7 @@ using api.Models;
 
 namespace api.Dtos.DataProcessor30ListingData
 {
-    public class DataProcessor30ListingDataDto
+    public class DataProcessor30ListingDataSummeryDto
     {
         public int Id {get; set;}
         public string Name { get; set; } = string.Empty;
