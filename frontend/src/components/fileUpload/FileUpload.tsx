@@ -84,7 +84,7 @@ export function FileUpload({
             </div>
             {isInvalidUpload && (
                <p className={styles.invalidUpload}>
-                  Invalid Upload type. Please upload only 1 PDF file.
+                  Invalid upload type. Please upload only 1 PDF file.
                </p>
             )}
             <StandardButton onClick={open} color={""} fontSize={"1rem"}>
