@@ -10,9 +10,9 @@ namespace api.Mappers
 {
     public static class DataProcessor30ListingDataMappers
     {
-        public static DataProcessor30ListingDataDto ToDto( this DataProcessor30ListingData dataProcessor30ListingData)
+        public static DataProcessor30ListingDataSummeryDto ToDto( this DataProcessor30ListingData dataProcessor30ListingData)
         {
-            return new  DataProcessor30ListingDataDto{
+            return new  DataProcessor30ListingDataSummeryDto{
                 Id = dataProcessor30ListingData.Id,
                 Name = dataProcessor30ListingData.Name,
                 CreationTime = dataProcessor30ListingData.CreationTime,
