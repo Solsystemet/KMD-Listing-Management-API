@@ -26,6 +26,9 @@ export function FileUpload({
          if (fileRejections.length > 0) {
             return setIsInvalidUpload(true);
          }
+
+         setProgress(0);
+
          const file = acceptedFiles[0];
          setSelectedFile(file);
 
