@@ -2,10 +2,10 @@
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import styles from "./FileUpload.module.css";
 import { useDropzone } from "react-dropzone";
-import axios from "axios";
 import { FileText } from "lucide-react";
 import { StandardButton } from "../buttons/Buttons";
 import NullableDataProcessor30ListingData from "../../types/NullableDataProcessor30ListingData";
+import { scrapeFile } from "../../lib/api";
 
 export function FileUpload({
    setListingData,
@@ -29,25 +29,9 @@ export function FileUpload({
             const formData = new FormData();
             formData.append("file", file);
 
-            const response = await axios.post("/api/file-scraper", formData, {
-               onUploadProgress: progressEvent => {
-                  console.log(progressEvent.total);
-                  let percentCompleted = 0;
-                  if (!progressEvent.total) {
-                     percentCompleted = 100;
-                  } else {
-                     percentCompleted = Math.round(
-                        (progressEvent.loaded * 100) / progressEvent.total
-                     );
-                  }
-                  setProgress(percentCompleted);
-               },
-            });
+            const listingData = await scrapeFile(formData, setProgress);
 
-            const ListingData: NullableDataProcessor30ListingData =
-               response.data;
-
-            setListingData(ListingData);
+            setListingData(listingData);
          } catch {
             setListingData(null);
          }
