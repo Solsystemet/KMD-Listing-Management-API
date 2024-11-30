@@ -30,9 +30,9 @@ namespace api.Controllers
             }
             
             var dataProcessor30ListingDatas = await _dataProcessor30ListingDataRepo.GetAllAsync(query);
-            var dataProcessor30ListingDataDtos = dataProcessor30ListingDatas.Select(l => l.ToDto());
+            var dataProcessor30ListingDataSummeryDtos = dataProcessor30ListingDatas.Select(l => l.ToDto());
             
-            return Ok(dataProcessor30ListingDataDtos);
+            return Ok(dataProcessor30ListingDataSummeryDtos);
         }
         [HttpGet("{id:int}")]
 
