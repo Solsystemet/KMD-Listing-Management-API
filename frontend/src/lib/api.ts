@@ -3,6 +3,9 @@ import ListingSidebarDto from "../types/ListingSidebarDto";
 import QueryObject from "../types/QueryObject";
 import { Dispatch, SetStateAction } from "react";
 import NullableDataProcessor30ListingData from "../types/NullableDataProcessor30ListingData";
+import { ListingSidebar } from "../components/listingSidebar/listingSidebar";
+import DataProcessor30ListingData from "../types/DataProcessor30ListingData";
+import { DataProcessor } from "../types/DataProcessor30ListingData";
 
 type ListingSidebarDtoWithStringDate = {
    id: number;
@@ -31,6 +34,24 @@ export async function getAllListings(queryObject: QueryObject) {
    }
 
    return listings;
+}
+
+type DataProcessor30ListingDataWithStringDate = Omit<
+   DataProcessor30ListingData,
+   "creationTime" | "updateTime"
+> & { creationTime: string; updateTime: string };
+
+export async function getListingById(queryObject: QueryObject, id: number) {
+   const res = await axios.get(`/api/data-processor-30-listing-data/${id}`);
+   const listingWithStringDate: DataProcessor30ListingDataWithStringDate =
+      res.data;
+   const listing: DataProcessor30ListingData = {
+      ...listingWithStringDate,
+      creationTime: new Date(listingWithStringDate.creationTime),
+      updateTime: new Date(listingWithStringDate.updateTime),
+   };
+
+   return listing;
 }
 
 export async function scrapeFile(
