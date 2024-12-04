@@ -8,14 +8,14 @@ namespace api.Models
 {
 
     [Owned]
-    public class DataProcessorRepresentative : DataContactInfo
+    public class DataControllerRepresentative : DataContactInfo
     {
         public string Role { get; set; } = string.Empty;
-        public  bool IsEqual(DataProcessorRepresentative dataProcessorRepresentative){
-            if(dataProcessorRepresentative.Role != this.Role){
+        public  bool IsEqual(DataControllerRepresentative dataControllerRepresentative){
+            if(dataControllerRepresentative.Role != this.Role){
                 return false;
             }
-            return base.IsEqual(dataProcessorRepresentative);            
+            return base.IsEqual(dataControllerRepresentative);            
         }
     }
 }

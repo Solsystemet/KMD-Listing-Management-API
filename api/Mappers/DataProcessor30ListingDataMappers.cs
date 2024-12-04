@@ -27,6 +27,7 @@ namespace api.Mappers
                 Name = dataProcessor30ListingDataDto.Name,
                 DataController = dataProcessor30ListingDataDto.DataController,
                 DataProcessor = dataProcessor30ListingDataDto.DataProcessor,
+                DataControllerRepresentative = dataProcessor30ListingDataDto.DataControllerRepresentative,
                 DataProcessorRepresentative = dataProcessor30ListingDataDto.DataProcessorRepresentative,
                 DataSecurityAdvisor = dataProcessor30ListingDataDto.DataSecurityAdvisor,
                 DataCategories = dataProcessor30ListingDataDto.DataCategories,
