@@ -1,17 +1,28 @@
+import React from "react";
 import styles from "./inputBox.module.css";
 
 type InputBoxProps = {
    templateText: string;
-   value?: string;
+   id: string;
+   name: string;
+   value: string;
+   onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
+   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+   required?: boolean;
 };
 
-function InputBox({ templateText, value }: InputBoxProps) {
+function InputBox(props: InputBoxProps) {
    return (
       <input
          type="text"
-         placeholder={templateText}
+         placeholder={props.templateText}
          className={styles.inputBox}
-         value={value}
+         id={props.id}
+         name={props.name}
+         value={props.value}
+         onBlur={props.onBlur}
+         onChange={props.onChange}
+         required={props.required}
       />
    );
 }
