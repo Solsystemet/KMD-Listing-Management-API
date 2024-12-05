@@ -276,7 +276,7 @@ export function Survey({ listingDataProp }: SurveyProps) {
                   <Field form={form} name={`dataSubProcessor.${index}`}>
                      {field => (
                         <div className={styles.inputContainer}>
-                           <h3>Data Sub Processor Info {index}</h3>
+                           <h3>Data Sub Processor Info {index + 1}</h3>
                            <InputBox
                               id={`dataSubProcessor.${index}.name`}
                               name={`dataSubProcessor.${index}.name`}
