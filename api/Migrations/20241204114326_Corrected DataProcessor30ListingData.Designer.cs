@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,11 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241204114326_Corrected DataProcessor30ListingData")]
+    partial class CorrectedDataProcessor30ListingData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,9 +159,8 @@ namespace api.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<string>("CVR")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                            b1.Property<long>("CVR")
+                                .HasColumnType("bigint");
 
                             b1.Property<string>("Mail")
                                 .IsRequired()
@@ -222,9 +224,8 @@ namespace api.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<string>("CVR")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                            b1.Property<long>("CVR")
+                                .HasColumnType("bigint");
 
                             b1.Property<string>("Mail")
                                 .IsRequired()
