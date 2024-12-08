@@ -1,7 +1,8 @@
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { blob } from "stream/consumers";
 
-export async function createPdf(_listing: any) {
+export async function createPdf(_listing: any): Promise<Blob> {
     const doc = new jsPDF();
 
     const splitTitle = doc.splitTextToSize(`${_listing.name} Data Processor Listing`, 120);
@@ -43,6 +44,9 @@ export async function createPdf(_listing: any) {
     // Save the PDF file
     const fileName = `${_listing.name} listing.pdf`;
     doc.save(fileName);
+    const blobPDF = new Blob( [ doc.output('blob') ], { type: 'application/pdf' } ); // outputs the pdf as a blob w MIME/media type pdf
+    
+    return(blobPDF);
 }
 
 // Helper function to format all data
