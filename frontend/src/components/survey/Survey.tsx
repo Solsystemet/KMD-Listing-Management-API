@@ -5,6 +5,7 @@ import { Checkbox } from "../checkBox/CheckBox";
 import styles from "./Survey.module.css";
 import NullableDataProcessor30ListingData from "../../types/NullableDataProcessor30ListingData";
 import { StandardButton } from "../buttons/Buttons";
+import DataProcessor30ListingData from "../../types/DataProcessor30ListingData";
 
 function FieldInfo<TFieldValue>({
    field,
@@ -53,6 +54,8 @@ type SurveyProps = {
 
 export function Survey({ listingDataProp }: SurveyProps) {
    const [listingData, SetListingData] = useState(listingDataProp);
+   const [hasJustAddedDataSubProcessor, setHasJustAddedDataSubProcessor] =
+      useState(false); // Should be removed if possible (used to make sure the POST request is not posted when a subProcessor is added)
 
    function addDataProcessors() {
       SetListingData({
@@ -69,6 +72,7 @@ export function Survey({ listingDataProp }: SurveyProps) {
             },
          ],
       });
+      setHasJustAddedDataSubProcessor(true);
    }
 
    const form = useForm({
@@ -102,6 +106,12 @@ export function Survey({ listingDataProp }: SurveyProps) {
             phoneNo: listingData.dataProcessorRepresentative.phoneNo || "",
             mail: listingData.dataProcessorRepresentative.mail || "",
          },
+         dataSecurityAdvisor: {
+            name: listingData.dataSecurityAdvisor.name || "",
+            address: listingData.dataSecurityAdvisor.address || "",
+            phoneNo: listingData.dataSecurityAdvisor.phoneNo || "",
+            mail: listingData.dataSecurityAdvisor.mail || "",
+         },
          dataSubProcessors: listingData.dataSubProcessors.map(subProcessor => ({
             name: subProcessor.name || "",
             cvr: subProcessor.cvr || "",
@@ -110,12 +120,25 @@ export function Survey({ listingDataProp }: SurveyProps) {
             directSubProcessor: subProcessor.directSubProcessor || false,
             transferReason: "",
          })),
-         infoDescription: "", // Correctly placed infoDescription field
-         technicalDescription: "",
+         dataTransfer: {
+            transferInformation: "",
+         },
+         dataSecurity: {
+            securityMeasures: "",
+         },
+         dataCategories: {
+            categoryList: "",
+         },
       },
       onSubmit: async values => {
          //! MR BLACH ADD AND DO YOUR THING!!!!
+         if (hasJustAddedDataSubProcessor) {
+            setHasJustAddedDataSubProcessor(false);
+            return;
+         }
+         const test: DataProcessor30ListingData = values.value;
          console.log(values);
+         console.log(await JSON.stringify(values.value));
       },
    });
 
@@ -512,6 +535,79 @@ export function Survey({ listingDataProp }: SurveyProps) {
                   )}
                </Field>
 
+               {/* Data Security Advisor */}
+               <Field form={form} name="dataSecurityAdvisor">
+                  {field => (
+                     <div className={styles.inputContainer}>
+                        <h2>Data Security Advisor info</h2>
+                        <InputBox
+                           id={`dataSecurityAdvisor.name`}
+                           name={`dataSecurityAdvisor.name`}
+                           templateText={"Name"}
+                           value={field.state.value?.name}
+                           onBlur={field.handleBlur}
+                           onChange={e => {
+                              field.handleChange({
+                                 ...field.state.value,
+                                 name: e.target.value,
+                              });
+                              handleChange(e.target.value);
+                           }}
+                           required={false}
+                        />
+                        <FieldInfo field={field} />
+                        <InputBox
+                           id={`dataSecurityAdvisor.address`}
+                           name={`dataSecurityAdvisor.address`}
+                           templateText={"Address"}
+                           value={field.state.value?.address}
+                           onBlur={field.handleBlur}
+                           onChange={e => {
+                              field.handleChange({
+                                 ...field.state.value,
+                                 address: e.target.value,
+                              });
+                              handleChange(e.target.value);
+                           }}
+                           required={false}
+                        />
+                        <FieldInfo field={field} />
+                        <InputBox
+                           id={`dataSecurityAdvisor.phoneNo`}
+                           name={`dataSecurityAdvisor.phoneNo`}
+                           templateText={"Phone number"}
+                           value={field.state.value?.phoneNo}
+                           onBlur={field.handleBlur}
+                           onChange={e => {
+                              field.handleChange({
+                                 ...field.state.value,
+                                 phoneNo: e.target.value,
+                              });
+                              handleChange(e.target.value);
+                           }}
+                           required={false}
+                        />
+                        <FieldInfo field={field} />
+                        <InputBox
+                           id={`dataSecurityAdvisor.mail`}
+                           name={`dataSecurityAdvisor.mail`}
+                           templateText={"E-mail"}
+                           value={field.state.value?.mail}
+                           onBlur={field.handleBlur}
+                           onChange={e => {
+                              field.handleChange({
+                                 ...field.state.value,
+                                 mail: e.target.value,
+                              });
+                              handleChange(e.target.value);
+                           }}
+                           required={false}
+                        />
+                        <FieldInfo field={field} />
+                     </div>
+                  )}
+               </Field>
+
                {/* Sub processors */}
                <h2>Data Sub Processors</h2>
                {listingData.dataSubProcessors.map((subProcessor, index) => (
@@ -567,6 +663,21 @@ export function Survey({ listingDataProp }: SurveyProps) {
                                  }}
                                  required={false}
                               />
+                              <InputBox
+                                 id={`dataSubProcessor.${index}.treatment`}
+                                 name={`dataSubProcessor.${index}.treatment`}
+                                 templateText={"treatment"}
+                                 value={field.state.value?.treatment}
+                                 onBlur={field.handleBlur}
+                                 onChange={e => {
+                                    field.handleChange({
+                                       ...field.state.value,
+                                       treatment: e.target.value,
+                                    });
+                                    handleChange(e.target.value);
+                                 }}
+                                 required={false}
+                              />
                               <FieldInfo field={field} />
                               <Checkbox
                                  id={`dataSubProcessor.${index}.directSubProcessor`}
@@ -608,15 +719,16 @@ export function Survey({ listingDataProp }: SurveyProps) {
                <button onClick={addDataProcessors} className={styles.addButton}>
                   Add Data Processor
                </button>
-               <Field form={form} name={`infoDescription`}>
+               <Field form={form} name={`dataCategories.categoryList`}>
                   {field => (
                      <>
                         <h2>
-                           Beskrivelse af det information der bliver behandlet.
+                           Beskrivelse af de katagorier af information der
+                           bliver behandlet.
                         </h2>
                         <TextBox
-                           id={`infoDescription`}
-                           name={`infoDescription`}
+                           id={`dataCategories.categoryList`}
+                           name={`dataCategories.categoryList`}
                            templateText={"Enter description"}
                            value={field.state.value}
                            onBlur={field.handleBlur}
@@ -631,7 +743,7 @@ export function Survey({ listingDataProp }: SurveyProps) {
                   )}
                </Field>
 
-               <Field form={form} name={`technicalDescription`}>
+               <Field form={form} name={`dataSecurity.securityMeasures`}>
                   {field => (
                      <>
                         <h2>
@@ -639,8 +751,32 @@ export function Survey({ listingDataProp }: SurveyProps) {
                            sikkerhedsforanstaltninger.
                         </h2>
                         <TextBox
-                           id={`technicalDescription`}
-                           name={`technicalDescription`}
+                           id={`dataSecurity.securityMeasures`}
+                           name={`dataSecurity.securityMeasures`}
+                           templateText={"Enter technical description"}
+                           value={field.state.value || ""}
+                           onBlur={field.handleBlur}
+                           onChange={e => {
+                              field.handleChange(e.target.value);
+                              handleChange(e.target.value);
+                           }}
+                           required={false}
+                        />
+                        <FieldInfo field={field} />
+                     </>
+                  )}
+               </Field>
+
+               <Field form={form} name={`dataTransfer.transferInformation`}>
+                  {field => (
+                     <>
+                        <h2>
+                           Beskrivelse af tekniske og organisatoriske
+                           sikkerhedsforanstaltninger.
+                        </h2>
+                        <TextBox
+                           id={`dataTransfer.transferInformation`}
+                           name={`dataTransfer.transferInformation`}
                            templateText={"Enter technical description"}
                            value={field.state.value || ""}
                            onBlur={field.handleBlur}
