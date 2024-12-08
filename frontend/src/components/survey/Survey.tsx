@@ -6,6 +6,7 @@ import styles from "./Survey.module.css";
 import NullableDataProcessor30ListingData from "../../types/NullableDataProcessor30ListingData";
 import { StandardButton } from "../buttons/Buttons";
 import DataProcessor30ListingData from "../../types/DataProcessor30ListingData";
+import { postListing } from "../../lib/api";
 
 function FieldInfo<TFieldValue>({
    field,
@@ -131,14 +132,14 @@ export function Survey({ listingDataProp }: SurveyProps) {
          },
       },
       onSubmit: async values => {
-         //! MR BLACH ADD AND DO YOUR THING!!!!
          if (hasJustAddedDataSubProcessor) {
             setHasJustAddedDataSubProcessor(false);
             return;
          }
-         const test: DataProcessor30ListingData = values.value;
          console.log(values);
          console.log(await JSON.stringify(values.value));
+         const id = await postListing(values.value);
+         console.log(id);
       },
    });
 
