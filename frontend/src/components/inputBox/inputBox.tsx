@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./inputBox.module.css";
 
 type InputBoxProps = {
-   templateText: string;
+   getFieldValuetemplateText: string;
    id: string;
    name: string;
    value: string;
