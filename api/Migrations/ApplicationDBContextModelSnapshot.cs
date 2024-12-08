@@ -156,8 +156,9 @@ namespace api.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<long>("CVR")
-                                .HasColumnType("bigint");
+                            b1.Property<string>("CVR")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Mail")
                                 .IsRequired()
@@ -221,8 +222,9 @@ namespace api.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<long>("CVR")
-                                .HasColumnType("bigint");
+                            b1.Property<string>("CVR")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Mail")
                                 .IsRequired()

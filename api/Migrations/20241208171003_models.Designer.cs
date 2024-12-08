@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20241124173701_DataSubProcessorAdd2")]
-    partial class DataSubProcessorAdd2
+    [Migration("20241208171003_models")]
+    partial class models
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,6 +81,47 @@ namespace api.Migrations
                     b.ToTable("DataProcessor30ListingDatas");
                 });
 
+            modelBuilder.Entity("api.Models.DataSubProcessor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CVR")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DataProcessor30ListingDataId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("DirectSubProcessor")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransferReason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Treatment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DataProcessor30ListingDataId");
+
+                    b.ToTable("DataSubProcessors");
+                });
+
             modelBuilder.Entity("api.Models.DataEdit", b =>
                 {
                     b.HasOne("api.Models.DataProcessor30ListingData", "DataProcessor30ListingData")
@@ -118,8 +159,9 @@ namespace api.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<long>("CVR")
-                                .HasColumnType("bigint");
+                            b1.Property<string>("CVR")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Mail")
                                 .IsRequired()
@@ -141,6 +183,39 @@ namespace api.Migrations
                                 .HasForeignKey("DataProcessor30ListingDataId");
                         });
 
+                    b.OwnsOne("api.Models.DataControllerRepresentative", "DataControllerRepresentative", b1 =>
+                        {
+                            b1.Property<int>("DataProcessor30ListingDataId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Address")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Mail")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("PhoneNo")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Role")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("DataProcessor30ListingDataId");
+
+                            b1.ToTable("DataProcessor30ListingDatas");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DataProcessor30ListingDataId");
+                        });
+
                     b.OwnsOne("api.Models.DataProcessor", "DataProcessor", b1 =>
                         {
                             b1.Property<int>("DataProcessor30ListingDataId")
@@ -150,8 +225,9 @@ namespace api.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<long>("CVR")
-                                .HasColumnType("bigint");
+                            b1.Property<string>("CVR")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Mail")
                                 .IsRequired()
@@ -191,6 +267,10 @@ namespace api.Migrations
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("PhoneNo")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Role")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
@@ -248,48 +328,6 @@ namespace api.Migrations
                                 .HasForeignKey("DataProcessor30ListingDataId");
                         });
 
-                    b.OwnsMany("api.Models.DataSubProcessor", "DataSubProcessors", b1 =>
-                        {
-                            b1.Property<int>("DataProcessor30ListingDataId")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
-
-                            b1.Property<string>("Adress")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("CVR")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Treatment")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<bool>("directSubProcessor")
-                                .HasColumnType("bit");
-
-                            b1.Property<string>("name")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("transferReason")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("DataProcessor30ListingDataId", "Id");
-
-                            b1.ToTable("DataSubProcessor");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DataProcessor30ListingDataId");
-                        });
-
                     b.OwnsOne("api.Models.DataTransfer", "DataTransfer", b1 =>
                         {
                             b1.Property<int>("DataProcessor30ListingDataId")
@@ -313,6 +351,9 @@ namespace api.Migrations
                     b.Navigation("DataController")
                         .IsRequired();
 
+                    b.Navigation("DataControllerRepresentative")
+                        .IsRequired();
+
                     b.Navigation("DataProcessor")
                         .IsRequired();
 
@@ -325,15 +366,24 @@ namespace api.Migrations
                     b.Navigation("DataSecurityAdvisor")
                         .IsRequired();
 
-                    b.Navigation("DataSubProcessors");
-
                     b.Navigation("DataTransfer")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("api.Models.DataSubProcessor", b =>
+                {
+                    b.HasOne("api.Models.DataProcessor30ListingData", "DataProcessor30ListingData")
+                        .WithMany("DataSubProcessors")
+                        .HasForeignKey("DataProcessor30ListingDataId");
+
+                    b.Navigation("DataProcessor30ListingData");
                 });
 
             modelBuilder.Entity("api.Models.DataProcessor30ListingData", b =>
                 {
                     b.Navigation("DataEdits");
+
+                    b.Navigation("DataSubProcessors");
                 });
 #pragma warning restore 612, 618
         }
