@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20241125102708_DataSubProcessorAdd6")]
-    partial class DataSubProcessorAdd6
+    [Migration("20241208163632_init2")]
+    partial class init2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -127,7 +127,7 @@ namespace api.Migrations
 
                     b.HasIndex("DataProcessor30ListingDataId");
 
-                    b.ToTable("DataSubProcessor");
+                    b.ToTable("DataSubProcessors");
                 });
 
             modelBuilder.Entity("api.Models.DataEdit", b =>
@@ -167,8 +167,9 @@ namespace api.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<long>("CVR")
-                                .HasColumnType("bigint");
+                            b1.Property<string>("CVR")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Mail")
                                 .IsRequired()
@@ -199,8 +200,9 @@ namespace api.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<long>("CVR")
-                                .HasColumnType("bigint");
+                            b1.Property<string>("CVR")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Mail")
                                 .IsRequired()

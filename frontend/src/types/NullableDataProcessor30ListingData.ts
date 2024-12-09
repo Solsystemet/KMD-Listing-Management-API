@@ -34,9 +34,7 @@ export type NullableDataProcessorRepresentative = NullableDataContactInfo & {
    role?: string | null;
 };
 
-export type NullableDataSecurityAdvisor = NullableDataContactInfo & {
-   categoryList?: string | null;
-};
+export type NullableDataSecurityAdvisor = NullableDataContactInfo;
 
 export type NullableDataCategories = {
    categoryList?: string | null;

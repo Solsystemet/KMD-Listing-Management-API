@@ -9,7 +9,7 @@ namespace api.Models
     [Owned]
     public class DataProcessor : DataContactInfo
     {
-        public long CVR { get; set; }   
+        public string CVR { get; set; } = string.Empty;    
 
          public  bool IsEqual(DataProcessor dataProcessor){
             if(dataProcessor.CVR != this.CVR){

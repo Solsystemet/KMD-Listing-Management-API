@@ -9,7 +9,7 @@ namespace api.Models
     [Owned]
     public class DataController : DataContactInfo
     {
-        public long CVR { get; set; }        
+        public string CVR { get; set; } = string.Empty;    
         public  bool IsEqual(DataController dataController){
             if(dataController.CVR != this.CVR){
                 return false;
