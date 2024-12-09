@@ -378,7 +378,7 @@ namespace api.FileScraper
             }
 
         }
-        static public string[,] ExtractSubProcessors(
+        static public ValueTuple<string[,], Dictionary<int,string>> ExtractSubProcessors(
              PdfDocument document,
              List<int> pages,
              ValueTuple<Dictionary<ValueTuple<double, int>, int>, Dictionary<double, int>> tableIndices)
@@ -386,6 +386,8 @@ namespace api.FileScraper
             try
             {
                 string[,] subProcessors = new string[tableIndices.Item1.Count, tableIndices.Item2.Count];
+                Dictionary<int, string> companyMap = new Dictionary<int, string>();
+                string? currentComany = null;
                 int yPos = 0;
                 foreach (var pageIndex in pages)
                 {
@@ -420,6 +422,7 @@ namespace api.FileScraper
                             // Handle case where company name takes a full row
                             if (orderedTextBlocks[i].BoundingBox.TopLeft.Y > orderedTextBlocks[i + 1].BoundingBox.TopLeft.Y + 5)
                             {
+                                currentComany = orderedTextBlocks[i].Text;
                                 i++;
                             }
                             while (!IsWithinColumn(orderedTextBlocks[i], tableIndices.Item2.First().Key))
@@ -445,6 +448,7 @@ namespace api.FileScraper
                             {
                                 if (IsWithinColumn(orderedTextBlocks[i], tableIndices.Item2.Keys.First()) && orderedTextBlocks[i].BoundingBox.TopLeft.Y > orderedTextBlocks[i + 1].BoundingBox.TopLeft.Y + 5)
                                 {
+                                    currentComany = orderedTextBlocks[i].Text;
                                     i++;
                                     continue;
                                 }
@@ -453,7 +457,13 @@ namespace api.FileScraper
 
                             (int?, int?) indices = GetIndicesFromTextBlock(orderedTextBlocks[i], tableIndices, ref yPos);
                             if (indices.Item1 != null && indices.Item2 != null)
+                            {
                                 subProcessors[(int)indices.Item1, (int)indices.Item2] += orderedTextBlocks[i].Text;
+                                if (!companyMap.ContainsKey((int)indices.Item1) && currentComany != null)
+                                    companyMap[(int)indices.Item1] = currentComany;
+                                    
+                            }
+
                         }
 
 
@@ -461,7 +471,7 @@ namespace api.FileScraper
                     }
                 }
 
-                return subProcessors;
+                return (subProcessors, companyMap);
             }
             catch (Exception ex)
             {

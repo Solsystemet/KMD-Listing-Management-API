@@ -44,19 +44,20 @@ namespace api.Controllers
             (string, List<int>) SubProcessorSection = FileScraper.FileScraper.GetSection(pdfDocument, "B.1. Godkendte underdatabehandlere", "B.2.");
             // row major
             (Dictionary<(double, int), int>, Dictionary<double, int>) tableIndices = FileScraper.FileScraper.CreateTableIndices(pdfDocument, SubProcessorSection.Item2);
-            string[,] SubProcessorData = FileScraper.FileScraper.ExtractSubProcessors(pdfDocument, SubProcessorSection.Item2, tableIndices);
+            ValueTuple<string[,], Dictionary<int,string>> SubProcessorData = FileScraper.FileScraper.ExtractSubProcessors(pdfDocument, SubProcessorSection.Item2, tableIndices);
             var list = new List<List<string>>();
-            for (int i = 0; i < SubProcessorData.GetLength(0); i++)
+            for (int i = 0; i < SubProcessorData.Item1.GetLength(0); i++)
             {
                 var innerList = new List<string>();
-                for (int j = 0; j < SubProcessorData.GetLength(1); j++)
+                for (int j = 0; j < SubProcessorData.Item1.GetLength(1); j++)
                 {
-                    innerList.Add(SubProcessorData[i, j]);
+                    innerList.Add(SubProcessorData.Item1[i, j]);
                 }
                 list.Add(innerList);
             }
             IEnumerable<NullableSubProcessor>? verifiedSubProcessors = FileScraper.FileScraper.CreateSubProcessorList(list);
 
+<<<<<<< Updated upstream
             var dataProcessor30ListingData = new NullableDataProcessor30ListingData(); 
             dataProcessor30ListingData.DataControllerRepresentative = representativePair.Item1;
             dataProcessor30ListingData.DataProcessorRepresentative = representativePair.Item2;
@@ -67,6 +68,13 @@ namespace api.Controllers
             else {
                 dataProcessor30ListingData.DataSubProcessors = new List<NullableSubProcessor>();
             }
+=======
+            List<object?> objList = new List<object?>();
+            objList.Add(representativePair.Item1);
+            objList.Add(representativePair.Item2);
+            objList.Add(verifiedSubProcessors);
+            objList.Add(SubProcessorData.Item2);
+>>>>>>> Stashed changes
 
             return Ok(dataProcessor30ListingData);
             
