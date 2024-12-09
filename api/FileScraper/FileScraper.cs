@@ -479,10 +479,29 @@ namespace api.FileScraper
             }
 
         }
-        static public IEnumerable<NullableSubProcessor>? CreateSubProcessorList(List<List<String>> data)
+        static public IEnumerable<NullableSubProcessor>? CreateSubProcessorList(List<List<String>> data, Dictionary<int,string> companyMap)
         {
             List<NullableSubProcessor>? result = new List<NullableSubProcessor>();
 
+            for (int y = 0; y < data.Count; y++)
+            {
+                    // This value should never be null so row is empty
+                    if (data[y][0] == null)
+                        continue;
+
+
+                    NullableSubProcessor subProcessor = new NullableSubProcessor();
+                    subProcessor.Name = data[y][0];
+                    subProcessor.CVR = data[y][1];
+                    subProcessor.Address = data[y][2];
+                    subProcessor.Treatment = data[y][3];
+                    subProcessor.DirectSubProcessor = data[y][4] == "Ja" ? true : false;
+                    subProcessor.TransferReason = data[y][5] == null ? "N/A" : data[y][5];
+                    if(companyMap.ContainsKey(y))
+                        subProcessor.ParentCompany = companyMap[y];
+                    result.Add(subProcessor);
+            }
+            /*
             foreach (List<string> row in data)
             {
                 // This value should never be null so row is empty
@@ -499,7 +518,7 @@ namespace api.FileScraper
                 subProcessor.TransferReason = row[5] == null ? "N/A" : row[5];
                 result.Add(subProcessor);
             }
-
+            */
             return result;
         }
     }

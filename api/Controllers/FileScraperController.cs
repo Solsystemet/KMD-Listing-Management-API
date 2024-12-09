@@ -55,9 +55,7 @@ namespace api.Controllers
                 }
                 list.Add(innerList);
             }
-            IEnumerable<NullableSubProcessor>? verifiedSubProcessors = FileScraper.FileScraper.CreateSubProcessorList(list);
-
-<<<<<<< Updated upstream
+            IEnumerable<NullableSubProcessor>? verifiedSubProcessors = FileScraper.FileScraper.CreateSubProcessorList(list, SubProcessorData.Item2);
             var dataProcessor30ListingData = new NullableDataProcessor30ListingData(); 
             dataProcessor30ListingData.DataControllerRepresentative = representativePair.Item1;
             dataProcessor30ListingData.DataProcessorRepresentative = representativePair.Item2;
@@ -68,13 +66,11 @@ namespace api.Controllers
             else {
                 dataProcessor30ListingData.DataSubProcessors = new List<NullableSubProcessor>();
             }
-=======
             List<object?> objList = new List<object?>();
             objList.Add(representativePair.Item1);
             objList.Add(representativePair.Item2);
             objList.Add(verifiedSubProcessors);
             objList.Add(SubProcessorData.Item2);
->>>>>>> Stashed changes
 
             return Ok(dataProcessor30ListingData);
             
