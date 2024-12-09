@@ -3,14 +3,14 @@ import React from "react";
 
 type StandardButtonProps = {
    children: React.ReactNode;
-   color: string;
+   color?: string;
    backgroundColor?: string;
-   fontSize: string;
+   fontSize?: string;
    border?: string;
+   type?: "button" | "submit" | "reset";
    onClick?: () => void;
    disabled?: boolean;
 };
-
 export function StandardButton(props: StandardButtonProps) {
    return (
       <button
@@ -22,6 +22,7 @@ export function StandardButton(props: StandardButtonProps) {
          }}
          className={styles.standardButton}
          onClick={props.onClick}
+         type={props.type}
          disabled={props.disabled}
       >
          {props.children}
