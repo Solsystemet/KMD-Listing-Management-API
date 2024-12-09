@@ -1,4 +1,5 @@
-﻿using api.FileScraper;
+﻿using api.Dtos.DataProcessor30ListingData.NullableDataProcessor30ListingData;
+using api.FileScraper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,17 +96,17 @@ namespace KMD_API_Test.SubprocessorTests
                 }
                 list.Add(innerList);
             }
-            IEnumerable<FileScraper.SubProcessor>? verifiedSubProcessors = FileScraper.CreateSubProcessorList(list);
-            IEnumerable<FileScraper.SubProcessor>? verifiedSubProcessorsFromExpected = FileScraper.CreateSubProcessorList(StruerSubprocessorsList);
+            IEnumerable<NullableSubProcessor>? verifiedSubProcessors = FileScraper.CreateSubProcessorList(list);
+            IEnumerable<NullableSubProcessor>? verifiedSubProcessorsFromExpected = FileScraper.CreateSubProcessorList(StruerSubprocessorsList);
 
             for (int i = 0; i < verifiedSubProcessorsFromExpected.Count(); i++)
             {
-                Assert.That(verifiedSubProcessors.ElementAt(i).name, Is.EqualTo(verifiedSubProcessorsFromExpected.ElementAt(i).name));
+                Assert.That(verifiedSubProcessors.ElementAt(i).Name, Is.EqualTo(verifiedSubProcessorsFromExpected.ElementAt(i).Name));
                 Assert.That(verifiedSubProcessors.ElementAt(i).CVR, Is.EqualTo(verifiedSubProcessorsFromExpected.ElementAt(i).CVR));
-                Assert.That(verifiedSubProcessors.ElementAt(i).Adress, Is.EqualTo(verifiedSubProcessorsFromExpected.ElementAt(i).Adress));
+                Assert.That(verifiedSubProcessors.ElementAt(i).Address, Is.EqualTo(verifiedSubProcessorsFromExpected.ElementAt(i).Address));
                 Assert.That(verifiedSubProcessors.ElementAt(i).Treatment, Is.EqualTo(verifiedSubProcessorsFromExpected.ElementAt(i).Treatment));
-                Assert.That(verifiedSubProcessors.ElementAt(i).directSubProcessor, Is.EqualTo(verifiedSubProcessorsFromExpected.ElementAt(i).directSubProcessor));
-                Assert.That(verifiedSubProcessors.ElementAt(i).transferReason, Is.EqualTo(verifiedSubProcessorsFromExpected.ElementAt(i).transferReason));
+                Assert.That(verifiedSubProcessors.ElementAt(i).DirectSubProcessor, Is.EqualTo(verifiedSubProcessorsFromExpected.ElementAt(i).DirectSubProcessor));
+                Assert.That(verifiedSubProcessors.ElementAt(i).TransferReason, Is.EqualTo(verifiedSubProcessorsFromExpected.ElementAt(i).TransferReason));
             }
         }
     }

@@ -15,6 +15,7 @@
 
    --primary-color: #020304;
    --secondary-color: #1f614e;
+   --error-color: #ff4d4f;
    --highlight-color: #ffc37d;
    --background-color: #ffffff;
    --secondary-background-color: #d9d9d9;
@@ -47,7 +48,10 @@ body {
 
 h1 {
    font-size: 3rem;
-   line-height: 1rem;
+}
+h2 {
+   font-size: 1.5rem;
+   margin-bottom: 0;
 }
 
 @font-face {
@@ -126,8 +130,4 @@ h1 {
    src: url(./assets/fonts/MerriweatherSans/MerriweatherSans-SemiBoldItalic.ttf);
    font-weight: 600;
    font-style: italic;
-}
-
-#root {
-   max-width: 1280px;
 }

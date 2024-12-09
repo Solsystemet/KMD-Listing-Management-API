@@ -24,6 +24,11 @@
    text-align: center;
    cursor: pointer;
 }
+.invalidUpload {
+   color: var(--error-color);
+   margin: 0;
+   text-align: center;
+}
 
 .fileDetailContainer {
    grid-column: 2;
@@ -52,6 +57,10 @@
    display: flex;
    justify-content: center;
    align-items: center;
+}
+
+.picCircle.downloadComplete {
+   background-color: var(--secondary-color);
 }
 
 .fileName {

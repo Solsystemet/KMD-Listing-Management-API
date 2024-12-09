@@ -11,7 +11,7 @@ namespace api.Models
     {
         public string SecurityMeasures { get; set; } = string.Empty;
 
-          public bool IsEqual(DataSecurity dataSecurity){
+        public bool IsEqual(DataSecurity dataSecurity){
             return dataSecurity.SecurityMeasures == this.SecurityMeasures;
         }
     }
