@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import styles from "./Buttons.module.css";
 import React from "react";
 
@@ -32,20 +33,24 @@ export function StandardButton(props: StandardButtonProps) {
 
 type NavButtonProps = {
    children: React.ReactNode;
-   fontSize: string;
+   fontSize?: string;
    color: string;
    href?: string;
+   params?: string;
 };
 
 export function NavButton(props: NavButtonProps) {
    return (
-      <div className={styles.navButton}>
-         <a
-            href={props.href}
-            style={{ fontSize: props.fontSize, color: props.color }}
-         >
+      <Link
+         className={styles.navButton}
+         to={props.href}
+         {...(props.params != undefined
+            ? { params: { listingId: props.params } }
+            : {})}
+      >
+         <p style={{ fontSize: props.fontSize, color: props.color }}>
             {props.children}
-         </a>
-      </div>
+         </p>
+      </Link>
    );
 }

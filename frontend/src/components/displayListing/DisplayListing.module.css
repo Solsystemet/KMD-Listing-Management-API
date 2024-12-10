@@ -1,17 +1,44 @@
 /* FILE: DisplayListing.module.css */
 .listing-container {
    font-family: Arial, sans-serif;
-   padding: 20px;
-   border: 1px solid #ccc;
-   border-radius: 5px;
+   padding: 1.25rem; /* 20px */
+   border: 0.0625rem solid #ccc; /* 1px */
+   border-radius: 0.3125rem; /* 5px */
    background-color: #f9f9f9;
+   max-width: 50rem; /* 800px */
+   margin: 0 auto;
+   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 4px 8px */
 }
 
 .listing-container h2 {
-   margin-top: 20px;
+   margin-top: 1.25rem; /* 20px */
    color: #333;
+   border-bottom: 0.125rem solid #ccc; /* 2px */
+   padding-bottom: 0.3125rem; /* 5px */
 }
 
 .listing-container p {
-   margin: 5px 0;
+   margin: 0.3125rem 0; /* 5px */
+   line-height: 1.6;
+}
+
+.listing-container div {
+   margin-bottom: 1.25rem; /* 20px */
+}
+
+.listing-container div p {
+   margin: 0.125rem 0; /* 2px */
+}
+
+.listing-container div p:first-child {
+   font-weight: bold;
+}
+
+.listing-container div p:last-child {
+   color: #555;
+}
+
+.listing-container div:hover {
+   background-color: #f1f1f1;
+   transition: background-color 0.3s ease;
 }
