@@ -22,7 +22,6 @@ export function FileUpload({
          acceptedFiles: T[],
          fileRejections: FileRejection[]
       ) => {
-         console.log(fileRejections);
          if (fileRejections.length > 0) {
             return setIsInvalidUpload(true);
          }
@@ -37,6 +36,8 @@ export function FileUpload({
             formData.append("file", file);
 
             const listingData = await scrapeFile(formData, setProgress);
+
+            setProgress(100);
 
             setListingData(listingData);
          } catch {
