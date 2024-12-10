@@ -64,10 +64,10 @@ export async function scrapeFile(
          let percentCompleted = 0;
 
          if (!progressEvent.total) {
-            percentCompleted = 100;
+            percentCompleted = 66;
          } else {
             percentCompleted = Math.round(
-               (progressEvent.loaded * 100) / progressEvent.total
+               (progressEvent.loaded * 66) / progressEvent.total
             );
          }
 

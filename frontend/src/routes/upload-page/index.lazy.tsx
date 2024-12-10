@@ -18,6 +18,9 @@ function Index() {
       localStorage.setItem("listingData", JSON.stringify(listingData));
       navigate({ to: "/create-listing" });
    }
+   function handleSkip() {
+      navigate({ to: "/create-listing" });
+   }
 
    return (
       <main className={styles.layout}>
@@ -26,6 +29,12 @@ function Index() {
                <FileUpload setListingData={setListingData} />
             </div>
             <div className={styles.submitButton}>
+               <StandardButton
+                  children={"Skip"}
+                  color={"white"}
+                  fontSize={"16px"}
+                  onClick={handleSkip}
+               />
                <StandardButton
                   children={"Submit"}
                   color={"white"}

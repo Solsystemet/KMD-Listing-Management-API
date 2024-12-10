@@ -26,6 +26,8 @@ main.layout {
 }
 
 .submitButton {
+   display: flex;
+   gap: 1rem;
    position: absolute;
    bottom: 5rem;
    right: 5rem;
