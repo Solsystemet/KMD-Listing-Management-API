@@ -13,5 +13,8 @@ namespace api.Dtos.DataProcessor30ListingData.NullableDataProcessor30ListingData
         public string? Treatment { get; set; } = null;
         public bool? DirectSubProcessor { get; set; } = null;
         public string? TransferReason { get; set; } = null;
+        
+        // Utility
+        public string? ParentCompany {  get; set; } = null;               
     }
 }
