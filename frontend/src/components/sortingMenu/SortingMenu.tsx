@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import styles from "./SortingMenu.module.css";
 import {
    ArrowDownNarrowWide,

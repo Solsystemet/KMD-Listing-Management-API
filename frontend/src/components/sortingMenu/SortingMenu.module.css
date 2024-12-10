@@ -35,10 +35,12 @@
    right: 0;
    opacity: 0;
    transition: opacity 0.1s ease;
+   pointer-events: none;
 }
 
 .menu.isShown {
    opacity: 1;
+   pointer-events: all;
 }
 
 .sortingItem {

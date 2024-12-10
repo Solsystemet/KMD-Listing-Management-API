@@ -5,7 +5,6 @@ import { Checkbox } from "../checkBox/CheckBox";
 import styles from "./Survey.module.css";
 import NullableDataProcessor30ListingData from "../../types/NullableDataProcessor30ListingData";
 import { StandardButton } from "../buttons/Buttons";
-import DataProcessor30ListingData from "../../types/DataProcessor30ListingData";
 import { postListing } from "../../lib/api";
 
 function FieldInfo<TFieldValue>({

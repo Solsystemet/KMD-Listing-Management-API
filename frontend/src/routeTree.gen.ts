@@ -13,20 +13,22 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as IndexImport } from './routes/index'
+import { Route as ListingIndexImport } from './routes/listing/index'
+import { Route as ListingListingIdIndexImport } from './routes/listing/$listingId/index'
 
 // Create Virtual Routes
 
-const IndexLazyImport = createFileRoute('/')()
 const UploadPageIndexLazyImport = createFileRoute('/upload-page/')()
 const CreateListingIndexLazyImport = createFileRoute('/create-listing/')()
 
 // Create/Update Routes
 
-const IndexLazyRoute = IndexLazyImport.update({
+const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+} as any)
 
 const UploadPageIndexLazyRoute = UploadPageIndexLazyImport.update({
   id: '/upload-page/',
@@ -44,6 +46,18 @@ const CreateListingIndexLazyRoute = CreateListingIndexLazyImport.update({
   import('./routes/create-listing/index.lazy').then((d) => d.Route),
 )
 
+const ListingIndexRoute = ListingIndexImport.update({
+  id: '/listing/',
+  path: '/listing/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ListingListingIdIndexRoute = ListingListingIdIndexImport.update({
+  id: '/listing/$listingId/',
+  path: '/listing/$listingId/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -52,7 +66,14 @@ declare module '@tanstack/react-router' {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/listing/': {
+      id: '/listing/'
+      path: '/listing'
+      fullPath: '/listing'
+      preLoaderRoute: typeof ListingIndexImport
       parentRoute: typeof rootRoute
     }
     '/create-listing/': {
@@ -69,49 +90,82 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UploadPageIndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/listing/$listingId/': {
+      id: '/listing/$listingId/'
+      path: '/listing/$listingId'
+      fullPath: '/listing/$listingId'
+      preLoaderRoute: typeof ListingListingIdIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexLazyRoute
+  '/': typeof IndexRoute
+  '/listing': typeof ListingIndexRoute
   '/create-listing': typeof CreateListingIndexLazyRoute
   '/upload-page': typeof UploadPageIndexLazyRoute
+  '/listing/$listingId': typeof ListingListingIdIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexLazyRoute
+  '/': typeof IndexRoute
+  '/listing': typeof ListingIndexRoute
   '/create-listing': typeof CreateListingIndexLazyRoute
   '/upload-page': typeof UploadPageIndexLazyRoute
+  '/listing/$listingId': typeof ListingListingIdIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexLazyRoute
+  '/': typeof IndexRoute
+  '/listing/': typeof ListingIndexRoute
   '/create-listing/': typeof CreateListingIndexLazyRoute
   '/upload-page/': typeof UploadPageIndexLazyRoute
+  '/listing/$listingId/': typeof ListingListingIdIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/create-listing' | '/upload-page'
+  fullPaths:
+    | '/'
+    | '/listing'
+    | '/create-listing'
+    | '/upload-page'
+    | '/listing/$listingId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create-listing' | '/upload-page'
-  id: '__root__' | '/' | '/create-listing/' | '/upload-page/'
+  to:
+    | '/'
+    | '/listing'
+    | '/create-listing'
+    | '/upload-page'
+    | '/listing/$listingId'
+  id:
+    | '__root__'
+    | '/'
+    | '/listing/'
+    | '/create-listing/'
+    | '/upload-page/'
+    | '/listing/$listingId/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexLazyRoute: typeof IndexLazyRoute
+  IndexRoute: typeof IndexRoute
+  ListingIndexRoute: typeof ListingIndexRoute
   CreateListingIndexLazyRoute: typeof CreateListingIndexLazyRoute
   UploadPageIndexLazyRoute: typeof UploadPageIndexLazyRoute
+  ListingListingIdIndexRoute: typeof ListingListingIdIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexLazyRoute: IndexLazyRoute,
+  IndexRoute: IndexRoute,
+  ListingIndexRoute: ListingIndexRoute,
   CreateListingIndexLazyRoute: CreateListingIndexLazyRoute,
   UploadPageIndexLazyRoute: UploadPageIndexLazyRoute,
+  ListingListingIdIndexRoute: ListingListingIdIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -127,18 +181,26 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/listing/",
         "/create-listing/",
-        "/upload-page/"
+        "/upload-page/",
+        "/listing/$listingId/"
       ]
     },
     "/": {
-      "filePath": "index.lazy.tsx"
+      "filePath": "index.tsx"
+    },
+    "/listing/": {
+      "filePath": "listing/index.tsx"
     },
     "/create-listing/": {
       "filePath": "create-listing/index.lazy.tsx"
     },
     "/upload-page/": {
       "filePath": "upload-page/index.lazy.tsx"
+    },
+    "/listing/$listingId/": {
+      "filePath": "listing/$listingId/index.tsx"
     }
   }
 }

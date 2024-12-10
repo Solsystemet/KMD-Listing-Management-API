@@ -35,6 +35,26 @@ export async function getAllListings(queryObject: QueryObject) {
    return listings;
 }
 
+type DataProcessor30ListingDataWithStringDate = Omit<
+   DataProcessor30ListingData,
+   "creationTime" | "updateTime"
+> & { creationTime: string; updateTime: string };
+
+export async function getListingById(id: number) {
+   if (isNaN(id) || !isFinite(id)) return null;
+
+   const res = await axios.get(`/api/data-processor-30-listing-data/${id}`);
+   const listingWithStringDate: DataProcessor30ListingDataWithStringDate =
+      res.data;
+   const listing: DataProcessor30ListingData = {
+      ...listingWithStringDate,
+      creationTime: new Date(listingWithStringDate.creationTime),
+      updateTime: new Date(listingWithStringDate.updateTime),
+   };
+
+   return listing;
+}
+
 export async function scrapeFile(
    formData: FormData,
    setProgress: Dispatch<SetStateAction<number>>
@@ -60,7 +80,10 @@ export async function scrapeFile(
 }
 
 export async function postListing(
-   listing: DataProcessor30ListingData
+   listing: Omit<
+      DataProcessor30ListingData,
+      "creationTime" | "updateTime" | "id"
+   >
 ): Promise<number> {
    const result = await axios.post(
       "/api/data-processor-30-listing-data",
