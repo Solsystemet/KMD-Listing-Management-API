@@ -1,7 +1,7 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { ListingSidebar } from "../components/listingSidebar/listingSidebar";
 import { useQuery } from "@tanstack/react-query";
-import { getAllListings } from "../lib/api";
+import { getAllListings, getListingById } from "../lib/api";
 import { Searchbar } from "../components/searchbar/Searchbar";
 import QueryObject from "../types/QueryObject";
 import { useState } from "react";

@@ -1,0 +1,17 @@
+/* FILE: DisplayListing.module.css */
+.listing-container {
+   font-family: Arial, sans-serif;
+   padding: 20px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   background-color: #f9f9f9;
+}
+
+.listing-container h2 {
+   margin-top: 20px;
+   color: #333;
+}
+
+.listing-container p {
+   margin: 5px 0;
+}

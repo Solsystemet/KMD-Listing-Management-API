@@ -1,5 +1,8 @@
 type DataProcessor30ListingData = {
+   id: number;
    name: string;
+   creationTime: Date;
+   updateTime: Date;
    dataController: DataController;
    dataProcessor: DataProcessor;
    dataControllerRepresentative: DataControllerRepresentative;
