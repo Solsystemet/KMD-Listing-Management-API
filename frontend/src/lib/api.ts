@@ -40,6 +40,8 @@ type DataProcessor30ListingDataWithStringDate = Omit<
 > & { creationTime: string; updateTime: string };
 
 export async function getListingById(id: number) {
+   if (isNaN(id) || !isFinite(id)) return null;
+
    const res = await axios.get(`/api/data-processor-30-listing-data/${id}`);
    const listingWithStringDate: DataProcessor30ListingDataWithStringDate =
       res.data;

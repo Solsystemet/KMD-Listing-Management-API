@@ -1,8 +1,11 @@
-// FILE: DisplayListing.tsx
 import DataProcessor30ListingData from "../../types/DataProcessor30ListingData";
 import "./DisplayListing.module.css";
 
-export function displayListing(listing: DataProcessor30ListingData) {
+export function DisplayListing({
+   listing,
+}: {
+   listing: DataProcessor30ListingData;
+}) {
    return (
       <div className="listing-container">
          <h2>Data Controller</h2>
