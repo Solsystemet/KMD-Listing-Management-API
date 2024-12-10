@@ -15,8 +15,16 @@
 .listingDisplay {
    display: flex;
    justify-content: center;
-   align-items: center;
    overflow: scroll;
+   width: 100%;
+   height: 100%;
+   background-color: #8f8f8f;
+}
+.logoContainer {
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   align-items: center;
    width: 100%;
    height: 100%;
 }

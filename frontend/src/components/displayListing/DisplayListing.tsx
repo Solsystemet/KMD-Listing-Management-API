@@ -1,61 +1,140 @@
 import DataProcessor30ListingData from "../../types/DataProcessor30ListingData";
-import "./DisplayListing.module.css";
+import styles from "./DisplayListing.module.css";
 
 export function DisplayListing({
    listing,
 }: {
    listing: DataProcessor30ListingData;
 }) {
+   const {
+      dataController,
+      dataProcessor,
+      dataControllerRepresentative,
+      dataProcessorRepresentative,
+      dataSubProcessors,
+      dataCategories,
+      dataSecurity,
+   } = listing;
+
    return (
-      <div className="listing-container">
-         <h2>Data Controller</h2>
-         <p>Name: {listing.dataController.name}</p>
-         <p>CVR: {listing.dataController.cvr}</p>
-         <p>Address: {listing.dataController.address}</p>
-         <p>Phone: {listing.dataController.phoneNo}</p>
-         <p>Email: {listing.dataController.mail}</p>
-
-         <h2>Data Processor</h2>
-         <p>Name: {listing.dataProcessor.name}</p>
-         <p>CVR: {listing.dataProcessor.cvr}</p>
-         <p>Address: {listing.dataProcessor.address}</p>
-         <p>Phone: {listing.dataProcessor.phoneNo}</p>
-         <p>Email: {listing.dataProcessor.mail}</p>
-
-         <h2>Data Controller Representative</h2>
-         <p>Name: {listing.dataControllerRepresentative.name}</p>
-         <p>Role: {listing.dataControllerRepresentative.role}</p>
-         <p>Address: {listing.dataControllerRepresentative.address}</p>
-         <p>Phone: {listing.dataControllerRepresentative.phoneNo}</p>
-         <p>Email: {listing.dataControllerRepresentative.mail}</p>
-
-         <h2>Data Processor Representative</h2>
-         <p>Name: {listing.dataProcessorRepresentative.name}</p>
-         <p>Role: {listing.dataProcessorRepresentative.role}</p>
-         <p>Address: {listing.dataProcessorRepresentative.address}</p>
-         <p>Phone: {listing.dataProcessorRepresentative.phoneNo}</p>
-         <p>Email: {listing.dataProcessorRepresentative.mail}</p>
-
-         <h2>Data Sub-Processors</h2>
-         {listing.dataSubProcessors.map((subProcessor, index) => (
-            <div key={index}>
-               <p>Name: {subProcessor.name}</p>
-               <p>CVR: {subProcessor.cvr}</p>
-               <p>Address: {subProcessor.address}</p>
-               <p>Treatment: {subProcessor.treatment}</p>
+      <div className={styles.listingBackground}>
+         <div className={styles.listingContainer}>
+            <section className={styles.infoContainer}>
+               <h1>{listing.name}</h1>
+               <div>
+                  <span>Created at: </span>
+                  <span> {listing.creationTime.toUTCString()}</span>
+               </div>
+               <div>
+                  <span>Updated at: </span>
+                  <span>{listing.updateTime.toUTCString()}</span>
+               </div>
+            </section>
+            <section>
+               <h2>Data Controller</h2>
                <p>
-                  Direct Sub-Processor:{" "}
-                  {subProcessor.directSubProcessor ? "Yes" : "No"}
+                  <b>Name:</b> {dataController.name}
                </p>
-               <p>Transfer Reason: {subProcessor.transferReason}</p>
-            </div>
-         ))}
+               <p>
+                  <b>CVR:</b> {dataController.cvr}
+               </p>
+               <p>
+                  <b>Address:</b> {dataController.address}
+               </p>
+               <p>
+                  <b>Phone:</b> {dataController.phoneNo}
+               </p>
+               <p>
+                  <b>Email:</b> {dataController.mail}
+               </p>
+            </section>
 
-         <h2>Information Description</h2>
-         <p>{listing.dataCategories.toString()}</p>
+            <section>
+               <h2>Data Processor</h2>
+               <p>
+                  <b>Name:</b> {dataProcessor.name}
+               </p>
+               <p>
+                  <b>CVR:</b> {dataProcessor.cvr}
+               </p>
+               <p>
+                  <b>Address:</b> {dataProcessor.address}
+               </p>
+               <p>
+                  <b>Phone:</b> {dataProcessor.phoneNo}
+               </p>
+               <p>
+                  <b>Email:</b> {dataProcessor.mail}
+               </p>
+            </section>
 
-         <h2>Security Measures</h2>
-         <p>{listing.dataSecurity.toString()}</p>
+            <section>
+               <h2>Data Controller Representative</h2>
+               <p>
+                  <b>Name:</b> {dataControllerRepresentative.name}
+               </p>
+               <p>
+                  <b>Role:</b>
+                  {dataControllerRepresentative.role}
+               </p>
+               <p>
+                  <b>
+                     <b>Address:</b>
+                  </b>
+                  {dataControllerRepresentative.address}
+               </p>
+               <p>
+                  <b>Phone:</b> {dataControllerRepresentative.phoneNo}
+               </p>
+               <p>
+                  <b>Email:</b> {dataControllerRepresentative.mail}
+               </p>
+            </section>
+
+            <section>
+               <h2>Data Processor Representative</h2>
+               <p>
+                  <b>Name:</b> {dataProcessorRepresentative.name}
+               </p>
+               <p>
+                  <b>Role:</b> {dataProcessorRepresentative.role}
+               </p>
+               <p>
+                  <b>Address:</b> {dataProcessorRepresentative.address}
+               </p>
+               <p>
+                  <b>Phone:</b> {dataProcessorRepresentative.phoneNo}
+               </p>
+               <p>
+                  <b>Email:</b> {dataProcessorRepresentative.mail}
+               </p>
+            </section>
+
+            <section className={styles.SubProcessorContainer}>
+               <h2>Data Sub-Processors</h2>
+               {dataSubProcessors.map((subProcessor, index) => (
+                  <div key={index} className={styles.subProcessor}>
+                     <p>{subProcessor.name}</p>
+                     <p>
+                        <b>CVR:</b> {subProcessor.cvr}
+                     </p>
+                     <p>
+                        <b>Address:</b> {subProcessor.address}
+                     </p>
+                     <p>
+                        <b>Treatment:</b> {subProcessor.treatment}
+                     </p>
+                     <p>
+                        <b>Direct Sub-Processor:</b>{" "}
+                        {subProcessor.directSubProcessor ? "Yes" : "No"}
+                     </p>
+                     <p>
+                        <b>Transfer Reason:</b> {subProcessor.transferReason}
+                     </p>
+                  </div>
+               ))}
+            </section>
+         </div>
       </div>
    );
 }

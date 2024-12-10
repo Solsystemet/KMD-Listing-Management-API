@@ -1,4 +1,8 @@
-import { createFileRoute, useParams } from "@tanstack/react-router";
+import {
+   createFileRoute,
+   useNavigate,
+   useParams,
+} from "@tanstack/react-router";
 import { ListingSidebar } from "../../../components/listingSidebar/listingSidebar";
 import { useQuery } from "@tanstack/react-query";
 import { getAllListings, getListingById } from "../../../lib/api";
@@ -17,6 +21,7 @@ export const Route = createFileRoute("/listing/$listingId/")({
 function Index() {
    const initListingId = useParams({ from: "/listing/$listingId/" }).listingId;
 
+   const navigate = useNavigate({ from: "/listing/$listingId" });
    const [listingId, setListingId] = useState(parseInt(initListingId));
 
    const [queryObject, setQueryObject] = useState<QueryObject>({
@@ -25,8 +30,17 @@ function Index() {
       pageSize: 20,
    });
 
+   function handleClickTile(id: number) {
+      setListingId(id);
+
+      navigate({
+         to: "/listing/$listingId",
+         params: { listingId: id.toString() },
+      });
+   }
+
    const currListing = useQuery({
-      queryKey: ["get-listing-by-id", queryObject],
+      queryKey: ["get-listing-by-id", listingId],
       queryFn: () => getListingById(listingId),
    });
    const listings = useQuery({
@@ -43,12 +57,18 @@ function Index() {
             ) : listings.error ? (
                listings.error.message
             ) : (
-               <ListingSidebar listingSidebarDtos={listings.data} />
+               <ListingSidebar
+                  listingSidebarDtos={listings.data}
+                  onClick={handleClickTile}
+                  selectedListingId={listingId}
+               />
             )}
          </div>
          <div className={styles.listingDisplay}>
             {currListing.isPending || currListing.data === null ? (
-               <img src={imgKMD} alt="Logo" className={styles.greyLogo} />
+               <div className={styles.logoContainer}>
+                  <img src={imgKMD} alt="Logo" className={styles.greyLogo} />
+               </div>
             ) : currListing.error ? (
                currListing.error.message
             ) : (
