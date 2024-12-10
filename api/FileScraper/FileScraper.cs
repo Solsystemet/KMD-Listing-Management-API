@@ -458,7 +458,11 @@ namespace api.FileScraper
                             (int?, int?) indices = GetIndicesFromTextBlock(orderedTextBlocks[i], tableIndices, ref yPos);
                             if (indices.Item1 != null && indices.Item2 != null)
                             {
-                                subProcessors[(int)indices.Item1, (int)indices.Item2] += orderedTextBlocks[i].Text;
+                                string text = orderedTextBlocks[i].Text;
+                                text = text.Replace("-\n", "");
+                                text = text.Replace("-", "");
+                                text = text.Replace('\n', ' ');
+                                subProcessors[(int)indices.Item1, (int)indices.Item2] += text;
                                 if (!companyMap.ContainsKey((int)indices.Item1) && currentComany != null)
                                     companyMap[(int)indices.Item1] = currentComany;
                                     
