@@ -431,7 +431,11 @@ namespace api.FileScraper
                                 {
                                     if (IsWithinColumn(orderedTextBlocks[i], xpos))
                                     {
-                                        subProcessors[yPos, xIndex] += "\n" + orderedTextBlocks[i].Text;
+                                        string text = orderedTextBlocks[i].Text;
+                                        text = text.Replace("-\n", "");
+                                        text = text.Replace("-", "");
+                                        text = text.Replace('\n', ' ');
+                                        subProcessors[yPos, xIndex] += text;
                                     }
                                 }
 
