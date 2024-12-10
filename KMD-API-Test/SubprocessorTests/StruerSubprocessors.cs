@@ -85,19 +85,19 @@ namespace KMD_API_Test.SubprocessorTests
             (string, List<int>) SubProcessorSection = FileScraper.GetSection(doc, "B.1. Godkendte underdatabehandlere", "B.2.");
 
             (Dictionary<(double, int), int>, Dictionary<double, int>) tableIndices = FileScraper.CreateTableIndices(doc, SubProcessorSection.Item2);
-            string[,] SubProcessorData = FileScraper.ExtractSubProcessors(doc, SubProcessorSection.Item2, tableIndices);
+            (string[,], Dictionary<int, string>) SubProcessorData = FileScraper.ExtractSubProcessors(doc, SubProcessorSection.Item2, tableIndices);
             var list = new List<List<string>>();
-            for (int i = 0; i < SubProcessorData.GetLength(0); i++)
+            for (int i = 0; i < SubProcessorData.Item1.GetLength(0); i++)
             {
                 var innerList = new List<string>();
-                for (int j = 0; j < SubProcessorData.GetLength(1); j++)
+                for (int j = 0; j < SubProcessorData.Item1.GetLength(1); j++)
                 {
-                    innerList.Add(SubProcessorData[i, j]);
+                    innerList.Add(SubProcessorData.Item1[i, j]);
                 }
                 list.Add(innerList);
             }
-            IEnumerable<NullableSubProcessor>? verifiedSubProcessors = FileScraper.CreateSubProcessorList(list);
-            IEnumerable<NullableSubProcessor>? verifiedSubProcessorsFromExpected = FileScraper.CreateSubProcessorList(StruerSubprocessorsList);
+            IEnumerable<NullableSubProcessor>? verifiedSubProcessors = FileScraper.CreateSubProcessorList(list, SubProcessorData.Item2);
+            IEnumerable<NullableSubProcessor>? verifiedSubProcessorsFromExpected = FileScraper.CreateSubProcessorList(StruerSubprocessorsList, SubProcessorData.Item2);
 
             for (int i = 0; i < verifiedSubProcessorsFromExpected.Count(); i++)
             {
