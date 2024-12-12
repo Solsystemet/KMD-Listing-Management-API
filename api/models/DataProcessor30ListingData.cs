@@ -11,6 +11,7 @@ namespace api.Models
         public int Id { get; set; }
     
         public string Name { get; set; } = string.Empty;
+        public string Solution {get; set;} = string.Empty;
 
         public DateTime CreationTime {get; set; } = DateTime.Now;
         public DateTime UpdateTime {get; set; } = DateTime.Now;
