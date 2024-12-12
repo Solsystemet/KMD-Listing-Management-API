@@ -1,6 +1,22 @@
 import DataProcessor30ListingData from "../../types/DataProcessor30ListingData";
 import styles from "./DisplayListing.module.css";
 
+
+import { StandardButton } from "../buttons/Buttons";
+import FileSaver from "file-saver";
+import createPDF from '../../lib/createPdf';
+import axios from "axios";
+import NullableDataProcessor30ListingData from "../../types/NullableDataProcessor30ListingData";
+
+async function downloadBlob (data: object) {
+   try{
+
+      FileSaver.saveAs(await createPDF(data));
+   } catch (error) {
+      console.error('failed to download: ', error);
+   }
+}
+
 export function DisplayListing({
    listing,
 }: {
@@ -19,6 +35,13 @@ export function DisplayListing({
    return (
       <div className={styles.listingBackground}>
          <div className={styles.listingContainer}>
+            <StandardButton
+               children={'download'}
+               color={'white'}
+               fontSize={'16px'}
+               onClick={() => {
+                  downloadBlob(listing)}
+               }/>
             <section className={styles.infoContainer}>
                <h1>{listing.name}</h1>
                <div>
