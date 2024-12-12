@@ -27,6 +27,7 @@ type TextBoxProps = {
   id: string;
   name: string;
   value: string;
+  readonly: boolean;
   onBlur: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   required?: boolean;
@@ -43,6 +44,7 @@ function TextBox(props: TextBoxProps) {
       onBlur={props.onBlur}
       onChange={props.onChange}
       required={props.required}
+      readOnly={props.readonly}
       rows={5}
     />
   );
@@ -70,6 +72,7 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
           treatment: "",
           directSubProcessor: false,
           transferReason: "",
+          parentCompany: "",
         },
       ],
     });
@@ -79,7 +82,6 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
   const form = useForm({
     defaultValues: {
       name: "",
-      solution: "",
       dataController: {
         name: listingData.dataController.name || "",
         cvr: listingData.dataController.cvr || "",
@@ -178,27 +180,7 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
               </div>
             )}
           </Field>
-
-          <Field form={form} name="solution">
-            {(field) => (
-              <div className={styles.inputContainer}>
-                <h1>Project name</h1>
-                <InputBox
-                  templateText="Enter the name of the project"
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => {
-                    field.handleChange(e.target.value);
-                    handleChange(e.target.value);
-                  }}
-                  required={false}
-                />
-                <FieldInfo field={field} />
-              </div>
-            )}
-          </Field>
+          <div />
 
           {/* Data controller */}
           <Field form={form} name="dataController">
@@ -556,79 +538,6 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
             )}
           </Field>
 
-          {/* Data Security Advisor */}
-          <Field form={form} name="dataSecurityAdvisor">
-            {(field) => (
-              <div className={styles.inputContainer}>
-                <h2>Data Security Advisor info</h2>
-                <InputBox
-                  id={`dataSecurityAdvisor.name`}
-                  name={`dataSecurityAdvisor.name`}
-                  templateText={"Name"}
-                  value={field.state.value?.name}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => {
-                    field.handleChange({
-                      ...field.state.value,
-                      name: e.target.value,
-                    });
-                    handleChange(e.target.value);
-                  }}
-                  required={false}
-                />
-                <FieldInfo field={field} />
-                <InputBox
-                  id={`dataSecurityAdvisor.address`}
-                  name={`dataSecurityAdvisor.address`}
-                  templateText={"Address"}
-                  value={field.state.value?.address}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => {
-                    field.handleChange({
-                      ...field.state.value,
-                      address: e.target.value,
-                    });
-                    handleChange(e.target.value);
-                  }}
-                  required={false}
-                />
-                <FieldInfo field={field} />
-                <InputBox
-                  id={`dataSecurityAdvisor.phoneNo`}
-                  name={`dataSecurityAdvisor.phoneNo`}
-                  templateText={"Phone number"}
-                  value={field.state.value?.phoneNo}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => {
-                    field.handleChange({
-                      ...field.state.value,
-                      phoneNo: e.target.value,
-                    });
-                    handleChange(e.target.value);
-                  }}
-                  required={false}
-                />
-                <FieldInfo field={field} />
-                <InputBox
-                  id={`dataSecurityAdvisor.mail`}
-                  name={`dataSecurityAdvisor.mail`}
-                  templateText={"E-mail"}
-                  value={field.state.value?.mail}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => {
-                    field.handleChange({
-                      ...field.state.value,
-                      mail: e.target.value,
-                    });
-                    handleChange(e.target.value);
-                  }}
-                  required={false}
-                />
-                <FieldInfo field={field} />
-              </div>
-            )}
-          </Field>
-
           {/* Sub processors */}
           <h2>Data Sub Processors</h2>
           {listingData.dataSubProcessors.map((subProcessor, index) => (
@@ -732,6 +641,23 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
                       }}
                       required={false}
                     />
+                    <FieldInfo field={field} />
+                    <h4>Parent Company</h4>
+                    <InputBox
+                      id={`dataSubProcessor.${index}.parentCompany`}
+                      name={`dataSubProcessor.${index}.parentCompany`}
+                      templateText={"Enter parent company"}
+                      value={field.state.value?.parentCompany}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => {
+                        field.handleChange({
+                          ...field.state.value,
+                          transferReason: e.target.value,
+                        });
+                        handleChange(e.target.value);
+                      }}
+                      required={false}
+                    />
                   </div>
                 )}
               </Field>
@@ -740,7 +666,7 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
           <button onClick={addDataProcessors} className={styles.addButton}>
             Add Data Processor
           </button>
-          {/*
+
           <Field form={form} name={`dataCategories.categoryList`}>
             {(field) => (
               <>
@@ -752,7 +678,8 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
                   id={`dataCategories.categoryList`}
                   name={`dataCategories.categoryList`}
                   templateText={"Enter description"}
-                  value={field.state.value}
+                  readonly={true}
+                  value={"Operation, maintenance & support of the solution"} // Predefined
                   onBlur={field.handleBlur}
                   onChange={(e) => {
                     field.handleChange(e.target.value);
@@ -788,30 +715,6 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
               </>
             )}
           </Field>
-
-          <Field form={form} name={`dataTransfer.transferInformation`}>
-            {(field) => (
-              <>
-                <h2>
-                  Beskrivelse af tekniske og organisatoriske
-                  sikkerhedsforanstaltninger.
-                </h2>
-                <TextBox
-                  id={`dataTransfer.transferInformation`}
-                  name={`dataTransfer.transferInformation`}
-                  templateText={"Enter technical description"}
-                  value={field.state.value || ""}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => {
-                    field.handleChange(e.target.value);
-                    handleChange(e.target.value);
-                  }}
-                  required={false}
-                />
-                <FieldInfo field={field} />
-              </>
-            )}
-          </Field>*/}
         </div>
         <StandardButton type="submit" disabled={!form.state.canSubmit}>
           {form.state.isSubmitting ? "..." : "Submit"}
