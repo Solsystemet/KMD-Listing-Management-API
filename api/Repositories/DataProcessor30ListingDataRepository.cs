@@ -29,6 +29,20 @@ namespace api.Repositories
                 listings = listings.Where(l => l.Name.Contains(query.Name));
             }
 
+            if(!string.IsNullOrWhiteSpace(query.DataController)){
+                listings = listings.Where(l => l.DataController.Name.Contains(query.DataController));
+            }
+
+            if(!string.IsNullOrWhiteSpace(query.DataProcessor)){
+                listings = listings.Where(l => l.DataProcessor.Name.Contains(query.DataProcessor));
+            }
+
+            if (!string.IsNullOrWhiteSpace(query.DataSubProcessor))
+            {
+            listings = listings.Where(l => l.DataSubProcessors
+            .Any(ds => ds.Name.Contains(query.DataSubProcessor)));
+            }
+
             if(!string.IsNullOrWhiteSpace(query.SortBy)){
 
                
