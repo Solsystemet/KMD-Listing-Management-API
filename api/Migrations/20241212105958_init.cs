@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class init2 : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,6 +18,8 @@ namespace api.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Solution = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Archived = table.Column<byte>(type: "tinyint", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataController_CVR = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -30,10 +32,16 @@ namespace api.Migrations
                     DataProcessor_Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataProcessor_PhoneNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataProcessor_Mail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataProcessorRepresentative_Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataProcessorRepresentative_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataProcessorRepresentative_Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataProcessorRepresentative_PhoneNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataProcessorRepresentative_Mail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataControllerRepresentative_Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataControllerRepresentative_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataControllerRepresentative_Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataControllerRepresentative_PhoneNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataControllerRepresentative_Mail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataSecurityAdvisor_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataSecurityAdvisor_Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataSecurityAdvisor_PhoneNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -75,15 +83,13 @@ namespace api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CVR = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Treatment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DirectSubProcessor = table.Column<bool>(type: "bit", nullable: false),
                     TransferReason = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataProcessor30ListingDataId = table.Column<int>(type: "int", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Mail = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    DataProcessor30ListingDataId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
