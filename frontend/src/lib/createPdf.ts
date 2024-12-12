@@ -102,3 +102,5 @@ function formatDataCategories(dataCategories: any): string {
     if (!dataCategories?.categoryList) return "N/A";
     return dataCategories.categoryList.split(", ").map((category: string) => `- ${category}`).join("\n"); //splits into an array, formats and joins the list back to one string
 }
+
+export default createPdf;
