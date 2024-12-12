@@ -14,6 +14,7 @@ namespace api.Dtos.DataProcessor30ListingData
         public DateTime CreationTime {get; set; }
         public string DataProcessorName { get; set; } = string.Empty;
 
+        public Boolean Archived {get; set;} = false;
         
 
     }

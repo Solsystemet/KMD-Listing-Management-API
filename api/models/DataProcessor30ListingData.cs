@@ -13,6 +13,8 @@ namespace api.Models
         public string Name { get; set; } = string.Empty;
         public string Solution {get; set;} = string.Empty;
 
+        public Boolean Archived {get; set;} = false;
+
         public DateTime CreationTime {get; set; } = DateTime.Now;
         public DateTime UpdateTime {get; set; } = DateTime.Now;
 
