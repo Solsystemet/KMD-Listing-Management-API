@@ -37,6 +37,15 @@ namespace api.Repositories
                 listings = listings.Where(l => l.DataProcessor.Name.Contains(query.DataProcessor));
             }
 
+            if(query.Archived != null){
+                listings = listings.Where(l => l.Archived == query.Archived);
+            }
+
+            if(!string.IsNullOrWhiteSpace(query.AdvancedSearch)){
+                listings = listings.Where(l => l.Name.Contains(query.AdvancedSearch) || l.DataController.Name.Contains(query.AdvancedSearch)|| l.DataProcessor.Name.Contains(query.AdvancedSearch) || l.DataSubProcessors
+            .Any(ds => ds.Name.Contains(query.AdvancedSearch)));
+            }
+
             if (!string.IsNullOrWhiteSpace(query.DataSubProcessor))
             {
             listings = listings.Where(l => l.DataSubProcessors
@@ -92,6 +101,8 @@ namespace api.Repositories
             List<string>updatedFields = new List<string>();
 
             if(existing30Listing.Name != dataProcessor30ListingDataDto.Name) updatedFields.Add("Name");
+            if(existing30Listing.Solution != dataProcessor30ListingDataDto.Solution) updatedFields.Add("Solution");
+            if(existing30Listing.Archived != dataProcessor30ListingDataDto.Archived) updatedFields.Add("Archived");
             if(!existing30Listing.DataController.IsEqual(dataProcessor30ListingDataDto.DataController)) updatedFields.Add("Data Controller");
             if(!existing30Listing.DataProcessor.IsEqual(dataProcessor30ListingDataDto.DataProcessor)) updatedFields.Add("Data processor");
             if(!existing30Listing.DataProcessorRepresentative.IsEqual(dataProcessor30ListingDataDto.DataProcessorRepresentative)) updatedFields.Add("Data Processor Representative");
