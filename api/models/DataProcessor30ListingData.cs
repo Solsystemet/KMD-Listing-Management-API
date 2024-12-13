@@ -11,10 +11,14 @@ namespace api.Models
         public int Id { get; set; }
     
         public string Name { get; set; } = string.Empty;
+        
+        public string Solution { get; set; } = string.Empty;
 
+        public byte Archived { get; set; } = 0;
         public DateTime CreationTime {get; set; } = DateTime.Now;
         public DateTime UpdateTime {get; set; } = DateTime.Now;
 
+        
         public DataController DataController { get; set; } = new DataController();
         public DataProcessor DataProcessor { get; set; } = new DataProcessor();
         public DataProcessorRepresentative DataProcessorRepresentative { get; set; } = new DataProcessorRepresentative();

@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20241204114326_Corrected DataProcessor30ListingData")]
-    partial class CorrectedDataProcessor30ListingData
+    [Migration("20241212105958_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,10 +66,17 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<byte>("Archived")
+                        .HasColumnType("tinyint");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Solution")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -159,8 +166,9 @@ namespace api.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<long>("CVR")
-                                .HasColumnType("bigint");
+                            b1.Property<string>("CVR")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Mail")
                                 .IsRequired()
@@ -224,8 +232,9 @@ namespace api.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<long>("CVR")
-                                .HasColumnType("bigint");
+                            b1.Property<string>("CVR")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Mail")
                                 .IsRequired()

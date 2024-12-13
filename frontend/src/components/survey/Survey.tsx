@@ -79,6 +79,7 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
    const form = useForm({
       defaultValues: {
          name: "",
+         solution: "",
          dataController: {
             name: listingData.dataController.name || "",
             cvr: listingData.dataController.cvr || "",
@@ -177,7 +178,27 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
                      </div>
                   )}
                </Field>
-               <div />
+
+               <Field form={form} name="solution">
+                  {field => (
+                     <div className={styles.inputContainer}>
+                        <h1>Project name</h1>
+                        <InputBox
+                           templateText="Enter the name of the project"
+                           id={field.name}
+                           name={field.name}
+                           value={field.state.value}
+                           onBlur={field.handleBlur}
+                           onChange={e => {
+                              field.handleChange(e.target.value);
+                              handleChange(e.target.value);
+                           }}
+                           required={false}
+                        />
+                        <FieldInfo field={field} />
+                     </div>
+                  )}
+               </Field>
 
                {/* Data controller */}
                <Field form={form} name="dataController">

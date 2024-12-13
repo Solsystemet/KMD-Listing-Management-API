@@ -12,6 +12,7 @@ namespace api.Dtos.DataProcessor30ListingData
     {
         public string Name { get; set; } = string.Empty;
 
+        public string Solution { get; set; } = string.Empty;
         public DataController DataController { get; set; } = new DataController();
         public DataProcessor DataProcessor { get; set; } = new DataProcessor();
         
