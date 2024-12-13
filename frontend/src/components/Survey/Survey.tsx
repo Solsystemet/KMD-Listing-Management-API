@@ -5,7 +5,7 @@ import { Checkbox } from "../checkBox/CheckBox";
 import styles from "./Survey.module.css";
 import NullableDataProcessor30ListingData from "../../types/NullableDataProcessor30ListingData";
 import { StandardButton } from "../buttons/Buttons";
-import { postListing } from "../../lib/api";
+import DataProcessor30ListingData from "../../types/DataProcessor30ListingData";
 
 function FieldInfo<TFieldValue>({
    field,
@@ -53,6 +53,9 @@ type SurveyProps = {
 };
 
 export function Survey({ listingDataProp }: SurveyProps) {
+   handleSubmit: (listing: DataProcessor30ListingData) => void;
+
+export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
    const [listingData, SetListingData] = useState(listingDataProp);
    const [hasJustAddedDataSubProcessor, setHasJustAddedDataSubProcessor] =
       useState(false); // Should be removed if possible (used to make sure the POST request is not posted when a subProcessor is added)
@@ -78,6 +81,7 @@ export function Survey({ listingDataProp }: SurveyProps) {
    const form = useForm({
       defaultValues: {
          name: "",
+         solution: "",
          dataController: {
             name: listingData.dataController.name || "",
             cvr: listingData.dataController.cvr || "",
@@ -140,6 +144,7 @@ export function Survey({ listingDataProp }: SurveyProps) {
          console.log(await JSON.stringify(values.value));
          const id = await postListing(values.value);
          console.log(id);
+
       },
    });
 
@@ -173,6 +178,7 @@ export function Survey({ listingDataProp }: SurveyProps) {
                               handleChange(e.target.value);
                            }}
                            required={true}
+
                         />
                         <FieldInfo field={field} />
                      </div>
@@ -196,6 +202,19 @@ export function Survey({ listingDataProp }: SurveyProps) {
                                  ...field.state.value,
                                  name: e.target.value,
                               });
+
+               <Field form={form} name="solution">
+                  {field => (
+                     <div className={styles.inputContainer}>
+                        <h1>Project name</h1>
+                        <InputBox
+                           templateText="Enter the name of the project"
+                           id={field.name}
+                           name={field.name}
+                           value={field.state.value}
+                           onBlur={field.handleBlur}
+                           onChange={e => {
+                              field.handleChange(e.target.value);
                               handleChange(e.target.value);
                            }}
                            required={false}
@@ -268,7 +287,6 @@ export function Survey({ listingDataProp }: SurveyProps) {
                      </div>
                   )}
                </Field>
-
                {/* Data processor */}
                <Field form={form} name="dataProcessor">
                   {field => (
@@ -277,6 +295,14 @@ export function Survey({ listingDataProp }: SurveyProps) {
                         <InputBox
                            id={`dataProcessor.name`}
                            name={`dataProcessor.name`}
+               {/* Data controller */}
+               <Field form={form} name="dataController">
+                  {field => (
+                     <div className={styles.inputContainer}>
+                        <h2>Data Controller Info</h2>
+                        <InputBox
+                           id={`dataController.name`}
+                           name={`dataController.name`}
                            templateText={"Company name"}
                            value={field.state.value?.name}
                            onBlur={field.handleBlur}
@@ -367,6 +393,15 @@ export function Survey({ listingDataProp }: SurveyProps) {
                            id={`dataControllerRepresentative.name`}
                            name={`dataControllerRepresentative.name`}
                            templateText={"Name"}
+               {/* Data processor */}
+               <Field form={form} name="dataProcessor">
+                  {field => (
+                     <div className={styles.inputContainer}>
+                        <h2>Data Processor Info</h2>
+                        <InputBox
+                           id={`dataProcessor.name`}
+                           name={`dataProcessor.name`}
+                           templateText={"Company name"}
                            value={field.state.value?.name}
                            onBlur={field.handleBlur}
                            onChange={e => {
@@ -384,6 +419,14 @@ export function Survey({ listingDataProp }: SurveyProps) {
                            name={`dataControllerRepresentative.role`}
                            templateText={"Role"}
                            value={field.state.value?.role}
+                           required={false}
+                        />
+                        <FieldInfo field={field} />
+                        <InputBox
+                           id={`dataProcessor.cvr`}
+                           name={`dataProcessor.cvr`}
+                           templateText={"CVR"}
+                           value={field.state.value?.cvr}
                            onBlur={field.handleBlur}
                            onChange={e => {
                               field.handleChange({
@@ -446,7 +489,6 @@ export function Survey({ listingDataProp }: SurveyProps) {
                      </div>
                   )}
                </Field>
-
                {/* Data processor representative */}
                <Field form={form} name="dataProcessorRepresentative">
                   {field => (
@@ -535,7 +577,108 @@ export function Survey({ listingDataProp }: SurveyProps) {
                      </div>
                   )}
                </Field>
-
+               {/* Data Security Advisor */}
+               <Field form={form} name="dataSecurityAdvisor">
+                  {field => (
+                     <div className={styles.inputContainer}>
+                        <h2>Data Security Advisor info</h2>
+                        <InputBox
+                           id={`dataSecurityAdvisor.name`}
+                           name={`dataSecurityAdvisor.name`}
+               {/* Data processor representative */}
+               <Field form={form} name="dataProcessorRepresentative">
+                  {field => (
+                     <div className={styles.inputContainer}>
+                        <h2>Data Processor Representative info</h2>
+                        <InputBox
+                           id={`dataProcessorRepresentative.name`}
+                           name={`dataProcessorRepresentative.name`}
+                           templateText={"Name"}
+                           value={field.state.value?.name}
+                           onBlur={field.handleBlur}
+                           onChange={e => {
+                              field.handleChange({
+                                 ...field.state.value,
+                                 name: e.target.value,
+                              });
+                              handleChange(e.target.value);
+                           }}
+                           required={false}
+                        />
+                        <FieldInfo field={field} />
+                        <InputBox
+                           id={`dataSecurityAdvisor.address`}
+                           name={`dataSecurityAdvisor.address`}
+                           id={`dataProcessorRepresentative.role`}
+                           name={`dataProcessorRepresentative.role`}
+                           templateText={"Role"}
+                           value={field.state.value?.role}
+                           onBlur={field.handleBlur}
+                           onChange={e => {
+                              field.handleChange({
+                                 ...field.state.value,
+                                 role: e.target.value,
+                              });
+                              handleChange(e.target.value);
+                           }}
+                           required={false}
+                        />
+                        <FieldInfo field={field} />
+                        <InputBox
+                           id={`dataProcessorRepresentative.address`}
+                           name={`dataProcessorRepresentative.address`}
+                           templateText={"Address"}
+                           value={field.state.value?.address}
+                           onBlur={field.handleBlur}
+                           onChange={e => {
+                              field.handleChange({
+                                 ...field.state.value,
+                                 address: e.target.value,
+                              });
+                              handleChange(e.target.value);
+                           }}
+                           required={false}
+                        />
+                        <FieldInfo field={field} />
+                        <InputBox
+                           id={`dataSecurityAdvisor.phoneNo`}
+                           name={`dataSecurityAdvisor.phoneNo`}
+                           id={`dataProcessorRepresentative.phoneNo`}
+                           name={`dataProcessorRepresentative.phoneNo`}
+                           templateText={"Phone number"}
+                           value={field.state.value?.phoneNo}
+                           onBlur={field.handleBlur}
+                           onChange={e => {
+                              field.handleChange({
+                                 ...field.state.value,
+                                 phoneNo: e.target.value,
+                              });
+                              handleChange(e.target.value);
+                           }}
+                           required={false}
+                        />
+                        <FieldInfo field={field} />
+                        <InputBox
+                           id={`dataSecurityAdvisor.mail`}
+                           name={`dataSecurityAdvisor.mail`}
+                           id={`dataProcessorRepresentative.mail`}
+                           name={`dataProcessorRepresentative.mail`}
+                           templateText={"E-mail"}
+                           value={field.state.value?.mail}
+                           onBlur={field.handleBlur}
+                           onChange={e => {
+                              field.handleChange({
+                                 ...field.state.value,
+                                 mail: e.target.value,
+                              });
+                              handleChange(e.target.value);
+                           }}
+                           required={false}
+                        />
+                        <FieldInfo field={field} />
+                     </div>
+                  )}
+               </Field>
                {/* Data Security Advisor */}
                <Field form={form} name="dataSecurityAdvisor">
                   {field => (
@@ -608,7 +751,6 @@ export function Survey({ listingDataProp }: SurveyProps) {
                      </div>
                   )}
                </Field>
-
                {/* Sub processors */}
                <h2>Data Sub Processors</h2>
                {listingData.dataSubProcessors.map((subProcessor, index) => (

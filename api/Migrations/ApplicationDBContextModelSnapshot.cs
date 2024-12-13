@@ -63,10 +63,17 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<byte>("Archived")
+                        .HasColumnType("tinyint");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Solution")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
