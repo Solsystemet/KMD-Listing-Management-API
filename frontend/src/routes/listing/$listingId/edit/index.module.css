@@ -1,0 +1,10 @@
+.createListing {
+   display: flex;
+   background-color: hsl(0, 0%, 56%);
+}
+
+.createListing > div {
+   display: flex;
+   width: 100vw;
+   justify-content: center;
+}

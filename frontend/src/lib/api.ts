@@ -91,3 +91,13 @@ export async function postListing(
    );
    return result.data.id;
 }
+
+export async function putListing(
+   id: number,
+   listing: Omit<
+      DataProcessor30ListingData,
+      "creationTime" | "updateTime" | "id"
+   >
+) {
+   await axios.put(`/api/data-processor-30-listing-data/${id}`, listing);
+}

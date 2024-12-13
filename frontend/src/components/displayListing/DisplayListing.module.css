@@ -9,6 +9,18 @@
    background-color: #8f8f8f;
 }
 
+.listingHeader {
+   display: flex;
+   justify-content: space-between;
+   align-items: flex-start;
+   margin: 0;
+}
+
+.listingActionButtons {
+   width: 5rem;
+   margin: 0rem;
+}
+
 .listingContainer {
    position: absolute;
    gap: 1rem;

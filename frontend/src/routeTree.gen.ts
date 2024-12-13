@@ -16,6 +16,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as ListingIndexImport } from './routes/listing/index'
 import { Route as ListingListingIdIndexImport } from './routes/listing/$listingId/index'
+import { Route as ListingListingIdEditIndexImport } from './routes/listing/$listingId/edit/index'
 
 // Create Virtual Routes
 
@@ -58,6 +59,12 @@ const ListingListingIdIndexRoute = ListingListingIdIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ListingListingIdEditIndexRoute = ListingListingIdEditIndexImport.update({
+  id: '/listing/$listingId/edit/',
+  path: '/listing/$listingId/edit/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -97,6 +104,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ListingListingIdIndexImport
       parentRoute: typeof rootRoute
     }
+    '/listing/$listingId/edit/': {
+      id: '/listing/$listingId/edit/'
+      path: '/listing/$listingId/edit'
+      fullPath: '/listing/$listingId/edit'
+      preLoaderRoute: typeof ListingListingIdEditIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -108,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/create-listing': typeof CreateListingIndexLazyRoute
   '/upload-page': typeof UploadPageIndexLazyRoute
   '/listing/$listingId': typeof ListingListingIdIndexRoute
+  '/listing/$listingId/edit': typeof ListingListingIdEditIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -116,6 +131,7 @@ export interface FileRoutesByTo {
   '/create-listing': typeof CreateListingIndexLazyRoute
   '/upload-page': typeof UploadPageIndexLazyRoute
   '/listing/$listingId': typeof ListingListingIdIndexRoute
+  '/listing/$listingId/edit': typeof ListingListingIdEditIndexRoute
 }
 
 export interface FileRoutesById {
@@ -125,6 +141,7 @@ export interface FileRoutesById {
   '/create-listing/': typeof CreateListingIndexLazyRoute
   '/upload-page/': typeof UploadPageIndexLazyRoute
   '/listing/$listingId/': typeof ListingListingIdIndexRoute
+  '/listing/$listingId/edit/': typeof ListingListingIdEditIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -135,6 +152,7 @@ export interface FileRouteTypes {
     | '/create-listing'
     | '/upload-page'
     | '/listing/$listingId'
+    | '/listing/$listingId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -142,6 +160,7 @@ export interface FileRouteTypes {
     | '/create-listing'
     | '/upload-page'
     | '/listing/$listingId'
+    | '/listing/$listingId/edit'
   id:
     | '__root__'
     | '/'
@@ -149,6 +168,7 @@ export interface FileRouteTypes {
     | '/create-listing/'
     | '/upload-page/'
     | '/listing/$listingId/'
+    | '/listing/$listingId/edit/'
   fileRoutesById: FileRoutesById
 }
 
@@ -158,6 +178,7 @@ export interface RootRouteChildren {
   CreateListingIndexLazyRoute: typeof CreateListingIndexLazyRoute
   UploadPageIndexLazyRoute: typeof UploadPageIndexLazyRoute
   ListingListingIdIndexRoute: typeof ListingListingIdIndexRoute
+  ListingListingIdEditIndexRoute: typeof ListingListingIdEditIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -166,6 +187,7 @@ const rootRouteChildren: RootRouteChildren = {
   CreateListingIndexLazyRoute: CreateListingIndexLazyRoute,
   UploadPageIndexLazyRoute: UploadPageIndexLazyRoute,
   ListingListingIdIndexRoute: ListingListingIdIndexRoute,
+  ListingListingIdEditIndexRoute: ListingListingIdEditIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -184,7 +206,8 @@ export const routeTree = rootRoute
         "/listing/",
         "/create-listing/",
         "/upload-page/",
-        "/listing/$listingId/"
+        "/listing/$listingId/",
+        "/listing/$listingId/edit/"
       ]
     },
     "/": {
@@ -201,6 +224,9 @@ export const routeTree = rootRoute
     },
     "/listing/$listingId/": {
       "filePath": "listing/$listingId/index.tsx"
+    },
+    "/listing/$listingId/edit/": {
+      "filePath": "listing/$listingId/edit/index.tsx"
     }
   }
 }
