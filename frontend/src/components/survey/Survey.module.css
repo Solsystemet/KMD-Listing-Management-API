@@ -31,3 +31,7 @@
    box-sizing: border-box;
    background-color: #ffffff;
 }
+
+.subProcessorContainer {
+   margin-bottom: 1rem;
+}

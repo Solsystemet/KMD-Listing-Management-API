@@ -6,5 +6,5 @@ export const Route = createFileRoute("/listing/")({
 
 function Index() {
    const navigate = useNavigate({ from: "/listing" });
-   navigate({ to: "/listing/$postId", params: { postId: "index" } });
+   navigate({ to: "/listing/$listingId", params: { listingId: "index" } });
 }

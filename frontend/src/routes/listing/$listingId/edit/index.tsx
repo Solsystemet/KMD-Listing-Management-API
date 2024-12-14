@@ -4,7 +4,7 @@ import {
    useNavigate,
    useParams,
 } from "@tanstack/react-router";
-import DataProcessor30ListingData from "../../../../types/DataProcessor30ListingData";
+import { DataProcessor30ListingDataDto } from "../../../../types/DataProcessor30ListingData";
 import { getListingById, putListing } from "../../../../lib/api";
 import { Survey } from "../../../../components/survey/Survey";
 import { useQuery } from "@tanstack/react-query";
@@ -27,7 +27,7 @@ function Index() {
       queryFn: () => getListingById(listingId),
    });
 
-   async function handleSubmit(listing: DataProcessor30ListingData) {
+   async function handleSubmit(listing: DataProcessor30ListingDataDto) {
       await putListing(listingId, listing);
       navigate({
          to: "/listing/$listingId",
@@ -39,10 +39,7 @@ function Index() {
       <main className={styles.createListing}>
          <div>
             {data ? (
-               <Survey
-                  listingDataProp={data}
-                  handleSubmit={handleSubmit}
-               ></Survey>
+               <Survey listingData={data} handleSubmit={handleSubmit}></Survey>
             ) : error ? (
                error.message
             ) : (

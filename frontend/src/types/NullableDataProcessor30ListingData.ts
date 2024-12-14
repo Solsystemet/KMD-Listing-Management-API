@@ -28,20 +28,11 @@ export const nullListingData: NullableDataProcessor30ListingData = {
       mail: null,
       role: null,
    },
-   dataSecurityAdvisor: {
-      name: null,
-      address: null,
-      phoneNo: null,
-      mail: null,
-   },
    dataCategories: {
       categoryList: null,
    },
    dataSecurity: {
       securityMeasures: null,
-   },
-   dataTransfer: {
-      transferInformation: null,
    },
    dataSubProcessors: [
       {
@@ -61,10 +52,8 @@ type NullableDataProcessor30ListingData = {
    dataProcessor: NullableDataProcessor;
    dataControllerRepresentative: NullableDataControllerRepresentative;
    dataProcessorRepresentative: NullableDataProcessorRepresentative;
-   dataSecurityAdvisor: NullableDataSecurityAdvisor;
    dataCategories: NullableDataCategories;
    dataSecurity: NullableDataSecurity;
-   dataTransfer: NullableDataTransfer;
    dataSubProcessors: NullableSubProcessor[];
 };
 
@@ -91,18 +80,12 @@ export type NullableDataProcessorRepresentative = NullableDataContactInfo & {
    role?: string | null;
 };
 
-export type NullableDataSecurityAdvisor = NullableDataContactInfo;
-
 export type NullableDataCategories = {
    categoryList?: string | null;
 };
 
 export type NullableDataSecurity = {
    securityMeasures?: string | null;
-};
-
-export type NullableDataTransfer = {
-   transferInformation?: string | null;
 };
 
 export type NullableSubProcessor = {

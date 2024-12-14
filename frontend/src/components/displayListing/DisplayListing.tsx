@@ -156,6 +156,18 @@ export function DisplayListing({
                   </div>
                ))}
             </section>
+
+            <section>
+               <h2>Category List</h2>
+               <p>{dataCategories.categoryList}</p>
+            </section>
+
+            {dataSecurity.securityMeasures && (
+               <section>
+                  <h2>Security Measures</h2>
+                  <p>{dataSecurity.securityMeasures}</p>
+               </section>
+            )}
          </div>
       </div>
    );

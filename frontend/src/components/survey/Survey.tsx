@@ -1,15 +1,16 @@
 import { useState } from "react"; // Importing useState to handle state management
 import InputBox from "../inputBox/inputBox";
-import { useForm, Field, FieldApi } from "@tanstack/react-form";
+import { useForm, FieldApi } from "@tanstack/react-form";
 import { Checkbox } from "../checkBox/CheckBox";
 import styles from "./Survey.module.css";
 import NullableDataProcessor30ListingData from "../../types/NullableDataProcessor30ListingData";
 import { StandardButton } from "../buttons/Buttons";
-import DataProcessor30ListingData from "../../types/DataProcessor30ListingData";
+import { DataProcessor30ListingDataDto } from "../../types/DataProcessor30ListingData";
 
 function FieldInfo<TFieldValue>({
    field,
 }: {
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
    field: FieldApi<TFieldValue, any, any, any, any>;
 }) {
    return (
@@ -27,7 +28,7 @@ type TextBoxProps = {
    id: string;
    name: string;
    value: string;
-   readonly: boolean;
+   readOnly: boolean;
    onBlur: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
    required?: boolean;
@@ -44,40 +45,22 @@ function TextBox(props: TextBoxProps) {
          onBlur={props.onBlur}
          onChange={props.onChange}
          required={props.required}
-         readOnly={props.readonly}
+         readOnly={props.readOnly}
          rows={5}
       />
    );
 }
 
 type SurveyProps = {
-   listingDataProp: NullableDataProcessor30ListingData;
-   handleSubmit: (listing: DataProcessor30ListingData) => void;
+   listingData: NullableDataProcessor30ListingData;
+   handleSubmit: (listing: DataProcessor30ListingDataDto) => void;
 };
 
-export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
-   const [listingData, SetListingData] = useState(listingDataProp);
-   const [hasJustAddedDataSubProcessor, setHasJustAddedDataSubProcessor] =
-      useState(false); // Should be removed if possible (used to make sure the POST request is not posted when a subProcessor is added)
-
-   function addDataProcessors() {
-      SetListingData({
-         ...listingData,
-         dataSubProcessors: [
-            ...listingData.dataSubProcessors,
-            {
-               name: "",
-               cvr: "",
-               address: "",
-               treatment: "",
-               directSubProcessor: false,
-               transferReason: "",
-               parentCompany: "",
-            },
-         ],
-      });
-      setHasJustAddedDataSubProcessor(true);
-   }
+export function Survey({ listingData, handleSubmit }: SurveyProps) {
+   const [
+      hasJustAddedOrRemovedDataSubProcessor,
+      setHasJustAddedOrRemovedDataSubProcessor,
+   ] = useState(false); // Should be removed if possible (used to make sure the POST request is not posted when a subProcessor is added or removed)
 
    const form = useForm({
       defaultValues: {
@@ -110,34 +93,27 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
             phoneNo: listingData.dataProcessorRepresentative.phoneNo || "",
             mail: listingData.dataProcessorRepresentative.mail || "",
          },
-         dataSecurityAdvisor: {
-            name: listingData.dataSecurityAdvisor.name || "",
-            address: listingData.dataSecurityAdvisor.address || "",
-            phoneNo: listingData.dataSecurityAdvisor.phoneNo || "",
-            mail: listingData.dataSecurityAdvisor.mail || "",
-         },
          dataSubProcessors: listingData.dataSubProcessors.map(subProcessor => ({
             name: subProcessor.name || "",
             cvr: subProcessor.cvr || "",
             address: subProcessor.address || "",
             treatment: subProcessor.treatment || "",
             directSubProcessor: subProcessor.directSubProcessor || false,
-            transferReason: subProcessor.transferReason,
-            parentCompany: subProcessor.parentCompany,
+            transferReason: subProcessor.transferReason || "",
+            parentCompany: subProcessor.parentCompany || "",
          })),
-         dataTransfer: {
-            transferInformation: "",
-         },
          dataSecurity: {
-            securityMeasures: "",
+            securityMeasures: listingData.dataSecurity.securityMeasures || "",
          },
          dataCategories: {
-            categoryList: "",
+            categoryList:
+               listingData.dataCategories.categoryList ||
+               "Operation, maintenance & support of the solution",
          },
       },
       onSubmit: async values => {
-         if (hasJustAddedDataSubProcessor) {
-            setHasJustAddedDataSubProcessor(false);
+         if (hasJustAddedOrRemovedDataSubProcessor) {
+            setHasJustAddedOrRemovedDataSubProcessor(false);
             return;
          }
          console.log(await JSON.stringify(values.value));
@@ -160,7 +136,7 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
          >
             {/* Listing information */}
             <div className={styles.ContactInfoCont}>
-               <Field form={form} name="name">
+               <form.Field name="name">
                   {field => (
                      <div className={styles.inputContainer}>
                         <h1>Data Processor 30 Listing information</h1>
@@ -179,11 +155,11 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
                         <FieldInfo field={field} />
                      </div>
                   )}
-               </Field>
+               </form.Field>
                <div />
 
                {/* Data controller */}
-               <Field form={form} name="dataController">
+               <form.Field name="dataController">
                   {field => (
                      <div className={styles.inputContainer}>
                         <h2>Data Controller Info</h2>
@@ -269,10 +245,10 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
                         <FieldInfo field={field} />
                      </div>
                   )}
-               </Field>
+               </form.Field>
 
                {/* Data processor */}
-               <Field form={form} name="dataProcessor">
+               <form.Field name="dataProcessor">
                   {field => (
                      <div className={styles.inputContainer}>
                         <h2>Data Processor Info</h2>
@@ -358,10 +334,10 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
                         <FieldInfo field={field} />
                      </div>
                   )}
-               </Field>
+               </form.Field>
 
                {/* Data controller representative */}
-               <Field form={form} name="dataControllerRepresentative">
+               <form.Field name="dataControllerRepresentative">
                   {field => (
                      <div className={styles.inputContainer}>
                         <h2>Data Controller Representative info</h2>
@@ -447,10 +423,10 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
                         <FieldInfo field={field} />
                      </div>
                   )}
-               </Field>
+               </form.Field>
 
                {/* Data processor representative */}
-               <Field form={form} name="dataProcessorRepresentative">
+               <form.Field name="dataProcessorRepresentative">
                   {field => (
                      <div className={styles.inputContainer}>
                         <h2>Data Processor Representative info</h2>
@@ -536,138 +512,211 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
                         <FieldInfo field={field} />
                      </div>
                   )}
-               </Field>
+               </form.Field>
 
                {/* Sub processors */}
                <h2>Data Sub Processors</h2>
-               {listingData.dataSubProcessors.map((subProcessor, index) => (
-                  <div key={index}>
-                     <Field form={form} name={`dataSubProcessors.${index}`}>
-                        {field => (
-                           <div className={styles.inputContainer}>
-                              <h3>Data Sub Processor Info {index + 1}</h3>
-                              <InputBox
-                                 id={`dataSubProcessor.${index}.name`}
-                                 name={`dataSubProcessor.${index}.name`}
-                                 templateText={"Company name"}
-                                 value={field.state.value?.name}
-                                 onBlur={field.handleBlur}
-                                 onChange={e => {
-                                    field.handleChange({
-                                       ...field.state.value,
-                                       name: e.target.value,
-                                    });
-                                    handleChange(e.target.value);
-                                 }}
-                                 required={false}
-                              />
-                              <FieldInfo field={field} />
-                              <InputBox
-                                 id={`dataSubProcessor.${index}.cvr`}
-                                 name={`dataSubProcessor.${index}.cvr`}
-                                 templateText={"CVR"}
-                                 value={field.state.value?.cvr}
-                                 onBlur={field.handleBlur}
-                                 onChange={e => {
-                                    field.handleChange({
-                                       ...field.state.value,
-                                       cvr: e.target.value,
-                                    });
-                                    handleChange(e.target.value);
-                                 }}
-                                 required={false}
-                              />
-                              <FieldInfo field={field} />
-                              <InputBox
-                                 id={`dataSubProcessor.${index}.address`}
-                                 name={`dataSubProcessor.${index}.address`}
-                                 templateText={"Address"}
-                                 value={field.state.value?.address}
-                                 onBlur={field.handleBlur}
-                                 onChange={e => {
-                                    field.handleChange({
-                                       ...field.state.value,
-                                       address: e.target.value,
-                                    });
-                                    handleChange(e.target.value);
-                                 }}
-                                 required={false}
-                              />
-                              <InputBox
-                                 id={`dataSubProcessor.${index}.treatment`}
-                                 name={`dataSubProcessor.${index}.treatment`}
-                                 templateText={"treatment"}
-                                 value={field.state.value?.treatment}
-                                 onBlur={field.handleBlur}
-                                 onChange={e => {
-                                    field.handleChange({
-                                       ...field.state.value,
-                                       treatment: e.target.value,
-                                    });
-                                    handleChange(e.target.value);
-                                 }}
-                                 required={false}
-                              />
-                              <FieldInfo field={field} />
-                              <Checkbox
-                                 id={`dataSubProcessor.${index}.directSubProcessor`}
-                                 name={`dataSubProcessor.${index}.directSubProcessor`}
-                                 value={field.state.value?.directSubProcessor}
-                                 onBlur={field.handleBlur}
-                                 onChange={e => {
-                                    field.handleChange({
-                                       ...field.state.value,
-                                       directSubProcessor: e.target.checked,
-                                    });
-                                    handleChange(e.target.checked.toString());
-                                 }}
+               <form.Field name="dataSubProcessors" mode="array">
+                  {subProcessorField => (
+                     <div
+                        className={`${styles.inputContainer} ${styles.subProcessorContainer}`}
+                     >
+                        {subProcessorField.state.value.map((_, index) => (
+                           <>
+                              <form.Field
+                                 name={`dataSubProcessors[${index}].name`}
                               >
-                                 Is KMD the sub-processor
-                              </Checkbox>
-                              <FieldInfo field={field} />
-                              <h4>Transfer reason</h4>
-                              <TextBox
-                                 id={`dataSubProcessor.${index}.transferReason`}
-                                 name={`dataSubProcessor.${index}.transferReason`}
-                                 templateText={"Enter transfer reason"}
-                                 value={field.state.value?.transferReason}
-                                 onBlur={field.handleBlur}
-                                 onChange={e => {
-                                    field.handleChange({
-                                       ...field.state.value,
-                                       transferReason: e.target.value,
-                                    });
-                                    handleChange(e.target.value);
-                                 }}
-                                 required={false}
-                              />
-                              <FieldInfo field={field} />
-                              <h4>Parent Company</h4>
-                              <InputBox
-                                 id={`dataSubProcessor.${index}.parentCompany`}
-                                 name={`dataSubProcessor.${index}.parentCompany`}
-                                 templateText={"Enter parent company"}
-                                 value={field.state.value?.parentCompany}
-                                 onBlur={field.handleBlur}
-                                 onChange={e => {
-                                    field.handleChange({
-                                       ...field.state.value,
-                                       transferReason: e.target.value,
-                                    });
-                                    handleChange(e.target.value);
-                                 }}
-                                 required={false}
-                              />
-                           </div>
-                        )}
-                     </Field>
-                  </div>
-               ))}
-               <button onClick={addDataProcessors} className={styles.addButton}>
-                  Add Data Processor
-               </button>
+                                 {field => (
+                                    <>
+                                       <h3>
+                                          Data Sub Processor Info {index + 1}
+                                          <StandardButton
+                                             backgroundColor="#ff4d4f"
+                                             color="white"
+                                             onClick={() => {
+                                                setHasJustAddedOrRemovedDataSubProcessor(
+                                                   true
+                                                );
+                                                subProcessorField.removeValue(
+                                                   index
+                                                );
+                                             }}
+                                          >
+                                             X
+                                          </StandardButton>
+                                       </h3>
+                                       <InputBox
+                                          id={`dataSubProcessor[${index}].name`}
+                                          name={`dataSubProcessor[${index}].name`}
+                                          templateText={"Company name"}
+                                          value={field.state.value}
+                                          onBlur={field.handleBlur}
+                                          onChange={e => {
+                                             field.handleChange(e.target.value);
+                                             handleChange(e.target.value);
+                                          }}
+                                          required={false}
+                                       />
+                                       <FieldInfo field={field} />
+                                    </>
+                                 )}
+                              </form.Field>
+                              <form.Field
+                                 name={`dataSubProcessors[${index}].cvr`}
+                              >
+                                 {field => (
+                                    <>
+                                       <InputBox
+                                          id={`dataSubProcessor[${index}].cvr`}
+                                          name={`dataSubProcessor[${index}].cvr`}
+                                          templateText={"CVR"}
+                                          value={field.state.value}
+                                          onBlur={field.handleBlur}
+                                          onChange={e => {
+                                             field.handleChange(e.target.value);
+                                             handleChange(e.target.value);
+                                          }}
+                                          required={false}
+                                       />
+                                       <FieldInfo field={field} />
+                                    </>
+                                 )}
+                              </form.Field>
+                              <form.Field
+                                 name={`dataSubProcessors[${index}].address`}
+                              >
+                                 {field => (
+                                    <>
+                                       <InputBox
+                                          id={`dataSubProcessor[${index}].address`}
+                                          name={`dataSubProcessor[${index}].address`}
+                                          templateText={"Address"}
+                                          value={field.state.value}
+                                          onBlur={field.handleBlur}
+                                          onChange={e => {
+                                             field.handleChange(e.target.value);
+                                             handleChange(e.target.value);
+                                          }}
+                                          required={false}
+                                       />
+                                       <FieldInfo field={field} />
+                                    </>
+                                 )}
+                              </form.Field>
+                              <form.Field
+                                 name={`dataSubProcessors[${index}].treatment`}
+                              >
+                                 {field => (
+                                    <>
+                                       <InputBox
+                                          id={`dataSubProcessor[${index}].treatment`}
+                                          name={`dataSubProcessor[${index}].treatment`}
+                                          templateText={"treatment"}
+                                          value={field.state.value}
+                                          onBlur={field.handleBlur}
+                                          onChange={e => {
+                                             field.handleChange(e.target.value);
+                                             handleChange(e.target.value);
+                                          }}
+                                          required={false}
+                                       />
+                                       <FieldInfo field={field} />
+                                    </>
+                                 )}
+                              </form.Field>
+                              <form.Field
+                                 name={`dataSubProcessors[${index}].directSubProcessor`}
+                              >
+                                 {field => (
+                                    <>
+                                       <Checkbox
+                                          id={`dataSubProcessor[${index}].directSubProcessor`}
+                                          name={`dataSubProcessor[${index}].directSubProcessor`}
+                                          value={field.state.value}
+                                          onBlur={field.handleBlur}
+                                          onChange={e => {
+                                             field.handleChange(
+                                                e.target.checked
+                                             );
+                                             handleChange(
+                                                e.target.checked.toString()
+                                             );
+                                          }}
+                                       >
+                                          Is KMD the sub-processor
+                                       </Checkbox>
+                                       <FieldInfo field={field} />
+                                    </>
+                                 )}
+                              </form.Field>
+                              <form.Field
+                                 name={`dataSubProcessors[${index}].transferReason`}
+                              >
+                                 {field => (
+                                    <>
+                                       <h4>Transfer reason</h4>
+                                       <TextBox
+                                          id={`dataSubProcessor[${index}].transferReason`}
+                                          name={`dataSubProcessor[${index}].transferReason`}
+                                          templateText={"Enter transfer reason"}
+                                          readOnly={false}
+                                          value={field.state.value}
+                                          onBlur={field.handleBlur}
+                                          onChange={e => {
+                                             field.handleChange(e.target.value);
+                                             handleChange(e.target.value);
+                                          }}
+                                          required={false}
+                                       />
+                                       <FieldInfo field={field} />
+                                    </>
+                                 )}
+                              </form.Field>
+                              <form.Field
+                                 name={`dataSubProcessors[${index}].parentCompany`}
+                              >
+                                 {field => (
+                                    <>
+                                       <h4>Parent Company</h4>
+                                       <InputBox
+                                          id={`dataSubProcessor[${index}].parentCompany`}
+                                          name={`dataSubProcessor[${index}].parentCompany`}
+                                          templateText={"Enter parent company"}
+                                          value={field.state.value}
+                                          onBlur={field.handleBlur}
+                                          onChange={e => {
+                                             field.handleChange(e.target.value);
+                                             handleChange(e.target.value);
+                                          }}
+                                          required={false}
+                                       />
+                                       <FieldInfo field={field} />
+                                    </>
+                                 )}
+                              </form.Field>
+                           </>
+                        ))}
+                        <StandardButton
+                           onClick={() => {
+                              setHasJustAddedOrRemovedDataSubProcessor(true);
+                              subProcessorField.pushValue({
+                                 name: "",
+                                 cvr: "",
+                                 address: "",
+                                 treatment: "",
+                                 directSubProcessor: false,
+                                 transferReason: "",
+                                 parentCompany: "",
+                              });
+                           }}
+                        >
+                           Add Data Processor
+                        </StandardButton>
+                     </div>
+                  )}
+               </form.Field>
 
-               <Field form={form} name={`dataCategories.categoryList`}>
+               <form.Field name={`dataCategories.categoryList`}>
                   {field => (
                      <>
                         <h2>
@@ -678,10 +727,8 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
                            id={`dataCategories.categoryList`}
                            name={`dataCategories.categoryList`}
                            templateText={"Enter description"}
-                           readonly={true}
-                           value={
-                              "Operation, maintenance & support of the solution"
-                           } // Predefined
+                           readOnly={false}
+                           value={field.state.value}
                            onBlur={field.handleBlur}
                            onChange={e => {
                               field.handleChange(e.target.value);
@@ -692,9 +739,9 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
                         <FieldInfo field={field} />
                      </>
                   )}
-               </Field>
+               </form.Field>
 
-               <Field form={form} name={`dataSecurity.securityMeasures`}>
+               <form.Field name={`dataSecurity.securityMeasures`}>
                   {field => (
                      <>
                         <h2>
@@ -705,7 +752,8 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
                            id={`dataSecurity.securityMeasures`}
                            name={`dataSecurity.securityMeasures`}
                            templateText={"Enter technical description"}
-                           value={field.state.value || ""}
+                           readOnly={false}
+                           value={field.state.value}
                            onBlur={field.handleBlur}
                            onChange={e => {
                               field.handleChange(e.target.value);
@@ -716,7 +764,7 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
                         <FieldInfo field={field} />
                      </>
                   )}
-               </Field>
+               </form.Field>
             </div>
             <StandardButton type="submit" disabled={!form.state.canSubmit}>
                {form.state.isSubmitting ? "..." : "Submit"}
