@@ -33,3 +33,11 @@
    filter: brightness(0.7);
    width: 60%;
 }
+
+.sortAndFilter {
+   display: flex;
+   justify-content:space-around;
+   width: 100%;
+   padding: 1rem;
+   background-color: #f8f4f4;
+}  

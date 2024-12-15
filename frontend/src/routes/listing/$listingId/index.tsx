@@ -13,6 +13,7 @@ import styles from "./index.module.css";
 import { SortingMenu } from "../../../components/sortingMenu/SortingMenu";
 import { DisplayListing } from "./../../../components/displayListing/DisplayListing";
 import imgKMD from "../../../assets/imgKMD.svg";
+import FilterMenu from "../../../components/filter/Filter";
 
 export const Route = createFileRoute("/listing/$listingId/")({
    component: Index,
@@ -51,7 +52,10 @@ function Index() {
       <main className={styles.listingIndex}>
          <div className={styles.sidebar}>
             <Searchbar setQueryObject={setQueryObject} />
+            <div className={styles.sortAndFilter}>
             <SortingMenu setQueryObject={setQueryObject} />
+            <FilterMenu setQueryObject={setQueryObject} />
+            </div>
             {listings.isPending ? (
                "Loading..."
             ) : listings.error ? (
