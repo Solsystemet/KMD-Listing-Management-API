@@ -38,6 +38,7 @@ export function DisplayListing({
                   <img
                      src={exportListingSvg}
                      alt="Export listing"
+                     title="Export listing"
                      className={styles.listingActionButtons}
                   />
                   <Link
@@ -47,6 +48,7 @@ export function DisplayListing({
                      <img
                         src={editListingSvg}
                         alt="Edit Listing"
+                        title="Edit Listing"
                         className={styles.listingActionButtons}
                      />
                   </Link>
