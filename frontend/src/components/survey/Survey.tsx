@@ -124,598 +124,523 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
    const handleChange = (value: string) => {
       console.log(value);
    };
+  return (
+    <div className={styles.surveyContainer}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          form.handleSubmit();
+        }}
+      >
+        {/* Listing information */}
+        <div className={styles.ContactInfoCont}>
+          <Field form={form} name="name">
+            {(field) => (
+              <div className={styles.inputContainer}>
+                <h1>Data Processor 30 Listing information</h1>
+                <InputBox
+                  templateText="Enter listing name"
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange(e.target.value);
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+              </div>
+            )}
+          </Field>
+          <div />
 
-   return (
-      <div className={styles.surveyContainer}>
-         <form
-            onSubmit={e => {
-               e.preventDefault();
-               e.stopPropagation();
-               form.handleSubmit();
-            }}
-         >
-            {/* Listing information */}
-            <div className={styles.ContactInfoCont}>
-               <form.Field name="name">
-                  {field => (
-                     <div className={styles.inputContainer}>
-                        <h1>Data Processor 30 Listing information</h1>
-                        <InputBox
-                           templateText="Enter listing name"
-                           id={field.name}
-                           name={field.name}
-                           value={field.state.value}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange(e.target.value);
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                     </div>
-                  )}
-               </form.Field>
-               <div />
+          {/* Data controller */}
+          <Field form={form} name="dataController">
+            {(field) => (
+              <div className={styles.inputContainer}>
+                <h2>Data Controller Info</h2>
+                <InputBox
+                  id={`dataController.name`}
+                  name={`dataController.name`}
+                  templateText={"Company name"}
+                  value={field.state.value?.name}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      name: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataController.cvr`}
+                  name={`dataController.cvr`}
+                  templateText={"CVR"}
+                  value={field.state.value?.cvr}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      cvr: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataController.address`}
+                  name={`dataController.address`}
+                  templateText={"Address"}
+                  value={field.state.value?.address}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      address: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataController.phoneNo`}
+                  name={`dataController.phoneNo`}
+                  templateText={"Phone number"}
+                  value={field.state.value?.phoneNo}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      phoneNo: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataController.mail`}
+                  name={`dataController.mail`}
+                  templateText={"E-mail"}
+                  value={field.state.value?.mail}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      mail: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+              </div>
+            )}
+          </Field>
 
-               {/* Data controller */}
-               <form.Field name="dataController">
-                  {field => (
-                     <div className={styles.inputContainer}>
-                        <h2>Data Controller Info</h2>
-                        <InputBox
-                           id={`dataController.name`}
-                           name={`dataController.name`}
-                           templateText={"Company name"}
-                           value={field.state.value?.name}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 name: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataController.cvr`}
-                           name={`dataController.cvr`}
-                           templateText={"CVR"}
-                           value={field.state.value?.cvr}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 cvr: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataController.address`}
-                           name={`dataController.address`}
-                           templateText={"Address"}
-                           value={field.state.value?.address}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 address: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataController.phoneNo`}
-                           name={`dataController.phoneNo`}
-                           templateText={"Phone number"}
-                           value={field.state.value?.phoneNo}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 phoneNo: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataController.mail`}
-                           name={`dataController.mail`}
-                           templateText={"E-mail"}
-                           value={field.state.value?.mail}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 mail: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                     </div>
-                  )}
-               </form.Field>
+          {/* Data processor */}
+          <Field form={form} name="dataProcessor">
+            {(field) => (
+              <div className={styles.inputContainer}>
+                <h2>Data Processor Info</h2>
+                <InputBox
+                  id={`dataProcessor.name`}
+                  name={`dataProcessor.name`}
+                  templateText={"Company name"}
+                  value={field.state.value?.name}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      name: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataProcessor.cvr`}
+                  name={`dataProcessor.cvr`}
+                  templateText={"CVR"}
+                  value={field.state.value?.cvr}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      cvr: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataProcessor.address`}
+                  name={`dataProcessor.address`}
+                  templateText={"Address"}
+                  value={field.state.value?.address}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      address: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataProcessor.phoneNo`}
+                  name={`dataProcessor.phoneNo`}
+                  templateText={"Phone number"}
+                  value={field.state.value?.phoneNo}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      phoneNo: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataProcessor.mail`}
+                  name={`dataProcessor.mail`}
+                  templateText={"E-mail"}
+                  value={field.state.value?.mail}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      mail: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+              </div>
+            )}
+          </Field>
 
-               {/* Data processor */}
-               <form.Field name="dataProcessor">
-                  {field => (
-                     <div className={styles.inputContainer}>
-                        <h2>Data Processor Info</h2>
-                        <InputBox
-                           id={`dataProcessor.name`}
-                           name={`dataProcessor.name`}
-                           templateText={"Company name"}
-                           value={field.state.value?.name}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 name: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataProcessor.cvr`}
-                           name={`dataProcessor.cvr`}
-                           templateText={"CVR"}
-                           value={field.state.value?.cvr}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 cvr: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataProcessor.address`}
-                           name={`dataProcessor.address`}
-                           templateText={"Address"}
-                           value={field.state.value?.address}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 address: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataProcessor.phoneNo`}
-                           name={`dataProcessor.phoneNo`}
-                           templateText={"Phone number"}
-                           value={field.state.value?.phoneNo}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 phoneNo: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataProcessor.mail`}
-                           name={`dataProcessor.mail`}
-                           templateText={"E-mail"}
-                           value={field.state.value?.mail}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 mail: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                     </div>
-                  )}
-               </form.Field>
+          {/* Data controller representative */}
+          <Field form={form} name="dataControllerRepresentative">
+            {(field) => (
+              <div className={styles.inputContainer}>
+                <h2>Data Controller Representative info</h2>
+                <InputBox
+                  id={`dataControllerRepresentative.name`}
+                  name={`dataControllerRepresentative.name`}
+                  templateText={"Name"}
+                  value={field.state.value?.name}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      name: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataControllerRepresentative.role`}
+                  name={`dataControllerRepresentative.role`}
+                  templateText={"Role"}
+                  value={field.state.value?.role}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      role: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataControllerRepresentative.address`}
+                  name={`dataControllerRepresentative.address`}
+                  templateText={"Address"}
+                  value={field.state.value?.address}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      address: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={false}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataControllerRepresentative.phoneNo`}
+                  name={`dataControllerRepresentative.phoneNo`}
+                  templateText={"Phone number"}
+                  value={field.state.value?.phoneNo}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      phoneNo: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataControllerRepresentative.mail`}
+                  name={`dataControllerRepresentative.mail`}
+                  templateText={"E-mail"}
+                  value={field.state.value?.mail}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      mail: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+              </div>
+            )}
+          </Field>
 
-               {/* Data controller representative */}
-               <form.Field name="dataControllerRepresentative">
-                  {field => (
-                     <div className={styles.inputContainer}>
-                        <h2>Data Controller Representative info</h2>
-                        <InputBox
-                           id={`dataControllerRepresentative.name`}
-                           name={`dataControllerRepresentative.name`}
-                           templateText={"Name"}
-                           value={field.state.value?.name}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 name: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataControllerRepresentative.role`}
-                           name={`dataControllerRepresentative.role`}
-                           templateText={"Role"}
-                           value={field.state.value?.role}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 role: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataControllerRepresentative.address`}
-                           name={`dataControllerRepresentative.address`}
-                           templateText={"Address"}
-                           value={field.state.value?.address}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 address: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataControllerRepresentative.phoneNo`}
-                           name={`dataControllerRepresentative.phoneNo`}
-                           templateText={"Phone number"}
-                           value={field.state.value?.phoneNo}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 phoneNo: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataControllerRepresentative.mail`}
-                           name={`dataControllerRepresentative.mail`}
-                           templateText={"E-mail"}
-                           value={field.state.value?.mail}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 mail: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                     </div>
-                  )}
-               </form.Field>
+          {/* Data processor representative */}
+          <Field form={form} name="dataProcessorRepresentative">
+            {(field) => (
+              <div className={styles.inputContainer}>
+                <h2>Data Processor Representative info</h2>
+                <InputBox
+                  id={`dataProcessorRepresentative.name`}
+                  name={`dataProcessorRepresentative.name`}
+                  templateText={"Name"}
+                  value={field.state.value?.name}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      name: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataProcessorRepresentative.role`}
+                  name={`dataProcessorRepresentative.role`}
+                  templateText={"Role"}
+                  value={field.state.value?.role}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      role: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataProcessorRepresentative.address`}
+                  name={`dataProcessorRepresentative.address`}
+                  templateText={"Address"}
+                  value={field.state.value?.address}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      address: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={false}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataProcessorRepresentative.phoneNo`}
+                  name={`dataProcessorRepresentative.phoneNo`}
+                  templateText={"Phone number"}
+                  value={field.state.value?.phoneNo}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      phoneNo: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+                <InputBox
+                  id={`dataProcessorRepresentative.mail`}
+                  name={`dataProcessorRepresentative.mail`}
+                  templateText={"E-mail"}
+                  value={field.state.value?.mail}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    field.handleChange({
+                      ...field.state.value,
+                      mail: e.target.value,
+                    });
+                    handleChange(e.target.value);
+                  }}
+                  required={true}
+                />
+                <FieldInfo field={field} />
+              </div>
+            )}
+          </Field>
 
-               {/* Data processor representative */}
-               <form.Field name="dataProcessorRepresentative">
-                  {field => (
-                     <div className={styles.inputContainer}>
-                        <h2>Data Processor Representative info</h2>
-                        <InputBox
-                           id={`dataProcessorRepresentative.name`}
-                           name={`dataProcessorRepresentative.name`}
-                           templateText={"Name"}
-                           value={field.state.value?.name}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 name: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataProcessorRepresentative.role`}
-                           name={`dataProcessorRepresentative.role`}
-                           templateText={"Role"}
-                           value={field.state.value?.role}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 role: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataProcessorRepresentative.address`}
-                           name={`dataProcessorRepresentative.address`}
-                           templateText={"Address"}
-                           value={field.state.value?.address}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 address: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataProcessorRepresentative.phoneNo`}
-                           name={`dataProcessorRepresentative.phoneNo`}
-                           templateText={"Phone number"}
-                           value={field.state.value?.phoneNo}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 phoneNo: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                        <InputBox
-                           id={`dataProcessorRepresentative.mail`}
-                           name={`dataProcessorRepresentative.mail`}
-                           templateText={"E-mail"}
-                           value={field.state.value?.mail}
-                           onBlur={field.handleBlur}
-                           onChange={e => {
-                              field.handleChange({
-                                 ...field.state.value,
-                                 mail: e.target.value,
-                              });
-                              handleChange(e.target.value);
-                           }}
-                           required={false}
-                        />
-                        <FieldInfo field={field} />
-                     </div>
-                  )}
-               </form.Field>
-
-               {/* Sub processors */}
-               <h2>Data Sub Processors</h2>
-               <form.Field name="dataSubProcessors" mode="array">
-                  {subProcessorField => (
-                     <div
-                        className={`${styles.inputContainer} ${styles.subProcessorContainer}`}
-                     >
-                        {subProcessorField.state.value.map((_, index) => (
-                           <>
-                              <form.Field
-                                 name={`dataSubProcessors[${index}].name`}
-                              >
-                                 {field => (
-                                    <>
-                                       <h3>
-                                          Data Sub Processor Info {index + 1}
-                                          <StandardButton
-                                             backgroundColor="#ff4d4f"
-                                             color="white"
-                                             onClick={() => {
-                                                setHasJustAddedOrRemovedDataSubProcessor(
-                                                   true
-                                                );
-                                                subProcessorField.removeValue(
-                                                   index
-                                                );
-                                             }}
-                                          >
-                                             X
-                                          </StandardButton>
-                                       </h3>
-                                       <InputBox
-                                          id={`dataSubProcessor[${index}].name`}
-                                          name={`dataSubProcessor[${index}].name`}
-                                          templateText={"Company name"}
-                                          value={field.state.value}
-                                          onBlur={field.handleBlur}
-                                          onChange={e => {
-                                             field.handleChange(e.target.value);
-                                             handleChange(e.target.value);
-                                          }}
-                                          required={false}
-                                       />
-                                       <FieldInfo field={field} />
-                                    </>
-                                 )}
-                              </form.Field>
-                              <form.Field
-                                 name={`dataSubProcessors[${index}].cvr`}
-                              >
-                                 {field => (
-                                    <>
-                                       <InputBox
-                                          id={`dataSubProcessor[${index}].cvr`}
-                                          name={`dataSubProcessor[${index}].cvr`}
-                                          templateText={"CVR"}
-                                          value={field.state.value}
-                                          onBlur={field.handleBlur}
-                                          onChange={e => {
-                                             field.handleChange(e.target.value);
-                                             handleChange(e.target.value);
-                                          }}
-                                          required={false}
-                                       />
-                                       <FieldInfo field={field} />
-                                    </>
-                                 )}
-                              </form.Field>
-                              <form.Field
-                                 name={`dataSubProcessors[${index}].address`}
-                              >
-                                 {field => (
-                                    <>
-                                       <InputBox
-                                          id={`dataSubProcessor[${index}].address`}
-                                          name={`dataSubProcessor[${index}].address`}
-                                          templateText={"Address"}
-                                          value={field.state.value}
-                                          onBlur={field.handleBlur}
-                                          onChange={e => {
-                                             field.handleChange(e.target.value);
-                                             handleChange(e.target.value);
-                                          }}
-                                          required={false}
-                                       />
-                                       <FieldInfo field={field} />
-                                    </>
-                                 )}
-                              </form.Field>
-                              <form.Field
-                                 name={`dataSubProcessors[${index}].treatment`}
-                              >
-                                 {field => (
-                                    <>
-                                       <InputBox
-                                          id={`dataSubProcessor[${index}].treatment`}
-                                          name={`dataSubProcessor[${index}].treatment`}
-                                          templateText={"treatment"}
-                                          value={field.state.value}
-                                          onBlur={field.handleBlur}
-                                          onChange={e => {
-                                             field.handleChange(e.target.value);
-                                             handleChange(e.target.value);
-                                          }}
-                                          required={false}
-                                       />
-                                       <FieldInfo field={field} />
-                                    </>
-                                 )}
-                              </form.Field>
-                              <form.Field
-                                 name={`dataSubProcessors[${index}].directSubProcessor`}
-                              >
-                                 {field => (
-                                    <>
-                                       <Checkbox
-                                          id={`dataSubProcessor[${index}].directSubProcessor`}
-                                          name={`dataSubProcessor[${index}].directSubProcessor`}
-                                          value={field.state.value}
-                                          onBlur={field.handleBlur}
-                                          onChange={e => {
-                                             field.handleChange(
-                                                e.target.checked
-                                             );
-                                             handleChange(
-                                                e.target.checked.toString()
-                                             );
-                                          }}
-                                       >
-                                          Is KMD the sub-processor
-                                       </Checkbox>
-                                       <FieldInfo field={field} />
-                                    </>
-                                 )}
-                              </form.Field>
-                              <form.Field
-                                 name={`dataSubProcessors[${index}].transferReason`}
-                              >
-                                 {field => (
-                                    <>
-                                       <h4>Transfer reason</h4>
-                                       <TextBox
-                                          id={`dataSubProcessor[${index}].transferReason`}
-                                          name={`dataSubProcessor[${index}].transferReason`}
-                                          templateText={"Enter transfer reason"}
-                                          readOnly={false}
-                                          value={field.state.value}
-                                          onBlur={field.handleBlur}
-                                          onChange={e => {
-                                             field.handleChange(e.target.value);
-                                             handleChange(e.target.value);
-                                          }}
-                                          required={false}
-                                       />
-                                       <FieldInfo field={field} />
-                                    </>
-                                 )}
-                              </form.Field>
-                              <form.Field
-                                 name={`dataSubProcessors[${index}].parentCompany`}
-                              >
-                                 {field => (
-                                    <>
-                                       <h4>Parent Company</h4>
-                                       <InputBox
-                                          id={`dataSubProcessor[${index}].parentCompany`}
-                                          name={`dataSubProcessor[${index}].parentCompany`}
-                                          templateText={"Enter parent company"}
-                                          value={field.state.value}
-                                          onBlur={field.handleBlur}
-                                          onChange={e => {
-                                             field.handleChange(e.target.value);
-                                             handleChange(e.target.value);
-                                          }}
-                                          required={false}
-                                       />
-                                       <FieldInfo field={field} />
-                                    </>
-                                 )}
-                              </form.Field>
-                           </>
-                        ))}
-                        <StandardButton
-                           onClick={() => {
-                              setHasJustAddedOrRemovedDataSubProcessor(true);
-                              subProcessorField.pushValue({
-                                 name: "",
-                                 cvr: "",
-                                 address: "",
-                                 treatment: "",
-                                 directSubProcessor: false,
-                                 transferReason: "",
-                                 parentCompany: "",
-                              });
-                           }}
-                        >
-                           Add Data Processor
-                        </StandardButton>
-                     </div>
-                  )}
-               </form.Field>
-
+          {/* Sub processors */}
+          <h2>Data Sub Processors</h2>
+          {listingData.dataSubProcessors.map((subProcessor, index) => (
+            <div key={index}>
+              <Field form={form} name={`dataSubProcessors.${index}`}>
+                {(field) => (
+                  <div className={styles.inputContainer}>
+                    <h3>Data Sub Processor Info {index + 1}</h3>
+                    <InputBox
+                      id={`dataSubProcessor.${index}.name`}
+                      name={`dataSubProcessor.${index}.name`}
+                      templateText={"Company name"}
+                      value={field.state.value?.name}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => {
+                        field.handleChange({
+                          ...field.state.value,
+                          name: e.target.value,
+                        });
+                        handleChange(e.target.value);
+                      }}
+                      required={true}
+                    />
+                    <FieldInfo field={field} />
+                    <InputBox
+                      id={`dataSubProcessor.${index}.cvr`}
+                      name={`dataSubProcessor.${index}.cvr`}
+                      templateText={"CVR"}
+                      value={field.state.value?.cvr}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => {
+                        field.handleChange({
+                          ...field.state.value,
+                          cvr: e.target.value,
+                        });
+                        handleChange(e.target.value);
+                      }}
+                      required={true}
+                    />
+                    <FieldInfo field={field} />
+                    <InputBox
+                      id={`dataSubProcessor.${index}.address`}
+                      name={`dataSubProcessor.${index}.address`}
+                      templateText={"Address"}
+                      value={field.state.value?.address}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => {
+                        field.handleChange({
+                          ...field.state.value,
+                          address: e.target.value,
+                        });
+                        handleChange(e.target.value);
+                      }}
+                      required={true}
+                    />
+                    <InputBox
+                      id={`dataSubProcessor.${index}.treatment`}
+                      name={`dataSubProcessor.${index}.treatment`}
+                      templateText={"treatment"}
+                      value={field.state.value?.treatment}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => {
+                        field.handleChange({
+                          ...field.state.value,
+                          treatment: e.target.value,
+                        });
+                        handleChange(e.target.value);
+                      }}
+                      required={true}
+                    />
+                    <FieldInfo field={field} />
+                    <Checkbox
+                      id={`dataSubProcessor.${index}.directSubProcessor`}
+                      name={`dataSubProcessor.${index}.directSubProcessor`}
+                      value={field.state.value?.directSubProcessor}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => {
+                        field.handleChange({
+                          ...field.state.value,
+                          directSubProcessor: e.target.checked,
+                        });
+                        handleChange(e.target.checked.toString());
+                      }}
+                    >
+                      Is KMD the sub-processor
+                    </Checkbox>
+                    <FieldInfo field={field} />
+                    <h4>Transfer reason</h4>
+                    <TextBox
+                      id={`dataSubProcessor.${index}.transferReason`}
+                      name={`dataSubProcessor.${index}.transferReason`}
+                      templateText={"Enter transfer reason"}
+                      value={field.state.value?.transferReason}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => {
+                        field.handleChange({
+                          ...field.state.value,
+                          transferReason: e.target.value,
+                        });
+                        handleChange(e.target.value);
+                      }}
+                      required={true}
+                    />
+                    <FieldInfo field={field} />
+                    <h4>Parent Company</h4>
+                    <InputBox
+                      id={`dataSubProcessor.${index}.parentCompany`}
+                      name={`dataSubProcessor.${index}.parentCompany`}
+                      templateText={"Enter parent company"}
+                      value={field.state.value?.parentCompany}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => {
+                        field.handleChange({
+                          ...field.state.value,
+                          transferReason: e.target.value,
+                        });
+                        handleChange(e.target.value);
+                      }}
+                      required={true}
+                    />
+                  </div>
+                )}
+              </Field>
+            </div>
+          ))}
+          <button onClick={addDataProcessors} className={styles.addButton}>
+            Add Data Processor
+          </button>
                <form.Field name={`dataCategories.categoryList`}>
                   {field => (
                      <>
