@@ -3,7 +3,9 @@ import ListingSidebarDto from "../types/ListingSidebarDto";
 import QueryObject from "../types/QueryObject";
 import { Dispatch, SetStateAction } from "react";
 import NullableDataProcessor30ListingData from "../types/NullableDataProcessor30ListingData";
-import DataProcessor30ListingData from "../types/DataProcessor30ListingData";
+import DataProcessor30ListingData, {
+   DataProcessor30ListingDataDto,
+} from "../types/DataProcessor30ListingData";
 
 type ListingSidebarDtoWithStringDate = {
    id: number;
@@ -80,14 +82,18 @@ export async function scrapeFile(
 }
 
 export async function postListing(
-   listing: Omit<
-      DataProcessor30ListingData,
-      "creationTime" | "updateTime" | "id"
-   >
+   listing: DataProcessor30ListingDataDto
 ): Promise<number> {
    const result = await axios.post(
       "/api/data-processor-30-listing-data",
       listing
    );
    return result.data.id;
+}
+
+export async function putListing(
+   id: number,
+   listing: DataProcessor30ListingDataDto
+) {
+   await axios.put(`/api/data-processor-30-listing-data/${id}`, listing);
 }

@@ -1,5 +1,8 @@
 import DataProcessor30ListingData from "../../types/DataProcessor30ListingData";
 import styles from "./DisplayListing.module.css";
+import exportListingSvg from "../../assets/listingIcons/exportListing.svg";
+import editListingSvg from "../../assets/listingIcons/editListing.svg";
+import { Link } from "@tanstack/react-router";
 
 export function DisplayListing({
    listing,
@@ -19,17 +22,38 @@ export function DisplayListing({
    return (
       <div className={styles.listingBackground}>
          <div className={styles.listingContainer}>
-            <section className={styles.infoContainer}>
-               <h1>{listing.name}</h1>
-               <div>
-                  <span>Created at: </span>
-                  <span> {listing.creationTime.toUTCString()}</span>
+            <div className={styles.listingHeader}>
+               <section className={styles.infoContainer}>
+                  <h1>{listing.name}</h1>
+                  <div>
+                     <span>Created at: </span>
+                     <span> {listing.creationTime.toUTCString()}</span>
+                  </div>
+                  <div>
+                     <span>Updated at: </span>
+                     <span>{listing.updateTime.toUTCString()}</span>
+                  </div>
+               </section>
+               <div className="listingControls">
+                  <img
+                     src={exportListingSvg}
+                     alt="Export listing"
+                     title="Export listing"
+                     className={styles.listingActionButtons}
+                  />
+                  <Link
+                     to="/listing/$listingId/edit"
+                     params={{ listingId: listing.id.toString() }}
+                  >
+                     <img
+                        src={editListingSvg}
+                        alt="Edit Listing"
+                        title="Edit Listing"
+                        className={styles.listingActionButtons}
+                     />
+                  </Link>
                </div>
-               <div>
-                  <span>Updated at: </span>
-                  <span>{listing.updateTime.toUTCString()}</span>
-               </div>
-            </section>
+            </div>
             <section>
                <h2>Data Controller</h2>
                <p>
@@ -134,6 +158,18 @@ export function DisplayListing({
                   </div>
                ))}
             </section>
+
+            <section>
+               <h2>Category List</h2>
+               <p>{dataCategories.categoryList}</p>
+            </section>
+
+            {dataSecurity.securityMeasures && (
+               <section>
+                  <h2>Security Measures</h2>
+                  <p>{dataSecurity.securityMeasures}</p>
+               </section>
+            )}
          </div>
       </div>
    );

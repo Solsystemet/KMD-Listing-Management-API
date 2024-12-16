@@ -1,154 +1,129 @@
 import { useState } from "react"; // Importing useState to handle state management
 import InputBox from "../inputBox/inputBox";
-import { useForm, Field, FieldApi } from "@tanstack/react-form";
+import { useForm, FieldApi } from "@tanstack/react-form";
 import { Checkbox } from "../checkBox/CheckBox";
 import styles from "./Survey.module.css";
 import NullableDataProcessor30ListingData from "../../types/NullableDataProcessor30ListingData";
 import { StandardButton } from "../buttons/Buttons";
-import DataProcessor30ListingData from "../../types/DataProcessor30ListingData";
+import { DataProcessor30ListingDataDto } from "../../types/DataProcessor30ListingData";
 
 function FieldInfo<TFieldValue>({
-  field,
+   field,
 }: {
-  field: FieldApi<TFieldValue, any, any, any, any>;
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   field: FieldApi<TFieldValue, any, any, any, any>;
 }) {
-  return (
-    <>
-      {field.state.meta.isTouched && field.state.meta.errors.length ? (
-        <em>{field.state.meta.errors.join(", ")}</em>
-      ) : null}
-      {field.state.meta.isValidating ? "Validating..." : null}
-    </>
-  );
+   return (
+      <>
+         {field.state.meta.isTouched && field.state.meta.errors.length ? (
+            <em>{field.state.meta.errors.join(", ")}</em>
+         ) : null}
+         {field.state.meta.isValidating ? "Validating..." : null}
+      </>
+   );
 }
 
 type TextBoxProps = {
-  templateText: string;
-  id: string;
-  name: string;
-  value: string;
-  readonly: boolean;
-  onBlur: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  required?: boolean;
+   templateText: string;
+   id: string;
+   name: string;
+   value: string;
+   readOnly: boolean;
+   onBlur: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
+   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+   required?: boolean;
 };
 
 function TextBox(props: TextBoxProps) {
-  return (
-    <textarea
-      placeholder={props.templateText}
-      className={styles.textBox}
-      id={props.id}
-      name={props.name}
-      value={props.value}
-      onBlur={props.onBlur}
-      onChange={props.onChange}
-      required={props.required}
-      readOnly={props.readonly}
-      rows={5}
-    />
-  );
+   return (
+      <textarea
+         placeholder={props.templateText}
+         className={styles.textBox}
+         id={props.id}
+         name={props.name}
+         value={props.value}
+         onBlur={props.onBlur}
+         onChange={props.onChange}
+         required={props.required}
+         readOnly={props.readOnly}
+         rows={5}
+      />
+   );
 }
 
 type SurveyProps = {
-  listingDataProp: NullableDataProcessor30ListingData;
-  handleSubmit: (listing: DataProcessor30ListingData) => void;
+   listingData: NullableDataProcessor30ListingData;
+   handleSubmit: (listing: DataProcessor30ListingDataDto) => void;
 };
 
-export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
-  const [listingData, SetListingData] = useState(listingDataProp);
-  const [hasJustAddedDataSubProcessor, setHasJustAddedDataSubProcessor] =
-    useState(false); // Should be removed if possible (used to make sure the POST request is not posted when a subProcessor is added)
+export function Survey({ listingData, handleSubmit }: SurveyProps) {
+   const [
+      hasJustAddedOrRemovedDataSubProcessor,
+      setHasJustAddedOrRemovedDataSubProcessor,
+   ] = useState(false); // Should be removed if possible (used to make sure the POST request is not posted when a subProcessor is added or removed)
 
-  function addDataProcessors() {
-    SetListingData({
-      ...listingData,
-      dataSubProcessors: [
-        ...listingData.dataSubProcessors,
-        {
-          name: "",
-          cvr: "",
-          address: "",
-          treatment: "",
-          directSubProcessor: false,
-          transferReason: "",
-          parentCompany: "",
-        },
-      ],
-    });
-    setHasJustAddedDataSubProcessor(true);
-  }
+   const form = useForm({
+      defaultValues: {
+         name: listingData.name || "",
+         dataController: {
+            name: listingData.dataController.name || "",
+            cvr: listingData.dataController.cvr || "",
+            address: listingData.dataController.address || "",
+            phoneNo: listingData.dataController.phoneNo || "",
+            mail: listingData.dataController.mail || "",
+         },
+         dataProcessor: {
+            name: listingData.dataProcessor.name || "",
+            cvr: listingData.dataProcessor.cvr || "",
+            address: listingData.dataProcessor.address || "",
+            phoneNo: listingData.dataProcessor.phoneNo || "",
+            mail: listingData.dataProcessor.mail || "",
+         },
+         dataControllerRepresentative: {
+            name: listingData.dataControllerRepresentative.name || "",
+            role: listingData.dataControllerRepresentative.role || "",
+            address: listingData.dataControllerRepresentative.address || "",
+            phoneNo: listingData.dataControllerRepresentative.phoneNo || "",
+            mail: listingData.dataControllerRepresentative.mail || "",
+         },
+         dataProcessorRepresentative: {
+            name: listingData.dataProcessorRepresentative.name || "",
+            role: listingData.dataProcessorRepresentative.role || "",
+            address: listingData.dataProcessorRepresentative.address || "",
+            phoneNo: listingData.dataProcessorRepresentative.phoneNo || "",
+            mail: listingData.dataProcessorRepresentative.mail || "",
+         },
+         dataSubProcessors: listingData.dataSubProcessors.map(subProcessor => ({
+            name: subProcessor.name || "",
+            cvr: subProcessor.cvr || "",
+            address: subProcessor.address || "",
+            treatment: subProcessor.treatment || "",
+            directSubProcessor: subProcessor.directSubProcessor || false,
+            transferReason: subProcessor.transferReason || "",
+            parentCompany: subProcessor.parentCompany || "",
+         })),
+         dataSecurity: {
+            securityMeasures: listingData.dataSecurity.securityMeasures || "",
+         },
+         dataCategories: {
+            categoryList:
+               listingData.dataCategories.categoryList ||
+               "Operation, maintenance & support of the solution",
+         },
+      },
+      onSubmit: async values => {
+         if (hasJustAddedOrRemovedDataSubProcessor) {
+            setHasJustAddedOrRemovedDataSubProcessor(false);
+            return;
+         }
+         console.log(await JSON.stringify(values.value));
+         handleSubmit(values.value);
+      },
+   });
 
-  const form = useForm({
-    defaultValues: {
-      name: "",
-      dataController: {
-        name: listingData.dataController.name || "",
-        cvr: listingData.dataController.cvr || "",
-        address: listingData.dataController.address || "",
-        phoneNo: listingData.dataController.phoneNo || "",
-        mail: listingData.dataController.mail || "",
-      },
-      dataProcessor: {
-        name: listingData.dataProcessor.name || "",
-        cvr: listingData.dataProcessor.cvr || "",
-        address: listingData.dataProcessor.address || "",
-        phoneNo: listingData.dataProcessor.phoneNo || "",
-        mail: listingData.dataProcessor.mail || "",
-      },
-      dataControllerRepresentative: {
-        name: listingData.dataControllerRepresentative.name || "",
-        role: listingData.dataControllerRepresentative.role || "",
-        address: listingData.dataControllerRepresentative.address || "",
-        phoneNo: listingData.dataControllerRepresentative.phoneNo || "",
-        mail: listingData.dataControllerRepresentative.mail || "",
-      },
-      dataProcessorRepresentative: {
-        name: listingData.dataProcessorRepresentative.name || "",
-        role: listingData.dataProcessorRepresentative.role || "",
-        address: listingData.dataProcessorRepresentative.address || "",
-        phoneNo: listingData.dataProcessorRepresentative.phoneNo || "",
-        mail: listingData.dataProcessorRepresentative.mail || "",
-      },
-      dataSecurityAdvisor: {
-        name: listingData.dataSecurityAdvisor.name || "",
-        address: listingData.dataSecurityAdvisor.address || "",
-        phoneNo: listingData.dataSecurityAdvisor.phoneNo || "",
-        mail: listingData.dataSecurityAdvisor.mail || "",
-      },
-      dataSubProcessors: listingData.dataSubProcessors.map((subProcessor) => ({
-        name: subProcessor.name || "",
-        cvr: subProcessor.cvr || "",
-        address: subProcessor.address || "",
-        treatment: subProcessor.treatment || "",
-        directSubProcessor: subProcessor.directSubProcessor || false,
-        transferReason: subProcessor.transferReason,
-        parentCompany: subProcessor.parentCompany,
-      })),
-      dataTransfer: {
-        transferInformation: "",
-      },
-      dataSecurity: {
-        securityMeasures: "",
-      },
-      dataCategories: {
-        categoryList: "",
-      },
-    },
-    onSubmit: async (values) => {
-      if (hasJustAddedDataSubProcessor) {
-        setHasJustAddedDataSubProcessor(false);
-        return;
-      }
-      console.log(await JSON.stringify(values.value));
-      handleSubmit(values.value);
-    },
-  });
-
-  const handleChange = (value: string) => {
-    console.log(value);
-  };
-
+   const handleChange = (value: string) => {
+      console.log(value);
+   };
   return (
     <div className={styles.surveyContainer}>
       <form
@@ -666,60 +641,60 @@ export function Survey({ listingDataProp, handleSubmit }: SurveyProps) {
           <button onClick={addDataProcessors} className={styles.addButton}>
             Add Data Processor
           </button>
+               <form.Field name={`dataCategories.categoryList`}>
+                  {field => (
+                     <>
+                        <h2>
+                           Beskrivelse af de katagorier af information der
+                           bliver behandlet.
+                        </h2>
+                        <TextBox
+                           id={`dataCategories.categoryList`}
+                           name={`dataCategories.categoryList`}
+                           templateText={"Enter description"}
+                           readOnly={false}
+                           value={field.state.value}
+                           onBlur={field.handleBlur}
+                           onChange={e => {
+                              field.handleChange(e.target.value);
+                              handleChange(e.target.value);
+                           }}
+                           required={false}
+                        />
+                        <FieldInfo field={field} />
+                     </>
+                  )}
+               </form.Field>
 
-          <Field form={form} name={`dataCategories.categoryList`}>
-            {(field) => (
-              <>
-                <h2>
-                  Beskrivelse af de katagorier af information der bliver
-                  behandlet.
-                </h2>
-                <TextBox
-                  id={`dataCategories.categoryList`}
-                  name={`dataCategories.categoryList`}
-                  templateText={"Enter description"}
-                  readonly={true}
-                  value={"Operation, maintenance & support of the solution"} // Predefined
-                  onBlur={field.handleBlur}
-                  onChange={(e) => {
-                    field.handleChange(e.target.value);
-                    handleChange(e.target.value);
-                  }}
-                  required={false}
-                />
-                <FieldInfo field={field} />
-              </>
-            )}
-          </Field>
-
-          <Field form={form} name={`dataSecurity.securityMeasures`}>
-            {(field) => (
-              <>
-                <h2>
-                  Beskrivelse af tekniske og organisatoriske
-                  sikkerhedsforanstaltninger.
-                </h2>
-                <TextBox
-                  id={`dataSecurity.securityMeasures`}
-                  name={`dataSecurity.securityMeasures`}
-                  templateText={"Enter technical description"}
-                  value={field.state.value || ""}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => {
-                    field.handleChange(e.target.value);
-                    handleChange(e.target.value);
-                  }}
-                  required={false}
-                />
-                <FieldInfo field={field} />
-              </>
-            )}
-          </Field>
-        </div>
-        <StandardButton type="submit" disabled={!form.state.canSubmit}>
-          {form.state.isSubmitting ? "..." : "Submit"}
-        </StandardButton>
-      </form>
-    </div>
-  );
+               <form.Field name={`dataSecurity.securityMeasures`}>
+                  {field => (
+                     <>
+                        <h2>
+                           Beskrivelse af tekniske og organisatoriske
+                           sikkerhedsforanstaltninger.
+                        </h2>
+                        <TextBox
+                           id={`dataSecurity.securityMeasures`}
+                           name={`dataSecurity.securityMeasures`}
+                           templateText={"Enter technical description"}
+                           readOnly={false}
+                           value={field.state.value}
+                           onBlur={field.handleBlur}
+                           onChange={e => {
+                              field.handleChange(e.target.value);
+                              handleChange(e.target.value);
+                           }}
+                           required={false}
+                        />
+                        <FieldInfo field={field} />
+                     </>
+                  )}
+               </form.Field>
+            </div>
+            <StandardButton type="submit" disabled={!form.state.canSubmit}>
+               {form.state.isSubmitting ? "..." : "Submit"}
+            </StandardButton>
+         </form>
+      </div>
+   );
 }

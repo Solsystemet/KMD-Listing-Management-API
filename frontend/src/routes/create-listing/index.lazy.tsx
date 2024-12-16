@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import NullableDataProcessor30ListingData, {
    nullListingData,
 } from "../../types/NullableDataProcessor30ListingData";
-import DataProcessor30ListingData from "../../types/DataProcessor30ListingData";
+import { DataProcessor30ListingDataDto } from "../../types/DataProcessor30ListingData";
 import { postListing } from "../../lib/api";
 
 export const Route = createLazyFileRoute("/create-listing/")({
@@ -31,7 +31,7 @@ function Index() {
       effectRan.current = true;
    }, []);
 
-   async function handleSubmit(listing: DataProcessor30ListingData) {
+   async function handleSubmit(listing: DataProcessor30ListingDataDto) {
       const id = await postListing(listing);
       navigate({
          to: "/listing/$listingId",
@@ -44,7 +44,7 @@ function Index() {
          <div>
             {listingData ? (
                <Survey
-                  listingDataProp={listingData}
+                  listingData={listingData}
                   handleSubmit={handleSubmit}
                ></Survey>
             ) : (

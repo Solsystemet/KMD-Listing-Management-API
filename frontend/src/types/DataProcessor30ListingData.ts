@@ -1,3 +1,8 @@
+export type DataProcessor30ListingDataDto = Omit<
+   DataProcessor30ListingData,
+   "id" | "creationTime" | "updateTime"
+>;
+
 type DataProcessor30ListingData = {
    id: number;
    name: string;
@@ -7,10 +12,8 @@ type DataProcessor30ListingData = {
    dataProcessor: DataProcessor;
    dataControllerRepresentative: DataControllerRepresentative;
    dataProcessorRepresentative: DataProcessorRepresentative;
-   dataSecurityAdvisor: DataSecurityAdvisor;
    dataCategories: DataCategories;
    dataSecurity: DataSecurity;
-   dataTransfer: DataTransfer;
    dataSubProcessors: SubProcessor[];
 };
 
@@ -37,8 +40,6 @@ export type DataProcessorRepresentative = DataContactInfo & {
    role: string;
 };
 
-export type DataSecurityAdvisor = DataContactInfo;
-
 export type DataCategories = {
    categoryList: string;
 };
@@ -58,6 +59,9 @@ export type SubProcessor = {
    treatment: string;
    directSubProcessor: boolean;
    transferReason: string;
+
+   // Utility variable
+   parentCompany: string;
 };
 
 export default DataProcessor30ListingData;
