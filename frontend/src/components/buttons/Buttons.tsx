@@ -54,3 +54,30 @@ export function NavButton(props: NavButtonProps) {
       </Link>
    );
 }
+
+type ExportButtonProps = {
+   children: React.ReactNode;
+   color?: string;
+   backgroundColor?: string;
+   fontSize?: string;
+   border?: string;
+   onClick?: (listingsList: object) => void;
+   disabled?: boolean;
+};
+export function ExportButton(props: ExportButtonProps) {
+   return (
+      <button
+         style={{
+            color: props.color,
+            backgroundColor: props.backgroundColor,
+            fontSize: props.fontSize,
+            border: props.border,
+         }}
+         className={styles.standardButton}
+         onClick={props.onClick}
+         disabled={props.disabled}
+      >
+         {props.children}
+      </button>
+   );
+}
