@@ -16,7 +16,11 @@ export function Navbar({ children }: NavbarProps) {
    return (
       <nav>
          <div className={styles.contentContainer}>
-            <Link to={"/listing/$listingId"} params={{ listingId: "index" }}>
+            <Link
+               to={"/listing/$listingId"}
+               params={{ listingId: "index" }}
+               className={styles.imgContainer}
+            >
                <img src={imgKMD} alt="Logo" />
             </Link>
             {children.map((child, index) => (
