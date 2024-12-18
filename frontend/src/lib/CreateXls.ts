@@ -1,4 +1,4 @@
-import { downloadTableAsExcel, tableToFile } from "html-table-to-excel.ts";
+import { downloadTableAsExcel, tableToFile, tableToExcel } from "html-table-to-excel.ts";
 import { getListingById } from "./api";
 
 // This function creates a temporary html document containing a table which will be converted to 
@@ -95,10 +95,13 @@ export function createXlsFile() {
 
     HTMLBody.appendChild(HTMLTable);  //Appends table to document (prob not needed?)
 
-    // file generation stuff
-    let tableFile = tableToFile(HTMLTable, 'Listings.xls');
-    
-    //export file to browser
+    // Convert the table to an Excel file
+    tableToFile(HTMLTable, 'Listings.xls');
+    // Trigger download of the Excel file
+    //const link = document.createElement('a');
+    //link.href = URL.createObjectURL(excelFile);
+    //link.download = 'Listings.xls';
+    //link.click();
 }
 
 //Helper function to create a row
