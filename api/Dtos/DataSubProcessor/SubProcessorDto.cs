@@ -14,5 +14,6 @@ namespace api.Dtos.DataSubProcessor
         public string Treatment { get; set; } = string.Empty;
         public bool DirectSubProcessor { get; set; } = false;
         public string TransferReason { get; set; } = string.Empty;
+        public string ParentCompany  { get; set; } = string.Empty;
     }
 }

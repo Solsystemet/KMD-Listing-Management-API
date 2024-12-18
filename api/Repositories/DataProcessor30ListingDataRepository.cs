@@ -107,10 +107,8 @@ namespace api.Repositories
             if(!existing30Listing.DataProcessor.IsEqual(dataProcessor30ListingDataDto.DataProcessor)) updatedFields.Add("Data processor");
             if(!existing30Listing.DataProcessorRepresentative.IsEqual(dataProcessor30ListingDataDto.DataProcessorRepresentative)) updatedFields.Add("Data Processor Representative");
             if(!existing30Listing.DataControllerRepresentative.IsEqual(dataProcessor30ListingDataDto.DataControllerRepresentative)) updatedFields.Add("Data Controller Representative");
-            if(!existing30Listing.DataSecurityAdvisor.IsEqual(dataProcessor30ListingDataDto.DataSecurityAdvisor)) updatedFields.Add("Data Security Advisor");
             if(!existing30Listing.DataCategories.IsEqual(dataProcessor30ListingDataDto.DataCategories)) updatedFields.Add("Data categories");
             if(!existing30Listing.DataSecurity.IsEqual(dataProcessor30ListingDataDto.DataSecurity)) updatedFields.Add("Data security");
-            if(!existing30Listing.DataTransfer.IsEqual(dataProcessor30ListingDataDto.DataTransfer)) updatedFields.Add("Data Transfer");
             
             bool SubProcessorUpdated = false;
             if(existing30Listing.DataSubProcessors.Count == dataProcessor30ListingDataDto.DataSubProcessors.Count){
@@ -141,10 +139,8 @@ namespace api.Repositories
             _context.Entry(existing30Listing.DataProcessor).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataProcessor);
             _context.Entry(existing30Listing.DataProcessorRepresentative).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataProcessorRepresentative);
             _context.Entry(existing30Listing.DataControllerRepresentative).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataControllerRepresentative);
-            _context.Entry(existing30Listing.DataSecurityAdvisor).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataSecurityAdvisor);
             _context.Entry(existing30Listing.DataCategories).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataCategories);
             _context.Entry(existing30Listing.DataSecurity).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataSecurity);
-            _context.Entry(existing30Listing.DataTransfer).CurrentValues.SetValues(dataProcessor30ListingDataDto.DataTransfer);
             existing30Listing.UpdateTime = DateTime.Now;
 
             await _context.DataEditDatas.AddAsync(new DataEdit("Listing Updated", String.Join(',', updatedFields), existing30Listing.Id));

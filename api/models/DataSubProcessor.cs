@@ -23,6 +23,8 @@ namespace api.Models
 
             this.TransferReason = subProcessorDto.TransferReason;
 
+            this.ParentCompany = subProcessorDto.ParentCompany;
+
             this.DataProcessor30ListingDataId = dataProcessor30ListingData.Id;
         }
         public int Id { get; set; }
@@ -33,6 +35,7 @@ namespace api.Models
         public string Treatment { get; set; } = string.Empty;
         public bool DirectSubProcessor { get; set; } = false;
         public string TransferReason { get; set; } = string.Empty;
+        public string ParentCompany  { get; set; } = string.Empty;
 
         public int? DataProcessor30ListingDataId { get; set; }
         public  bool IsEqualUpdateDto(SubProcessorDto dataSubProcessor){
@@ -53,6 +56,9 @@ namespace api.Models
                 return false;
             }
             if(dataSubProcessor.TransferReason != this.TransferReason){
+                return false;
+            }
+            if(dataSubProcessor.ParentCompany != this.ParentCompany){
                 return false;
             }
             return true;
