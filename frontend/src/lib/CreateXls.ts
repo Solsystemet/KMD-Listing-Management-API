@@ -1,5 +1,8 @@
 import { downloadTableAsExcel, tableToFile, tableToExcel } from "html-table-to-excel.ts";
-import { getListingById } from "./api";
+import { getAllListings, getListingById } from "./api";
+import { useQuery } from "@tanstack/react-query";
+import QueryObject from "../types/QueryObject";
+
 
 // This function creates a temporary html document containing a table which will be converted to 
 // an xls (excel) file. The function constructs a static setup but appends information dynamically below
