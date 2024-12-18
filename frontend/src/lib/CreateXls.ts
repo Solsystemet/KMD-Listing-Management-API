@@ -33,6 +33,7 @@ const listingHeaders = [
             colSpan: '11',
         },{
             text: 'Third Countries',
+            colSpan: '2'
         },
     ],[
         {
@@ -79,11 +80,13 @@ export function createXlsFile() {
 
     //Use helper function to format static information
     staticInformation.forEach(rowData => {      // kmd info, taken from the staticInformation arr
-        const newRow = document.createElement('tr');
+        
+        let newRow = document.createElement('tr');
+        console.log('creating row: ' + rowData[1]);
         
         newRow.appendChild(createHeaderCell(rowData[0], '2'));
         newRow.appendChild(createNormalCell(rowData[1], '2'));
-
+        console.log('row created: ' + newRow);
         HTMLTable.appendChild(newRow);
     });
     listingHeaders.forEach(headerRow => {       // headers for listing data, taken from listingHeaders
@@ -102,13 +105,14 @@ export function createXlsFile() {
     HTMLBody.appendChild(HTMLTable);  //Appends table to document (prob not needed?)
 
     // Convert the table to an Excel file
-    tableToFile(HTMLTable, 'Listings.xls');
+    const excelFile = tableToFile(HTMLTable, 'Listings.xls');
     // Trigger download of the Excel file
     //const link = document.createElement('a');
     //link.href = URL.createObjectURL(excelFile);
     //link.download = 'Listings.xls';
     //link.click();
 
+    return excelFile;
     
 }
 
@@ -203,24 +207,31 @@ function createListingRow(_listingData) {
 
 //Helper function to create Header cell
 function createHeaderCell(content: string, colSpan: string = '1', rowSpan: string = '1') {
-    const headerCell = document.createElement('th');
+    const newHeaderCell = document.createElement('th');
 
-    headerCell.setAttribute('colspan', colSpan);
-    headerCell.setAttribute('rowspan', rowSpan);
-    headerCell.textContent = content;
+    newHeaderCell.textContent = content;
+    newHeaderCell.colSpan = parseInt(colSpan, 10);
+    newHeaderCell.rowSpan = parseInt(rowSpan, 10);
 
-    return headerCell;
+    newHeaderCell.style.backgroundColor = '#1f614e';
+    newHeaderCell.style.color = 'white';
+    newHeaderCell.style.fontWeight = 'bold';
+    newHeaderCell.style.padding = '8px';
+
+    return newHeaderCell;
 }
 
 //Helper function to create normal cell
 function createNormalCell(content: string, colSpan: string = '1', rowSpan: string = '1') {
-    const normalCell = document.createElement('tr');
+    const newNormalCell = document.createElement('th');
 
-    normalCell.setAttribute('colspan', colSpan);
-    normalCell.setAttribute('rowspan', rowSpan);
-    normalCell.textContent = content;
+    newNormalCell.textContent = content;
+    newNormalCell.colSpan = parseInt(colSpan, 10);
+    newNormalCell.rowSpan = parseInt(rowSpan, 10);
 
-    return normalCell;
+    newNormalCell.style.fontWeight = 'normal';
+
+    return newNormalCell;
 }
 
 export default createXlsFile;

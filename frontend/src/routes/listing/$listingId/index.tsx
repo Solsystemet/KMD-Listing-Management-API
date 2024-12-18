@@ -15,6 +15,7 @@ import { DisplayListing } from "./../../../components/displayListing/DisplayList
 import imgKMD from "../../../assets/imgKMD.svg";
 import { StandardButton, ExportButton } from "../../../components/buttons/Buttons";
 import { createXlsFile } from "../../../lib/CreateXls";
+import FileSaver from "file-saver";
 
 export const Route = createFileRoute("/listing/$listingId/")({
    component: Index,
@@ -43,7 +44,13 @@ function Index() {
 
    function handleExport() {
       console.log('handeling export');
-      createXlsFile();
+      try {
+         const excelFile = createXlsFile();
+ 
+         FileSaver.saveAs(excelFile, 'Listings.xls');
+     } catch (error) {
+         console.error('Failed to download: ', error);
+     }
    }
 
    const currListing = useQuery({
