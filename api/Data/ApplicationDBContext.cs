@@ -35,13 +35,7 @@ namespace api.Data
                 .OwnsOne(p => p.DataProcessorRepresentative);
 
             modelBuilder.Entity<DataProcessor30ListingData>()
-                .OwnsOne(p => p.DataSecurityAdvisor);
-
-            modelBuilder.Entity<DataProcessor30ListingData>()
                 .OwnsOne(p => p.DataCategories);
-
-            modelBuilder.Entity<DataProcessor30ListingData>()
-                .OwnsOne(p => p.DataTransfer);
 
             modelBuilder.Entity<DataProcessor30ListingData>()
                 .OwnsOne(p => p.DataSecurity);
