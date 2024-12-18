@@ -42,7 +42,7 @@ function Index() {
    }
 
    function handleExport() {
-      console.log('handeling exports');
+      console.log('handeling export');
       createXlsFile();
    }
 
@@ -57,8 +57,8 @@ function Index() {
    return (
       <main className={styles.listingIndex}>
          <div className={styles.sidebar}>
+            <StandardButton children={'Export'} onClick={handleExport}/>
             <Searchbar setQueryObject={setQueryObject} />
-            <StandardButton children='Export' onClick={handleExport}/>
             <SortingMenu setQueryObject={setQueryObject} />
             {listings.isPending ? (
                "Loading..."

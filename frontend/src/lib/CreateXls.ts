@@ -1,5 +1,8 @@
-import { downloadTableAsExcel, tableToFile, tableToExcel } from "html-table-to-excel.ts";
-import { getAllListings, getListingById } from "./api";
+import {
+    downloadTableAsExcel,
+    tableToFile,
+  } from 'https://cdn.jsdelivr.net/npm/html-table-to-excel.ts@1/esm.js' //for some reason doesnt work when downloaded so doin this, idk y,,,
+  import { getAllListings, getListingById } from "./api";
 import { useQuery } from "@tanstack/react-query";
 import QueryObject from "../types/QueryObject";
 
@@ -105,6 +108,8 @@ export function createXlsFile() {
     //link.href = URL.createObjectURL(excelFile);
     //link.download = 'Listings.xls';
     //link.click();
+
+    
 }
 
 //Helper function to create a row
@@ -217,3 +222,5 @@ function createNormalCell(content: string, colSpan: string = '1', rowSpan: strin
 
     return normalCell;
 }
+
+export default createXlsFile;
