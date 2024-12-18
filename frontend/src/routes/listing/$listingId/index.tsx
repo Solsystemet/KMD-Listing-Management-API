@@ -13,7 +13,7 @@ import styles from "./index.module.css";
 import { SortingMenu } from "../../../components/sortingMenu/SortingMenu";
 import { DisplayListing } from "./../../../components/displayListing/DisplayListing";
 import imgKMD from "../../../assets/imgKMD.svg";
-import { ExportButton } from "../../../components/buttons/Buttons";
+import { StandardButton, ExportButton } from "../../../components/buttons/Buttons";
 import { createXlsFile } from "../../../lib/CreateXls";
 
 export const Route = createFileRoute("/listing/$listingId/")({
@@ -41,9 +41,9 @@ function Index() {
       });
    }
 
-   function handleExport(listingsList: object) {
+   function handleExport() {
       console.log('handeling exports');
-      //createXlsFile(listingsList);
+      createXlsFile();
    }
 
    const currListing = useQuery({
@@ -58,7 +58,7 @@ function Index() {
       <main className={styles.listingIndex}>
          <div className={styles.sidebar}>
             <Searchbar setQueryObject={setQueryObject} />
-            <ExportButton children='Export' onClick={handleExport}/>
+            <StandardButton children='Export' onClick={handleExport}/>
             <SortingMenu setQueryObject={setQueryObject} />
             {listings.isPending ? (
                "Loading..."

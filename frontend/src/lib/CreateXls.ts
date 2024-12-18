@@ -64,16 +64,15 @@ const listingHeaders = [
         },{text: 'Changes of sub-processors/n(Indsigelse/Samtykke)'
 }]]
 
-export function createXlsFile(_listingsList) {
-
+export function createXlsFile() {
     //create doc
     const doc = document.implementation.createHTMLDocument('temporary Document');
 
     const HTMLBody = doc.body;
     const HTMLTable = doc.createElement('table');
 
-    //Use helper function to format default
-    staticInformation.forEach(rowData => {
+    //Use helper function to format static information
+    staticInformation.forEach(rowData => {      // kmd info, taken from the staticInformation arr
         const newRow = document.createElement('tr');
         
         newRow.appendChild(createHeaderCell(rowData[0], '2'));
@@ -81,23 +80,25 @@ export function createXlsFile(_listingsList) {
 
         HTMLTable.appendChild(newRow);
     });
-    listingHeaders.forEach(headerRow => {
+    listingHeaders.forEach(headerRow => {       // headers for listing data, taken from listingHeaders
         HTMLTable.appendChild(createHeaderRow(headerRow));
     })
 
     //Use helper function to append listing rows
-    //_listingsList.data.forEach(simpleListingData => {
-      //  const listingId = simpleListingData.id;});
-        //fetch data{}
-        //execute function to create info row
-        //append row
+        //fetch list of relevant listings
+        //iterate through id's:
+            //fetch data{}
+            //execute function to create info row
+            //append row
+
+
 
     HTMLBody.appendChild(HTMLTable);  //Appends table to document (prob not needed?)
 
     // file generation stuff
     let tableFile = tableToFile(HTMLTable, 'Listings.xls');
     
-    return tableFile;
+    //export file to browser
 }
 
 //Helper function to create a row
