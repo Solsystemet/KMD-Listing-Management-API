@@ -63,21 +63,17 @@ function formatListingData(listing: any){
         ["Data Categories", "Categories of data", formatDataCategories(listing["dataCategories"])]
     ];
 
-    // Conditional rows for data transfer and security
-    if (listing["dataTransfer"]?.transferInformation) {
-        data.push([
-            "Data Transfer",
-            "Terms for transfer of data internationally and to 3rd countries",
-            listing["dataTransfer"].transferInformation
-        ]);
-    }
-
-    if (listing["dataSecurity"]?.securityMeasures) {
-        data.push([
-            "Data Security",
-            "Security measures in place to protect data privacy",
-            listing["dataSecurity"].securityMeasures
-        ]);
+    if(listing.dataSubProcessors != ''){
+        let dataTransferData = [
+            ["Data Transfer", "Sub-processors to whom data may be transfered:", listing.dataTransfer.transferInformation]
+        ]
+        listing.dataSubProcessors.forEach(subProcessor => {
+            dataTransferData.push(["", "", 
+                `${subProcessor.name}\n
+                 ${subProcessor.treatment}\n
+                 ${subProcessor.transferReason}`
+            ])            
+        });
     }
 
     return data;
