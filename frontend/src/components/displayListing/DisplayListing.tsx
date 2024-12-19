@@ -3,6 +3,7 @@ import styles from "./DisplayListing.module.css";
 import exportListingSvg from "../../assets/listingIcons/exportListing.svg";
 import editListingSvg from "../../assets/listingIcons/editListing.svg";
 import { Link } from "@tanstack/react-router";
+import { createPdf } from "../../lib/createPdf";
 
 export function DisplayListing({
    listing,
@@ -18,6 +19,11 @@ export function DisplayListing({
       dataCategories,
       dataSecurity,
    } = listing;
+
+   async function exportHandeler(){
+      const blob = createPdf(listing);
+      
+   }
 
    return (
       <div className={styles.listingBackground}>
@@ -35,12 +41,16 @@ export function DisplayListing({
                   </div>
                </section>
                <div className="listingControls">
-                  <img
-                     src={exportListingSvg}
-                     alt="Export listing"
-                     title="Export listing"
+                  <button
+                     onClick={exportHandeler}
                      className={styles.listingActionButtons}
-                  />
+                     title="Export listing"
+                  >
+                     <img
+                        src={exportListingSvg}
+                        alt="Export listing"
+                     />
+                  </button>
                   <Link
                      to="/listing/$listingId/edit"
                      params={{ listingId: listing.id.toString() }}
