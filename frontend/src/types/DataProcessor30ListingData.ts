@@ -4,6 +4,7 @@ export type DataProcessor30ListingDataDto = Omit<
 >;
 
 type DataProcessor30ListingData = {
+   solution: string,
    id: number;
    name: string;
    creationTime: Date;
