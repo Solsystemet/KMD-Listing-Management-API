@@ -10,6 +10,8 @@ import {QueryClient} from "../main"
 // This function creates a temporary html document containing a table which will be converted to 
 // an xls (excel) file. The function constructs a static setup but appends information dynamically below
 // where each row will contain listinf information from a single listing. 
+
+// tried to make it as *not ugly :TM:* as i could but styling takes time we dont have and not everything works for some reason idk,,
 const staticInformation = [
     ["Name & contact details of the data processor:", "UVDATA A/S"],
     ["Contact details of data processor:", "Lauritzens Plads 1, 9000 Aalborg, Denmark, Phone: 45 44 60 66 29"],
@@ -49,13 +51,14 @@ const listingHeaders = [
             text: 'Categories of processing activities ',
             rowSpan: '2'
         },{
-            text: 'Sub-processors /n(Mark with an X the sub-processors being used and/or fill in full name of the sub-processors not mentioned in the list)',
+            text: 'Sub-processors (Mark with an X the sub-processors being used and/or fill in full name of the sub-processors not mentioned in the list)',
             colSpan: '11'
         },{
             text: 'Third country transfers /n(Yes/No)',
             rowSpan: '2'
         },{
-            text: 'Third countries /n(Insert link to TIA or list the relevant countries to which personal data may be transferred)',            rowSpan: '2'
+            text: 'Third countries (Insert link to TIA or list the relevant countries to which personal data may be transferred)',
+            rowSpan: '2'
         }
     ],[
           {text: 'Aeven'
@@ -75,10 +78,9 @@ export async function createXlsFile() {
     //create doc
     const doc = document.implementation.createHTMLDocument('temporary Document');
 
-    const HTMLBody = doc.body;
     const HTMLTable = doc.createElement('table');
     HTMLTable.appendChild(document.createElement('tr')); //Spacing row
-    HTMLTable.style.borderCollapse = 'collapse'; //formatting to merge cell borders
+    HTMLTable.style.borderCollapse = 'collapse'; //formatting to merge cell borders (used cus borders didnt show, but still doesnt idk idk)
 
     //Use helper function to format static information
     staticInformation.forEach(rowData => {      // kmd info, taken from the staticInformation arr
@@ -91,14 +93,14 @@ export async function createXlsFile() {
         HTMLTable.appendChild(newRow);
     });
     HTMLTable.appendChild(document.createElement('tr')); //Spacing row
-    listingHeaders.forEach(headerRow => {       // headers for listing data, taken from listingHeaders
+    listingHeaders.forEach(headerRow => {                // headers for listing data, taken from listingHeaders
         HTMLTable.appendChild(createHeaderRow(headerRow));
     })
 
     const allListingQuery: QueryObject = {
         isDescending: true,
         pageNumber: 1,
-        pageSize: 10000,    //arbetrary
+        pageSize: 10000,    //arbetrary, just big enough to encapsulate all listings 
     };
 
     const allListings = await getAllListings(allListingQuery);
@@ -115,9 +117,12 @@ for (const listing of allListings) {
     newRow.appendChild(createNormalCell('')); //Spacing cell
     newRow.appendChild(createNormalCell(currListing?.solution ?? 'N/A'));
     newRow.appendChild(createNormalCell(currListing?.dataController?.name ?? 'N/A'));
-    newRow.appendChild(createNormalCell(
-        `${currListing?.dataController?.address ?? 'N/A'}, ${currListing?.dataController?.mail ?? 'N/A'}, ${currListing?.dataController?.phoneNo ?? 'N/A'}`
-    ));
+
+    let dataControllerContact = '';
+    if (currListing?.dataController.address != ''){dataControllerContact = dataControllerContact.concat(`${currListing?.dataController.address}, `)}; //lazy way to add but works
+    if (currListing?.dataController.mail != ''){dataControllerContact = dataControllerContact.concat(`${currListing?.dataController.mail}, `)};
+    if (currListing?.dataController.phoneNo != ''){dataControllerContact = dataControllerContact.concat(`${currListing?.dataController.phoneNo}`)}; //w/o ', ' so it doesnt end weird
+    newRow.appendChild(createNormalCell(dataControllerContact));
     newRow.appendChild(createNormalCell(currListing?.dataCategories.categoryList ?? 'N/A'));
 
     const subProcessors = createSubProcessorChecklist(currListing);
@@ -164,7 +169,6 @@ function createHeaderRow(row) {
 
 
 //helper function to create checklist of sub processors
-// Helper function to create checklist of sub-processors
 function createSubProcessorChecklist(listingData) {
     // By default, empty, if true, place an 'X'
     let Aeven = '';
@@ -256,7 +260,7 @@ function createNormalCell(content: string, colSpan: string = '1', rowSpan: strin
     newNormalCell.rowSpan = parseInt(rowSpan, 10);
 
     newNormalCell.style.fontWeight = 'normal';
-    newNormalCell.style.border = '1px solid black';
+    newNormalCell.style.border = '1px solid black'; //*should* add a border to cells but doesnt for some reason??
 
     return newNormalCell;
 }
