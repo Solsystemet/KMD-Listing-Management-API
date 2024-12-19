@@ -42,10 +42,10 @@ function Index() {
       });
    }
 
-   function handleExport() {
+   async function handleExport() {
       console.log('handeling export');
       try {
-         const excelFile = createXlsFile();
+         const excelFile = await createXlsFile();
  
          FileSaver.saveAs(excelFile, 'Listings.xls');
      } catch (error) {
