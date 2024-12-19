@@ -25,14 +25,13 @@ namespace api.Mappers
             return new DataProcessor30ListingData
             {
                 Name = dataProcessor30ListingDataDto.Name,
+                Solution = dataProcessor30ListingDataDto.Solution,
                 DataController = dataProcessor30ListingDataDto.DataController,
                 DataProcessor = dataProcessor30ListingDataDto.DataProcessor,
                 DataControllerRepresentative = dataProcessor30ListingDataDto.DataControllerRepresentative,
                 DataProcessorRepresentative = dataProcessor30ListingDataDto.DataProcessorRepresentative,
-                DataSecurityAdvisor = dataProcessor30ListingDataDto.DataSecurityAdvisor,
                 DataCategories = dataProcessor30ListingDataDto.DataCategories,
                 DataSecurity = dataProcessor30ListingDataDto.DataSecurity,
-                DataTransfer = dataProcessor30ListingDataDto.DataTransfer,
             };
         }
     }

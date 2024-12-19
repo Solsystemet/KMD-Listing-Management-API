@@ -23,10 +23,8 @@ namespace api.Models
         public DataProcessor DataProcessor { get; set; } = new DataProcessor();
         public DataProcessorRepresentative DataProcessorRepresentative { get; set; } = new DataProcessorRepresentative();
         public DataControllerRepresentative DataControllerRepresentative { get; set; } = new DataControllerRepresentative();
-        public DataSecurityAdvisor DataSecurityAdvisor { get; set; } = new DataSecurityAdvisor();
-
+        
         public DataCategories DataCategories { get; set; } = new DataCategories();
-        public DataTransfer DataTransfer { get; set; } = new DataTransfer();
         public DataSecurity DataSecurity {get; set; } = new DataSecurity();
 
         public List<DataEdit> DataEdits { get; set; } = new List<DataEdit>();
