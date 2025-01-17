@@ -4,7 +4,7 @@ export type DataProcessor30ListingDataDto = Omit<
 >;
 
 type DataProcessor30ListingData = {
-   solution: string,
+   solution: string;
    id: number;
    name: string;
    creationTime: Date;
@@ -16,6 +16,7 @@ type DataProcessor30ListingData = {
    dataCategories: DataCategories;
    dataSecurity: DataSecurity;
    dataSubProcessors: SubProcessor[];
+   dataEdits: DataEdits[];
 };
 
 export type DataContactInfo = {
@@ -51,6 +52,10 @@ export type DataSecurity = {
 
 export type DataTransfer = {
    transferInformation: string;
+};
+
+export type DataEdits = {
+   dataEdits: string;
 };
 
 export type SubProcessor = {
