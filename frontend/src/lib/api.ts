@@ -20,6 +20,7 @@ export async function getAllListings(queryObject: QueryObject) {
          SortBy: queryObject.sortBy,
          IsDescending: queryObject.isDescending,
          Name: queryObject.name,
+         Archived: queryObject.archived,
       },
    });
    const listingsStringDate: ListingSidebarDtoWithStringDate[] = res.data;

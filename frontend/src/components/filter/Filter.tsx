@@ -1,81 +1,80 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import styles from "./Filter.module.css"
+import styles from "./Filter.module.css";
 import { ChevronDown } from "lucide-react";
 import QueryObject from "../../types/QueryObject";
 
 type FilterItemProps = {
    children: string;
-   filterParameter: "All" | "Archived" | "Not archived";
+   filterParameter: 0 | 1;
    isSelected: boolean;
-   onClick: (value: "All" | "Archived" | "Not archived") => void;
+   onClick: (value: 0 | 1) => void;
 };
 
-function FilterItem({children, filterParameter, isSelected, onClick}: FilterItemProps) {
-    return (
-        <button
-        onClick={() => onClick(filterParameter)}
-        className={`${styles.filterItemButton} ${isSelected ? styles.selected : ""}`}
-        >
-            {children}
-        </button>
-    );
+function FilterItem({
+   children,
+   filterParameter,
+   isSelected,
+   onClick,
+}: FilterItemProps) {
+   return (
+      <button
+         onClick={() => onClick(filterParameter)}
+         className={`${styles.filterItemButton} ${isSelected ? styles.selected : ""}`}
+      >
+         {children}
+      </button>
+   );
 }
 
-type FilterMenuProps= {
-    setQueryObject: Dispatch<SetStateAction<QueryObject>>;
+type FilterMenuProps = {
+   setQueryObject: Dispatch<SetStateAction<QueryObject>>;
 };
 
-export function FilterMenu({setQueryObject}: FilterMenuProps) {
-    const [isShown, setIsShown] = useState(false);
-    const [selectedFilter, setSelectedFilter] = useState<"All" | "Archived" | "Not archived">("All");
-    
-    function handleToggleShown() {
-        setIsShown(!isShown);
-    }
+export function FilterMenu({ setQueryObject }: FilterMenuProps) {
+   const [isShown, setIsShown] = useState(false);
+   const [selectedFilter, setSelectedFilter] = useState<0 | 1>(0);
 
-    function handleFilterItemClick(value: "All" | "Archived" | "Not Archived") {
-        setSelectedFilter(value);
-        setQueryObject((prevQueryObject: QueryObject) => {
-          const newQueryObject: QueryObject = {
+   function handleToggleShown() {
+      setIsShown(!isShown);
+   }
+
+   function handleFilterItemClick(value: 0 | 1) {
+      setSelectedFilter(value);
+      setQueryObject((prevQueryObject: QueryObject) => {
+         const newQueryObject: QueryObject = {
             ...prevQueryObject,
-            filterBy: value === "All" ? null : value.toLowerCase(),
-          };
-          return newQueryObject;
-        });
-        setIsShown(false); // Hide menu after selecting a filter
-      }
-    
-      return (
-        <div className={styles.filterMenuContainer}>
-          <button onClick={handleToggleShown} className={styles.toggleButton}>
+            archived: selectedFilter,
+         };
+         return newQueryObject;
+      });
+      console.log(selectedFilter);
+      setIsShown(false);
+   }
+
+   return (
+      <div className={styles.filterMenuContainer}>
+         <button onClick={handleToggleShown} className={styles.toggleButton}>
             <p>Filter</p>
             <ChevronDown color="var(--background-color)" />
-          </button>
-          <div className={`${styles.menu} ${isShown ? styles.isShown : ""}`}>
+         </button>
+         <div className={`${styles.menu} ${isShown ? styles.isShown : ""}`}>
             <FilterItem
-              filterParameter="All"
-              isSelected={selectedFilter === "All"}
-              onClick={handleFilterItemClick}
+               filterParameter={1}
+               isSelected={selectedFilter === 1}
+               onClick={handleFilterItemClick}
             >
-              All
+               Archived
             </FilterItem>
             <FilterItem
-              filterParameter="Archived"
-              isSelected={selectedFilter === "Archived"}
-              onClick={handleFilterItemClick}
+               filterParameter={0}
+               isSelected={selectedFilter === 0}
+               onClick={handleFilterItemClick}
             >
-              Archived
+               Not Archived
             </FilterItem>
-            <FilterItem
-              filterParameter="Not Archived"
-              isSelected={selectedFilter === "Not Archived"}
-              onClick={handleFilterItemClick}
-            >
-              Not Archived
-            </FilterItem>
-          </div>
-        </div>
-      );
-    }
+         </div>
+      </div>
+   );
+}
 
 export default FilterMenu;
