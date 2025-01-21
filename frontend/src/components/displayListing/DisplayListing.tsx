@@ -6,6 +6,7 @@ import { Link } from "@tanstack/react-router";
 import { createPdf } from "../../lib/createPdf";
 import FileSaver from "file-saver";
 import { DataEdits } from "../../types/DataProcessor30ListingData";
+import { Log } from "../log/log";
 
 export function DisplayListing({
    listing,
@@ -22,6 +23,15 @@ export function DisplayListing({
       dataSecurity,
       dataEdits,
    } = listing;
+
+   dataEdits.forEach(edit => {
+      console.log(`ID: ${edit.id}`);
+      console.log(`Edit Type: ${edit.editType}`);
+      console.log(`Edit Time: ${edit.editTime}`);
+      console.log(`Comment: ${edit.comment}`);
+      console.log(`Data Processor ID: ${edit.dataProcessor30ListingDataId}`);
+      console.log(`Fields Edited: ${edit.fieldsEdited}`);
+   });
 
    async function exportHandeler() {
       console.log("handeling export");
@@ -191,6 +201,7 @@ export function DisplayListing({
                   <p>{dataSecurity.securityMeasures}</p>
                </section>
             )}
+            <Log dataEdits={dataEdits} />
          </div>
       </div>
    );

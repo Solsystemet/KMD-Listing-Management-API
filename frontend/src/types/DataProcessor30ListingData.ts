@@ -55,7 +55,12 @@ export type DataTransfer = {
 };
 
 export type DataEdits = {
-   dataEdits: string;
+   id: number;
+   editType: string;
+   editTime: Date;
+   comment: string;
+   dataProcessor30ListingDataId: number;
+   fieldsEdited: string;
 };
 
 export type SubProcessor = {
