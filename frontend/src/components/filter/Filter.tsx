@@ -47,7 +47,6 @@ export function FilterMenu({ setQueryObject }: FilterMenuProps) {
          };
          return newQueryObject;
       });
-      console.log(selectedFilter);
       setIsShown(false);
    }
 
@@ -59,15 +58,15 @@ export function FilterMenu({ setQueryObject }: FilterMenuProps) {
          </button>
          <div className={`${styles.menu} ${isShown ? styles.isShown : ""}`}>
             <FilterItem
-               filterParameter={1}
-               isSelected={selectedFilter === 1}
+               filterParameter={0}
+               isSelected={selectedFilter === 0}
                onClick={handleFilterItemClick}
             >
                Archived
             </FilterItem>
             <FilterItem
-               filterParameter={0}
-               isSelected={selectedFilter === 0}
+               filterParameter={1}
+               isSelected={selectedFilter === 1}
                onClick={handleFilterItemClick}
             >
                Not Archived
