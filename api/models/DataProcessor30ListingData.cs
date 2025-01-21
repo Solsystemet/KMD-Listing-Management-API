@@ -15,6 +15,8 @@ namespace api.Models
         public string Solution { get; set; } = string.Empty;
 
         public byte Archived { get; set; } = 0;
+
+
         public DateTime CreationTime {get; set; } = DateTime.Now;
         public DateTime UpdateTime {get; set; } = DateTime.Now;
 
