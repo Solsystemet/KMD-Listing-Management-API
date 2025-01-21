@@ -5,6 +5,8 @@ import editListingSvg from "../../assets/listingIcons/editListing.svg";
 import { Link } from "@tanstack/react-router";
 import { createPdf } from "../../lib/createPdf";
 import FileSaver from "file-saver";
+import { DataEdits } from "../../types/DataProcessor30ListingData";
+import { Log } from "../log/log";
 
 export function DisplayListing({
    listing,
@@ -19,18 +21,27 @@ export function DisplayListing({
       dataSubProcessors,
       dataCategories,
       dataSecurity,
+      dataEdits,
    } = listing;
 
-   async function exportHandeler(){
-      console.log('handeling export');
+   dataEdits.forEach(edit => {
+      console.log(`ID: ${edit.id}`);
+      console.log(`Edit Type: ${edit.editType}`);
+      console.log(`Edit Time: ${edit.editTime}`);
+      console.log(`Comment: ${edit.comment}`);
+      console.log(`Data Processor ID: ${edit.dataProcessor30ListingDataId}`);
+      console.log(`Fields Edited: ${edit.fieldsEdited}`);
+   });
+
+   async function exportHandeler() {
+      console.log("handeling export");
       try {
          const blob = createPdf(listing);
- 
+
          FileSaver.saveAs(blob, `${listing.name} - Listing.pdf`);
-     } catch (error) {
-         console.error('Failed to download: ', error);
-     }
-      
+      } catch (error) {
+         console.error("Failed to download: ", error);
+      }
    }
 
    return (
@@ -49,18 +60,18 @@ export function DisplayListing({
                   </div>
                </section>
                <div className="listingControls">
-               <button
-                  onClick={exportHandeler}
-                  className={styles.listingActionButtons}
-                  title="Export listing"
-                  style={{all: 'unset'}}
-               >
-                  <img
-                     src={exportListingSvg}
-                     alt="Export listing"
+                  <button
+                     onClick={exportHandeler}
                      className={styles.listingActionButtons}
+                     title="Export listing"
+                     style={{ all: "unset" }}
+                  >
+                     <img
+                        src={exportListingSvg}
+                        alt="Export listing"
+                        className={styles.listingActionButtons}
                      />
-               </button>
+                  </button>
                   <Link
                      to="/listing/$listingId/edit"
                      params={{ listingId: listing.id.toString() }}
@@ -156,8 +167,8 @@ export function DisplayListing({
 
             <section className={styles.SubProcessorContainer}>
                <h2>Data Sub-Processors</h2>
-               {dataSubProcessors.map((subProcessor, index) => (
-                  <div key={index} className={styles.subProcessor}>
+               {dataSubProcessors.map(subProcessor => (
+                  <div key={subProcessor.id} className={styles.subProcessor}>
                      <p>{subProcessor.name}</p>
                      <p>
                         <b>CVR:</b> {subProcessor.cvr}
@@ -190,6 +201,7 @@ export function DisplayListing({
                   <p>{dataSecurity.securityMeasures}</p>
                </section>
             )}
+            <Log dataEdits={dataEdits} />
          </div>
       </div>
    );

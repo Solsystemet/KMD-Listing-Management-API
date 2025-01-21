@@ -13,7 +13,10 @@ import styles from "./index.module.css";
 import { SortingMenu } from "../../../components/sortingMenu/SortingMenu";
 import { DisplayListing } from "./../../../components/displayListing/DisplayListing";
 import imgKMD from "../../../assets/imgKMD.svg";
-import { StandardButton, ExportButton } from "../../../components/buttons/Buttons";
+import {
+   StandardButton,
+   ExportButton,
+} from "../../../components/buttons/Buttons";
 import { createXlsFile } from "../../../lib/CreateXls";
 import FileSaver from "file-saver";
 
@@ -43,14 +46,14 @@ function Index() {
    }
 
    async function handleExport() {
-      console.log('handeling export');
+      console.log("handeling export");
       try {
          const excelFile = await createXlsFile();
- 
-         FileSaver.saveAs(excelFile, 'Listings.xls');
-     } catch (error) {
-         console.error('Failed to download: ', error);
-     }
+
+         FileSaver.saveAs(excelFile, "Listings.xls");
+      } catch (error) {
+         console.error("Failed to download: ", error);
+      }
    }
 
    const currListing = useQuery({
@@ -64,7 +67,7 @@ function Index() {
    return (
       <main className={styles.listingIndex}>
          <div className={styles.sidebar}>
-            <StandardButton children={'Export'} onClick={handleExport}/>
+            <StandardButton children={"Export"} onClick={handleExport} />
             <Searchbar setQueryObject={setQueryObject} />
             <SortingMenu setQueryObject={setQueryObject} />
             {listings.isPending ? (
