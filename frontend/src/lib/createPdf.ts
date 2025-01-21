@@ -1,5 +1,6 @@
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { Subscript } from "lucide-react";
 import { blob } from "stream/consumers";
 
 export async function createPdf(_listing: any): Promise<Blob> {
@@ -62,25 +63,21 @@ function formatListingData(listing: any){
         ["", "Data Security Adviser", formatContact(listing["dataSecurityAdvisor"])],
         ["Data Categories", "Categories of data", formatDataCategories(listing["dataCategories"])]
     ];
+    console.log(listing);
 
-    // Conditional rows for data transfer and security
-    if (listing["dataTransfer"]?.transferInformation) {
-        data.push([
-            "Data Transfer",
-            "Terms for transfer of data internationally and to 3rd countries",
-            listing["dataTransfer"].transferInformation
-        ]);
+    //Data Transfer:
+    let transferData = [
+        ["Transfer of data", "Terms of data transfer and sub-processors recieving data", listing.dataTransfer.transferInformation]
+    ]
+    for (const subProcessor of listing.dataSubProcessors) {
+        // Ensure that subProcessor has the properties you want to access
+        const transferInfo = [`Reason: ${subProcessor.transferReason}`, `Treatment: ${subProcessor.treatment}`].filter(item => item !== 'N/A').join("\n\n")
+        transferData.push(["", subProcessor.name, transferInfo])
     }
 
-    if (listing["dataSecurity"]?.securityMeasures) {
-        data.push([
-            "Data Security",
-            "Security measures in place to protect data privacy",
-            listing["dataSecurity"].securityMeasures
-        ]);
-    }
 
-    return data;
+
+    return [...data, ...transferData];
 }
 
 // Helper function to format contact information

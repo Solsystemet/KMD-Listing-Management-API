@@ -110,7 +110,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                listingData.dataCategories.categoryList ||
                "Operation, maintenance & support of the solution",
          },
-      },
+      } as DataProcessor30ListingDataDto,
       onSubmit: async values => {
          if (hasJustAddedOrRemovedDataSubProcessor) {
             setHasJustAddedOrRemovedDataSubProcessor(false);
@@ -150,7 +150,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               field.handleChange(e.target.value);
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                      </div>
@@ -176,7 +176,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                         <InputBox
@@ -192,7 +192,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                         <InputBox
@@ -208,7 +208,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                         <InputBox
@@ -224,7 +224,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                         <InputBox
@@ -240,7 +240,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                      </div>
@@ -265,7 +265,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                         <InputBox
@@ -281,7 +281,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                         <InputBox
@@ -297,7 +297,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                         <InputBox
@@ -313,7 +313,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                         <InputBox
@@ -329,7 +329,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                      </div>
@@ -354,7 +354,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                         <InputBox
@@ -370,7 +370,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                         <InputBox
@@ -402,7 +402,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                         <InputBox
@@ -418,7 +418,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                      </div>
@@ -443,7 +443,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                         <InputBox
@@ -459,7 +459,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                         <InputBox
@@ -491,7 +491,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                         <InputBox
@@ -507,7 +507,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               });
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                      </div>
@@ -555,7 +555,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                                              field.handleChange(e.target.value);
                                              handleChange(e.target.value);
                                           }}
-                                          required={false}
+                                          required={true}
                                        />
                                        <FieldInfo field={field} />
                                     </>
@@ -576,7 +576,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                                              field.handleChange(e.target.value);
                                              handleChange(e.target.value);
                                           }}
-                                          required={false}
+                                          required={true}
                                        />
                                        <FieldInfo field={field} />
                                     </>
@@ -597,7 +597,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                                              field.handleChange(e.target.value);
                                              handleChange(e.target.value);
                                           }}
-                                          required={false}
+                                          required={true}
                                        />
                                        <FieldInfo field={field} />
                                     </>
@@ -618,7 +618,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                                              field.handleChange(e.target.value);
                                              handleChange(e.target.value);
                                           }}
-                                          required={false}
+                                          required={true}
                                        />
                                        <FieldInfo field={field} />
                                     </>
@@ -666,7 +666,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                                              field.handleChange(e.target.value);
                                              handleChange(e.target.value);
                                           }}
-                                          required={false}
+                                          required={true}
                                        />
                                        <FieldInfo field={field} />
                                     </>
@@ -688,7 +688,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                                              field.handleChange(e.target.value);
                                              handleChange(e.target.value);
                                           }}
-                                          required={false}
+                                          required={true}
                                        />
                                        <FieldInfo field={field} />
                                     </>
@@ -734,7 +734,7 @@ export function Survey({ listingData, handleSubmit }: SurveyProps) {
                               field.handleChange(e.target.value);
                               handleChange(e.target.value);
                            }}
-                           required={false}
+                           required={true}
                         />
                         <FieldInfo field={field} />
                      </>

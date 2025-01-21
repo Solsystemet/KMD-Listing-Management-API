@@ -15,6 +15,13 @@ import { DisplayListing } from "./../../../components/displayListing/DisplayList
 import imgKMD from "../../../assets/imgKMD.svg";
 import FilterMenu from "../../../components/filter/Filter";
 
+import {
+   StandardButton,
+   ExportButton,
+} from "../../../components/buttons/Buttons";
+import { createXlsFile } from "../../../lib/CreateXls";
+import FileSaver from "file-saver";
+
 export const Route = createFileRoute("/listing/$listingId/")({
    component: Index,
 });
@@ -40,6 +47,17 @@ function Index() {
       });
    }
 
+   async function handleExport() {
+      console.log("handeling export");
+      try {
+         const excelFile = await createXlsFile();
+
+         FileSaver.saveAs(excelFile, "Listings.xls");
+      } catch (error) {
+         console.error("Failed to download: ", error);
+      }
+   }
+
    const currListing = useQuery({
       queryKey: ["get-listing-by-id", listingId],
       queryFn: () => getListingById(listingId),
@@ -51,10 +69,11 @@ function Index() {
    return (
       <main className={styles.listingIndex}>
          <div className={styles.sidebar}>
+            <StandardButton children={"Export"} onClick={handleExport} />
             <Searchbar setQueryObject={setQueryObject} />
             <div className={styles.sortAndFilter}>
-            <SortingMenu setQueryObject={setQueryObject} />
-            <FilterMenu setQueryObject={setQueryObject} />
+               <SortingMenu setQueryObject={setQueryObject} />
+               <FilterMenu setQueryObject={setQueryObject} />
             </div>
             {listings.isPending ? (
                "Loading..."

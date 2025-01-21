@@ -3,6 +3,8 @@ import styles from "./DisplayListing.module.css";
 import exportListingSvg from "../../assets/listingIcons/exportListing.svg";
 import editListingSvg from "../../assets/listingIcons/editListing.svg";
 import { Link } from "@tanstack/react-router";
+import { createPdf } from "../../lib/createPdf";
+import FileSaver from "file-saver";
 
 export function DisplayListing({
    listing,
@@ -18,6 +20,18 @@ export function DisplayListing({
       dataCategories,
       dataSecurity,
    } = listing;
+
+   async function exportHandeler(){
+      console.log('handeling export');
+      try {
+         const blob = createPdf(listing);
+ 
+         FileSaver.saveAs(blob, `${listing.name} - Listing.pdf`);
+     } catch (error) {
+         console.error('Failed to download: ', error);
+     }
+      
+   }
 
    return (
       <div className={styles.listingBackground}>
@@ -35,12 +49,18 @@ export function DisplayListing({
                   </div>
                </section>
                <div className="listingControls">
+               <button
+                  onClick={exportHandeler}
+                  className={styles.listingActionButtons}
+                  title="Export listing"
+                  style={{all: 'unset'}}
+               >
                   <img
                      src={exportListingSvg}
                      alt="Export listing"
-                     title="Export listing"
                      className={styles.listingActionButtons}
-                  />
+                     />
+               </button>
                   <Link
                      to="/listing/$listingId/edit"
                      params={{ listingId: listing.id.toString() }}
