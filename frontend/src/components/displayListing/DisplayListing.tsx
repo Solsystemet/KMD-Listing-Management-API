@@ -1,12 +1,15 @@
 import DataProcessor30ListingData from "../../types/DataProcessor30ListingData";
 import styles from "./DisplayListing.module.css";
 import exportListingSvg from "../../assets/listingIcons/exportListing.svg";
+import archiveListingSvg from "../../assets/listingIcons/archiveListing.svg";
 import editListingSvg from "../../assets/listingIcons/editListing.svg";
 import { Link } from "@tanstack/react-router";
 import { createPdf } from "../../lib/createPdf";
 import FileSaver from "file-saver";
 import { DataEdits } from "../../types/DataProcessor30ListingData";
 import { Log } from "../log/log";
+import { putListing } from "../../lib/api";
+import { useState } from "react";
 
 export function DisplayListing({
    listing,
@@ -44,12 +47,28 @@ export function DisplayListing({
       }
    }
 
+   const [isArchived, setIsArchived] = useState(listing.archived);
+
+   async function archiveHandler() {
+      const newArchiveStatus = isArchived === 1 ? 0 : 1;
+      putListing(listing.id, {
+         ...listing,
+         archived: newArchiveStatus,
+      });
+      setIsArchived(newArchiveStatus);
+   }
+
    return (
       <div className={styles.listingBackground}>
          <div className={styles.listingContainer}>
             <div className={styles.listingHeader}>
                <section className={styles.infoContainer}>
                   <h1>{listing.name}</h1>
+                  {isArchived === 1 && (
+                     <div>
+                        <span>Archived</span>
+                     </div>
+                  )}
                   <div>
                      <span>Created at: </span>
                      <span> {listing.creationTime.toUTCString()}</span>
@@ -69,6 +88,19 @@ export function DisplayListing({
                      <img
                         src={exportListingSvg}
                         alt="Export listing"
+                        className={styles.listingActionButtons}
+                     />
+                  </button>
+                  <button
+                     onClick={archiveHandler}
+                     className={styles.listingActionButtons}
+                     title="Export listing"
+                     style={{ all: "unset" }}
+                  >
+                     <img
+                        src={archiveListingSvg}
+                        alt="Archive Listing"
+                        title="Archive Listing"
                         className={styles.listingActionButtons}
                      />
                   </button>
