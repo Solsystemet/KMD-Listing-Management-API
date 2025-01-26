@@ -1,10 +1,15 @@
 import DataProcessor30ListingData from "../../types/DataProcessor30ListingData";
 import styles from "./DisplayListing.module.css";
 import exportListingSvg from "../../assets/listingIcons/exportListing.svg";
+import archiveListingSvg from "../../assets/listingIcons/archiveListing.svg";
 import editListingSvg from "../../assets/listingIcons/editListing.svg";
 import { Link } from "@tanstack/react-router";
 import { createPdf } from "../../lib/createPdf";
 import FileSaver from "file-saver";
+import { DataEdits } from "../../types/DataProcessor30ListingData";
+import { Log } from "../log/log";
+import { putListing } from "../../lib/api";
+import { useState } from "react";
 
 export function DisplayListing({
    listing,
@@ -19,18 +24,38 @@ export function DisplayListing({
       dataSubProcessors,
       dataCategories,
       dataSecurity,
+      dataEdits,
    } = listing;
 
-   async function exportHandeler(){
-      console.log('handeling export');
+   dataEdits.forEach(edit => {
+      console.log(`ID: ${edit.id}`);
+      console.log(`Edit Type: ${edit.editType}`);
+      console.log(`Edit Time: ${edit.editTime}`);
+      console.log(`Comment: ${edit.comment}`);
+      console.log(`Data Processor ID: ${edit.dataProcessor30ListingDataId}`);
+      console.log(`Fields Edited: ${edit.fieldsEdited}`);
+   });
+
+   async function exportHandeler() {
+      console.log("handeling export");
       try {
          const blob = createPdf(listing);
- 
+
          FileSaver.saveAs(blob, `${listing.name} - Listing.pdf`);
-     } catch (error) {
-         console.error('Failed to download: ', error);
-     }
-      
+      } catch (error) {
+         console.error("Failed to download: ", error);
+      }
+   }
+
+   const [isArchived, setIsArchived] = useState(listing.archived);
+
+   async function archiveHandler() {
+      const newArchiveStatus = isArchived === 1 ? 0 : 1;
+      putListing(listing.id, {
+         ...listing,
+         archived: newArchiveStatus,
+      });
+      setIsArchived(newArchiveStatus);
    }
 
    return (
@@ -39,6 +64,11 @@ export function DisplayListing({
             <div className={styles.listingHeader}>
                <section className={styles.infoContainer}>
                   <h1>{listing.name}</h1>
+                  {isArchived === 1 && (
+                     <div>
+                        <span>Archived</span>
+                     </div>
+                  )}
                   <div>
                      <span>Created at: </span>
                      <span> {listing.creationTime.toUTCString()}</span>
@@ -49,18 +79,31 @@ export function DisplayListing({
                   </div>
                </section>
                <div className="listingControls">
-               <button
-                  onClick={exportHandeler}
-                  className={styles.listingActionButtons}
-                  title="Export listing"
-                  style={{all: 'unset'}}
-               >
-                  <img
-                     src={exportListingSvg}
-                     alt="Export listing"
+                  <button
+                     onClick={exportHandeler}
                      className={styles.listingActionButtons}
+                     title="Export listing"
+                     style={{ all: "unset" }}
+                  >
+                     <img
+                        src={exportListingSvg}
+                        alt="Export listing"
+                        className={styles.listingActionButtons}
                      />
-               </button>
+                  </button>
+                  <button
+                     onClick={archiveHandler}
+                     className={styles.listingActionButtons}
+                     title="Export listing"
+                     style={{ all: "unset" }}
+                  >
+                     <img
+                        src={archiveListingSvg}
+                        alt="Archive Listing"
+                        title="Archive Listing"
+                        className={styles.listingActionButtons}
+                     />
+                  </button>
                   <Link
                      to="/listing/$listingId/edit"
                      params={{ listingId: listing.id.toString() }}
@@ -156,8 +199,8 @@ export function DisplayListing({
 
             <section className={styles.SubProcessorContainer}>
                <h2>Data Sub-Processors</h2>
-               {dataSubProcessors.map((subProcessor, index) => (
-                  <div key={index} className={styles.subProcessor}>
+               {dataSubProcessors.map(subProcessor => (
+                  <div key={subProcessor.id} className={styles.subProcessor}>
                      <p>{subProcessor.name}</p>
                      <p>
                         <b>CVR:</b> {subProcessor.cvr}
@@ -190,6 +233,7 @@ export function DisplayListing({
                   <p>{dataSecurity.securityMeasures}</p>
                </section>
             )}
+            <Log dataEdits={dataEdits} />
          </div>
       </div>
    );

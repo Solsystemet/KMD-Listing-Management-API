@@ -14,7 +14,6 @@ import { SortingMenu } from "../../../components/sortingMenu/SortingMenu";
 import { DisplayListing } from "./../../../components/displayListing/DisplayListing";
 import imgKMD from "../../../assets/imgKMD.svg";
 import FilterMenu from "../../../components/filter/Filter";
-
 import {
    StandardButton,
    ExportButton,

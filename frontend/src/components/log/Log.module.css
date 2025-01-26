@@ -1,0 +1,90 @@
+hr {
+   opacity: 0.5;
+   margin: 3rem 0rem;
+}
+
+.toggleButton {
+   display: flex;
+   background-color: transparent;
+   border: none;
+   color: var(--primary-color);
+   align-items: center;
+   gap: 1rem;
+}
+.ellipsisContainer {
+   display: flex;
+   aspect-ratio: 1/1;
+   background-color: var(--secondary-color);
+   border-radius: 50%;
+   padding: 0.2rem;
+}
+
+.logNode {
+   position: relative;
+   display: flex;
+   gap: 2rem;
+}
+.imgContainer {
+   display: flex;
+   aspect-ratio: 1/1;
+   flex-direction: column;
+   align-items: center;
+   gap: 1rem;
+}
+
+.imgContainer > img {
+   border-radius: 50%;
+   aspect-ratio: 1/1;
+   width: 5rem;
+}
+.overviewContent {
+   font-size: 1.3rem;
+}
+
+.overviewContent > * {
+   margin: 0rem;
+}
+
+.overviewContent > p:nth-child(1) {
+   opacity: 0.61;
+   font-size: 0.6em;
+}
+
+.overviewContent > p:nth-child(2) {
+   font-size: 1em;
+}
+
+.arrowContainer {
+   scale: 2;
+   transform: translateX(30%);
+}
+
+.seeMoreMenuContainer {
+   padding-top: 2.1rem;
+}
+
+.toggleButton {
+   width: 100%;
+}
+
+.menu {
+   opacity: 0;
+   height: 0;
+   transition: ease-in-out 0.1s;
+}
+
+.menu.isShown {
+   opacity: 100%;
+   height: 100%;
+}
+
+.menu > div > span:nth-child(1) {
+   opacity: 0.6;
+   font-size: 0.8rem;
+}
+
+.menu > div {
+   display: flex;
+   align-items: center;
+   gap: 0.4em;
+}

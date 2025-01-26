@@ -4,9 +4,10 @@ export type DataProcessor30ListingDataDto = Omit<
 >;
 
 type DataProcessor30ListingData = {
-   solution: string,
+   solution: string;
    id: number;
    name: string;
+   archived?: 0 | 1;
    creationTime: Date;
    updateTime: Date;
    dataController: DataController;
@@ -16,6 +17,7 @@ type DataProcessor30ListingData = {
    dataCategories: DataCategories;
    dataSecurity: DataSecurity;
    dataSubProcessors: SubProcessor[];
+   dataEdits: DataEdits[];
 };
 
 export type DataContactInfo = {
@@ -51,6 +53,15 @@ export type DataSecurity = {
 
 export type DataTransfer = {
    transferInformation: string;
+};
+
+export type DataEdits = {
+   id: number;
+   editType: string;
+   editTime: Date;
+   comment: string;
+   dataProcessor30ListingDataId: number;
+   fieldsEdited: string;
 };
 
 export type SubProcessor = {
