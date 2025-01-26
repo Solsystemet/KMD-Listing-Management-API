@@ -7,6 +7,7 @@ type DataProcessor30ListingData = {
    solution: string;
    id: number;
    name: string;
+   archived?: 0 | 1;
    creationTime: Date;
    updateTime: Date;
    dataController: DataController;
