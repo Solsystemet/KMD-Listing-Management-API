@@ -1,0 +1,75 @@
+.filterMenuContainer * {
+    margin: 0;
+ }
+ 
+ .filterMenuContainer {
+    display: flex;
+    position: relative;
+ }
+ 
+ .toggleButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.5em 1em;
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+    border: none;
+    border-radius: 0.25em;
+    cursor: pointer;
+ }
+ 
+ .menu {
+    width: 120%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--background-color);
+    border: 0.1em solid var(--primary-color);
+    border-radius: 0.25em;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+    pointer-events: none;
+ }
+ 
+ .menu.isShown {
+    opacity: 1;
+    pointer-events: all;
+ }
+ 
+ .filterItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    * {
+       margin: 0;
+       text-align: left;
+    }
+ }
+ 
+ .filterItemButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--primary-color);
+ }
+ 
+ .filterItemButton.selected {
+    font-weight: bold;
+    color: var(--secondary-color);
+ }
+ 
+ .filterOrderButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+ }
+ 
